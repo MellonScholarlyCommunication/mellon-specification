@@ -71,32 +71,51 @@ Use Cases {#usecases}
 For the purposes of simplicity, the use cases herein assume that named individuals (i.e. Alice, Bob, Carol, etc.) are already authenticated agents, that have a Solid pod (except for point in [[#login]]).
 
 ## Logging in ## {#login}
-To interact with actors and resources in Mellon, the user must have a valid pod environment to store these interactions. Because of this, Mellon must provide the capabilities to create a pod environment and login to this pod environment.
+To interact with actors and resources in the Mellon framework, the user must have a valid pod environment to store these interactions. Because of this, Mellon must provide the capabilities to create a pod environment and login to this pod environment.
 
 ### Create a researcher pod ### {#create-pod}
-Bob wants to interact with resources in Mellon, but does not have a personal pod environment.
-The Mellon website gives the option to login to an existing pod, or to create a new pod.
-Bob chooses the option to create a new pod, and is redirected to an environment to create a new Solid Pod.
+Bob wants to interact with published resources using the Mellon framework, but does not have a pod environment available to store these interactions.
+On opening the Web view of the Mellon project, Bob is given the option to login to an existing pod, or to create a new pod.
+Bob chooses the option to create a new pod, and is redirected to an environment where he can create a new Solid Pod.
 
 ### Logging in to existing researcher pod ### {#login-pod}
-Bob already has a Solid pod, and wants to login on the Mellon website.
-The Mellon website gives the option to login to an existing pod, or to create a new pod.
+Bob already has an existing pod environment, and wants to login on the Mellon project web view.
+On opening the view, he is given the option to login to an existing pod, or to create a new pod.
 Bob chooses the option to login to an existing pod, and is redirected to an environment to login to a new Solid Pod.
-On login, Bob is redirected to the home page of the website.
+On login, Bob is redirected to the landing page.
 
 
 ## Profile ## {#profile}
+A framework designed for scholarly communication requires researchers to be able to setup and a personal profile, that should be available both from inside and outside the framework.
+This allows for researchers to discover colleagues in the same field with the same interests, and to follow new developments.
+Potentially, verification capabilities should be in place to verify the information provided by the researcher.
 
 ### View actor researcher profile ### {#view-profile}
-
+Bob encounteres an interesting research paper made by Alice.
+Bob clicks on Alice's name, and is redirected to a profile viewer.
+This profile viewer shows all relevant information available for Alice, and gives the option to Follow or Block Alice [[#subscribe to actor]].
+can be provided 
 ### Edit actor researcher profile ### {#edit-profile}
+While viewing his own profile, Bob decides to edit the profile information.
+Bob clicks on the edit button to go to a profile editor view.
+Bob fills in additional information about work location and previous work locations.
+Bob saves the edits, and they are saved to his profile.
+Bob is redirected to the profile view, where the information has been updated, and is displayed correctly according to the changes made.
+
+This action can be performed for all profile cards where Bob has the correct edit permissions (which is usually only his own profile card).
 
 
-## Subscribtions ## {#subscribe}
+## Subscribing to entities in the network ## {#subscribe}
+Subscribing to entities in the network is an important part of scholarly communication, as this is used to filter relevant information and publications for actors in the network.
 
 ### View actors subscribed to entity 
+For all subscribable entities in the network, an actor should be able to view the actors subscribed to the entity, given the correct permissions.
 
 #### View actors subscribed to actor
+Bob wants to view the actors in the network that are subscribed to him.
+For this, Bob goes to his profile viewer, and goes to the followers view.
+This provides Bob with a list of all actors in the network following him.
+In this list.
 
 #### View actors subscribed to publication
 
@@ -108,10 +127,30 @@ On login, Bob is redirected to the home page of the website.
 #### View publications an actor is subscribed to
 
 ### Subscribe to a new entity
+Bob wishes to subscribe to a new entity in the network.
 
-#### Subscribe to a new actor
+#### Subscribe to a new actor #### {#subscribe to actor}
+Bob wishes to receive updates of events of his colleague Alice.
+For this, Bob heads to the profile of Alice, and clicks the follow option.
+This adds Alice to the following list of Bob, and adds Bob to the followers list of Alice.
+For all future events of Alice, Bob now receives a notification for the event.
 
 #### Subscribe to a new publication
+Bob wishes to receive updates of events of a certain publication that he is interested in.
+Bob heads to the publication view, and clicks the follow option.
+For all future events in the publication lifecycle, Bob now receives a notification.
+
+### Unsubscribe from an entitiy 
+Bob does not wish to receive updates from a certain actor anymore that he is following.
+Bob navigates to the following view, showing the entities that Bob is following in the network.
+Bob searches for the entity in the list that he wants to unsibscribe from.
+Bob clicks ubsubscribe, after which Bob is unsubscribed from the entity and the entitiy is removed from the list.
+
+### Block actors subscribed to entity 
+Bob wishes to remove an actor from his followers list (or from the followers list of one of his pubications).
+For this, Bob navigates to the followers view of the resource in question.
+Here, bob searches for the actor that he wants to block from a resource.
+Bob adds this actor to the blocked list for the resource in question.
 
 
 ## Publications ## {#publications}
@@ -266,6 +305,7 @@ In this case, some sort of protection SHOULD implemented, that prevents actors f
 
 #### describedby / seeAlso metadata #### {#describedby}
 Provide seeAlso metadata in rdf
+OpenResearch: Collaborative Management of Scholarly Communication Metadata
 
 #### Link header #### {#link-seeAlso}
 Provide seeAlso / describedby metadata in the LINK header when retrieving the file.
@@ -312,6 +352,45 @@ External services MAY be able to parse this data, and retrieve the relevant reso
 
 ### RDF Collection ### {#rdf-collection}
 As a default fallback, an RDF Collection SHOULD be created in the user vCard, that contains references to all publications and their metadata.
+
+
+
+## External services ## {#services}
+The Mellon framework requires services to be abailable that can be used by actors in the network to achieve several goals, such as getting verification for publications, finding relevant publications for a subject on the network, querying over the network, getting peer reviews for a publication, ... 
+All these services SHOULD not be specific for the Mellon framework alone, and could help connect different networks together, allowing researchers to query for publications and metadata over different networks of scholarly communication frameworks.
+
+### Data verification services ### {#verification-services}
+
+### Peer review services ### {#verification-services}
+
+### Indexing services ### {#verification-services}
+
+### Analytics services ### {#verification-services}
+
+### Activitypub services ### {#verification-services}
+
+
+
+## Verification mechanics ## {#verification}
+The Mellon framework requires a way for actors to verify information in the network by (one or more) trusted thrid parties.
+
+### Profile data verification ### {#profile-verification}
+A method SHOULD be in place for actors to have their profile information verified by external entities.
+This could mean for example past workplaces confirming that the actor has worked there (via an automatic API for example), or with confirmation of former colleagues.
+
+### Publication data verification ### {#publication-verification}
+A publication MUST be verified by a trusted third party, in order to prove its legitimacy. This verification MUST be timestamped, in order for the actor publishing the research to prove that they were the first to publish this research.
+The third party MAY verify this publication to publications already present in its network, and MAY provide the actor with proof that they are the first to publish that research in the known state of the art.
+
+### Peer review verification ### {#peer-review-verification}
+A mechanism is required to allow publications to be peer reviewed by external parties.
+External parties should be able to retrieve a specific version of the publication, on which a timestamped verification MUST be provided of the peer-review for that specific version of the publication.
+
+
+## Ontologies ## {#ontology}
+Thought should be given to what ontologies are used to represent semantic information in the Mellon framework. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholary communication frameworks outside of its network.
+
+
 
 
 Definitions {#definitions}

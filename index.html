@@ -1322,6 +1322,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 89ebb6ab, updated Fri Oct 9 15:32:07 2020 -0700" name="generator">
+  <meta content="f6199a5f531b8aae2ffa3398ff8a4a9fa1d3dbcb" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -1742,6 +1743,8 @@ dfn > a.self-link::before      { content: "#"; }
    <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-11-15">15 November 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
+     <dt>Issue Tracking:
+     <dd><a href="https://github.com/Dexagod/mellon-requirements/issues/">GitHub</a>
      <dt class="editor">Editor:
      <dd class="editor p-author h-card vcard"><span class="p-name fn">Ruben Dedecker (UGent - Imec)</span>
     </dl>
@@ -1775,11 +1778,13 @@ dfn > a.self-link::before      { content: "#"; }
         <li><a href="#edit-profile"><span class="secno">2.2.2</span> <span class="content">Edit actor researcher profile</span></a>
        </ol>
       <li>
-       <a href="#subscribe"><span class="secno">2.3</span> <span class="content">Subscribtions</span></a>
+       <a href="#subscribe"><span class="secno">2.3</span> <span class="content">Subscribing to entities in the network</span></a>
        <ol class="toc">
         <li><a href="#view-actors-subscribed-to-entity"><span class="secno">2.3.1</span> <span class="content">View actors subscribed to entity</span></a>
         <li><a href="#view-entities-an-actor-is-subscribed-to"><span class="secno">2.3.2</span> <span class="content">View entities an actor is subscribed to</span></a>
         <li><a href="#subscribe-to-a-new-entity"><span class="secno">2.3.3</span> <span class="content">Subscribe to a new entity</span></a>
+        <li><a href="#unsubscribe-from-an-entitiy"><span class="secno">2.3.4</span> <span class="content">Unsubscribe from an entitiy</span></a>
+        <li><a href="#block-actors-subscribed-to-entity"><span class="secno">2.3.5</span> <span class="content">Block actors subscribed to entity</span></a>
        </ol>
       <li>
        <a href="#publications"><span class="secno">2.4</span> <span class="content">Publications</span></a>
@@ -1853,6 +1858,23 @@ dfn > a.self-link::before      { content: "#"; }
         <li><a href="#tree-collection"><span class="secno">3.5.2</span> <span class="content">Tree Collection</span></a>
         <li><a href="#rdf-collection"><span class="secno">3.5.3</span> <span class="content">RDF Collection</span></a>
        </ol>
+      <li>
+       <a href="#services"><span class="secno">3.6</span> <span class="content">External services</span></a>
+       <ol class="toc">
+        <li><a href="#verification-services"><span class="secno">3.6.1</span> <span class="content">Data verification services</span></a>
+        <li><a href="#verification-services①"><span class="secno">3.6.2</span> <span class="content">Peer review services</span></a>
+        <li><a href="#verification-services②"><span class="secno">3.6.3</span> <span class="content">Indexing services</span></a>
+        <li><a href="#verification-services③"><span class="secno">3.6.4</span> <span class="content">Analytics services</span></a>
+        <li><a href="#verification-services④"><span class="secno">3.6.5</span> <span class="content">Activitypub services</span></a>
+       </ol>
+      <li>
+       <a href="#verification"><span class="secno">3.7</span> <span class="content">Verification mechanics</span></a>
+       <ol class="toc">
+        <li><a href="#profile-verification"><span class="secno">3.7.1</span> <span class="content">Profile data verification</span></a>
+        <li><a href="#publication-verification"><span class="secno">3.7.2</span> <span class="content">Publication data verification</span></a>
+        <li><a href="#peer-review-verification"><span class="secno">3.7.3</span> <span class="content">Peer review verification</span></a>
+       </ol>
+      <li><a href="#ontology"><span class="secno">3.8</span> <span class="content">Ontologies</span></a>
      </ol>
     <li><a href="#definitions"><span class="secno">4</span> <span class="content">Definitions</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
@@ -1872,29 +1894,66 @@ From these usecases, we dericve the <a href="#requirements">§ 3 Requirements<
    <h2 class="heading settled" data-level="2" id="usecases"><span class="secno">2. </span><span class="content">Use Cases</span><a class="self-link" href="#usecases"></a></h2>
     For the purposes of simplicity, the use cases herein assume that named individuals (i.e. Alice, Bob, Carol, etc.) are already authenticated agents, that have a Solid pod (except for point in <a href="#login">§ 2.1 Logging in</a>). 
    <h3 class="heading settled" data-level="2.1" id="login"><span class="secno">2.1. </span><span class="content">Logging in</span><a class="self-link" href="#login"></a></h3>
-    To interact with actors and resources in Mellon, the user must have a valid pod environment to store these interactions. Because of this, Mellon must provide the capabilities to create a pod environment and login to this pod environment. 
+    To interact with actors and resources in the Mellon framework, the user must have a valid pod environment to store these interactions. Because of this, Mellon must provide the capabilities to create a pod environment and login to this pod environment. 
    <h4 class="heading settled" data-level="2.1.1" id="create-pod"><span class="secno">2.1.1. </span><span class="content">Create a researcher pod</span><a class="self-link" href="#create-pod"></a></h4>
-    Bob wants to interact with resources in Mellon, but does not have a personal pod environment.
-The Mellon website gives the option to login to an existing pod, or to create a new pod.
-Bob chooses the option to create a new pod, and is redirected to an environment to create a new Solid Pod. 
+    Bob wants to interact with published resources using the Mellon framework, but does not have a pod environment available to store these interactions.
+On opening the Web view of the Mellon project, Bob is given the option to login to an existing pod, or to create a new pod.
+Bob chooses the option to create a new pod, and is redirected to an environment where he can create a new Solid Pod. 
    <h4 class="heading settled" data-level="2.1.2" id="login-pod"><span class="secno">2.1.2. </span><span class="content">Logging in to existing researcher pod</span><a class="self-link" href="#login-pod"></a></h4>
-    Bob already has a Solid pod, and wants to login on the Mellon website.
-The Mellon website gives the option to login to an existing pod, or to create a new pod.
+    Bob already has an existing pod environment, and wants to login on the Mellon project web view.
+On opening the view, he is given the option to login to an existing pod, or to create a new pod.
 Bob chooses the option to login to an existing pod, and is redirected to an environment to login to a new Solid Pod.
-On login, Bob is redirected to the home page of the website. 
+On login, Bob is redirected to the landing page. 
    <h3 class="heading settled" data-level="2.2" id="profile"><span class="secno">2.2. </span><span class="content">Profile</span><a class="self-link" href="#profile"></a></h3>
+    A framework designed for scholarly communication requires researchers to be able to setup and a personal profile, that should be available both from inside and outside the framework.
+This allows for researchers to discover colleagues in the same field with the same interests, and to follow new developments.
+Potentially, verification capabilities should be in place to verify the information provided by the researcher. 
    <h4 class="heading settled" data-level="2.2.1" id="view-profile"><span class="secno">2.2.1. </span><span class="content">View actor researcher profile</span><a class="self-link" href="#view-profile"></a></h4>
+    Bob encounteres an interesting research paper made by Alice.
+Bob clicks on Alice’s name, and is redirected to a profile viewer.
+This profile viewer shows all relevant information available for Alice, and gives the option to Follow or Block Alice [[#subscribe to actor]].
+can be provided 
    <h4 class="heading settled" data-level="2.2.2" id="edit-profile"><span class="secno">2.2.2. </span><span class="content">Edit actor researcher profile</span><a class="self-link" href="#edit-profile"></a></h4>
-   <h3 class="heading settled" data-level="2.3" id="subscribe"><span class="secno">2.3. </span><span class="content">Subscribtions</span><a class="self-link" href="#subscribe"></a></h3>
+    While viewing his own profile, Bob decides to edit the profile information.
+Bob clicks on the edit button to go to a profile editor view.
+Bob fills in additional information about work location and previous work locations.
+Bob saves the edits, and they are saved to his profile.
+Bob is redirected to the profile view, where the information has been updated, and is displayed correctly according to the changes made. 
+   <p>This action can be performed for all profile cards where Bob has the correct edit permissions (which is usually only his own profile card).</p>
+   <h3 class="heading settled" data-level="2.3" id="subscribe"><span class="secno">2.3. </span><span class="content">Subscribing to entities in the network</span><a class="self-link" href="#subscribe"></a></h3>
+    Subscribing to entities in the network is an important part of scholarly communication, as this is used to filter relevant information and publications for actors in the network. 
    <h4 class="heading settled" data-level="2.3.1" id="view-actors-subscribed-to-entity"><span class="secno">2.3.1. </span><span class="content">View actors subscribed to entity</span><a class="self-link" href="#view-actors-subscribed-to-entity"></a></h4>
+    For all subscribable entities in the network, an actor should be able to view the actors subscribed to the entity, given the correct permissions. 
    <h5 class="heading settled" data-level="2.3.1.1" id="view-actors-subscribed-to-actor"><span class="secno">2.3.1.1. </span><span class="content">View actors subscribed to actor</span><a class="self-link" href="#view-actors-subscribed-to-actor"></a></h5>
+    Bob wants to view the actors in the network that are subscribed to him.
+For this, Bob goes to his profile viewer, and goes to the followers view.
+This provides Bob with a list of all actors in the network following him.
+In this list. 
    <h5 class="heading settled" data-level="2.3.1.2" id="view-actors-subscribed-to-publication"><span class="secno">2.3.1.2. </span><span class="content">View actors subscribed to publication</span><a class="self-link" href="#view-actors-subscribed-to-publication"></a></h5>
    <h4 class="heading settled" data-level="2.3.2" id="view-entities-an-actor-is-subscribed-to"><span class="secno">2.3.2. </span><span class="content">View entities an actor is subscribed to</span><a class="self-link" href="#view-entities-an-actor-is-subscribed-to"></a></h4>
    <h5 class="heading settled" data-level="2.3.2.1" id="view-actors-an-actor-is-subscribed-to-contacts"><span class="secno">2.3.2.1. </span><span class="content">View actors an actor is subscribed to (contacts)</span><a class="self-link" href="#view-actors-an-actor-is-subscribed-to-contacts"></a></h5>
    <h5 class="heading settled" data-level="2.3.2.2" id="view-publications-an-actor-is-subscribed-to"><span class="secno">2.3.2.2. </span><span class="content">View publications an actor is subscribed to</span><a class="self-link" href="#view-publications-an-actor-is-subscribed-to"></a></h5>
    <h4 class="heading settled" data-level="2.3.3" id="subscribe-to-a-new-entity"><span class="secno">2.3.3. </span><span class="content">Subscribe to a new entity</span><a class="self-link" href="#subscribe-to-a-new-entity"></a></h4>
-   <h5 class="heading settled" data-level="2.3.3.1" id="subscribe-to-a-new-actor"><span class="secno">2.3.3.1. </span><span class="content">Subscribe to a new actor</span><a class="self-link" href="#subscribe-to-a-new-actor"></a></h5>
+    Bob wishes to subscribe to a new entity in the network. 
+   <h5 class="heading settled" data-level="2.3.3.1" id="subscribe-to-a-new-actor--subscribe-to-actor"><span class="secno">2.3.3.1. </span><span class="content">Subscribe to a new actor #### {#subscribe to actor}</span><a class="self-link" href="#subscribe-to-a-new-actor--subscribe-to-actor"></a></h5>
+    Bob wishes to receive updates of events of his colleague Alice.
+For this, Bob heads to the profile of Alice, and clicks the follow option.
+This adds Alice to the following list of Bob, and adds Bob to the followers list of Alice.
+For all future events of Alice, Bob now receives a notification for the event. 
    <h5 class="heading settled" data-level="2.3.3.2" id="subscribe-to-a-new-publication"><span class="secno">2.3.3.2. </span><span class="content">Subscribe to a new publication</span><a class="self-link" href="#subscribe-to-a-new-publication"></a></h5>
+    Bob wishes to receive updates of events of a certain publication that he is interested in.
+Bob heads to the publication view, and clicks the follow option.
+For all future events in the publication lifecycle, Bob now receives a notification. 
+   <h4 class="heading settled" data-level="2.3.4" id="unsubscribe-from-an-entitiy"><span class="secno">2.3.4. </span><span class="content">Unsubscribe from an entitiy</span><a class="self-link" href="#unsubscribe-from-an-entitiy"></a></h4>
+    Bob does not wish to receive updates from a certain actor anymore that he is following.
+Bob navigates to the following view, showing the entities that Bob is following in the network.
+Bob searches for the entity in the list that he wants to unsibscribe from.
+Bob clicks ubsubscribe, after which Bob is unsubscribed from the entity and the entitiy is removed from the list. 
+   <h4 class="heading settled" data-level="2.3.5" id="block-actors-subscribed-to-entity"><span class="secno">2.3.5. </span><span class="content">Block actors subscribed to entity</span><a class="self-link" href="#block-actors-subscribed-to-entity"></a></h4>
+    Bob wishes to remove an actor from his followers list (or from the followers list of one of his pubications).
+For this, Bob navigates to the followers view of the resource in question.
+Here, bob searches for the actor that he wants to block from a resource.
+Bob adds this actor to the blocked list for the resource in question. 
    <h3 class="heading settled" data-level="2.4" id="publications"><span class="secno">2.4. </span><span class="content">Publications</span><a class="self-link" href="#publications"></a></h3>
    <h4 class="heading settled" data-level="2.4.1" id="add-publications"><span class="secno">2.4.1. </span><span class="content">Add new publication</span><a class="self-link" href="#add-publications"></a></h4>
     Bob decides to publish a new research paper.
@@ -1981,7 +2040,8 @@ In this case, some sort of protection SHOULD implemented, that prevents actors f
       <h4 class="heading settled" data-level="3.1.3" id="metadata-storage"><span class="secno">3.1.3. </span><span class="content">Metadata Storage</span><a class="self-link" href="#metadata-storage"></a></h4>
       <h5 class="heading settled" data-level="3.1.3.1" id="meta-file"><span class="secno">3.1.3.1. </span><span class="content">.meta file</span><a class="self-link" href="#meta-file"></a></h5>
       <h5 class="heading settled" data-level="3.1.3.2" id="describedby"><span class="secno">3.1.3.2. </span><span class="content">describedby / seeAlso metadata</span><a class="self-link" href="#describedby"></a></h5>
-       Provide seeAlso metadata in rdf 
+       Provide seeAlso metadata in rdf
+OpenResearch: Collaborative Management of Scholarly Communication Metadata 
       <h5 class="heading settled" data-level="3.1.3.3" id="link-seeAlso"><span class="secno">3.1.3.3. </span><span class="content">Link header</span><a class="self-link" href="#link-seeAlso"></a></h5>
        Provide seeAlso / describedby metadata in the LINK header when retrieving the file. 
       <h3 class="heading settled" data-level="3.2" id="subscription-service"><span class="secno">3.2. </span><span class="content">Subscription service</span><a class="self-link" href="#subscription-service"></a></h3>
@@ -2007,6 +2067,27 @@ External services MAY be able to interpret these shapes, and retrieve resources 
 External services MAY be able to parse this data, and retrieve the relevant resources this way. 
       <h4 class="heading settled" data-level="3.5.3" id="rdf-collection"><span class="secno">3.5.3. </span><span class="content">RDF Collection</span><a class="self-link" href="#rdf-collection"></a></h4>
        As a default fallback, an RDF Collection SHOULD be created in the user vCard, that contains references to all publications and their metadata. 
+      <h3 class="heading settled" data-level="3.6" id="services"><span class="secno">3.6. </span><span class="content">External services</span><a class="self-link" href="#services"></a></h3>
+       The Mellon framework requires services to be abailable that can be used by actors in the network to achieve several goals, such as getting verification for publications, finding relevant publications for a subject on the network, querying over the network, getting peer reviews for a publication, ... 
+All these services SHOULD not be specific for the Mellon framework alone, and could help connect different networks together, allowing researchers to query for publications and metadata over different networks of scholarly communication frameworks. 
+      <h4 class="heading settled" data-level="3.6.1" id="verification-services"><span class="secno">3.6.1. </span><span class="content">Data verification services</span><a class="self-link" href="#verification-services"></a></h4>
+      <h4 class="heading settled" data-level="3.6.2" id="verification-services①"><span class="secno">3.6.2. </span><span class="content">Peer review services</span><a class="self-link" href="#verification-services①"></a></h4>
+      <h4 class="heading settled" data-level="3.6.3" id="verification-services②"><span class="secno">3.6.3. </span><span class="content">Indexing services</span><a class="self-link" href="#verification-services②"></a></h4>
+      <h4 class="heading settled" data-level="3.6.4" id="verification-services③"><span class="secno">3.6.4. </span><span class="content">Analytics services</span><a class="self-link" href="#verification-services③"></a></h4>
+      <h4 class="heading settled" data-level="3.6.5" id="verification-services④"><span class="secno">3.6.5. </span><span class="content">Activitypub services</span><a class="self-link" href="#verification-services④"></a></h4>
+      <h3 class="heading settled" data-level="3.7" id="verification"><span class="secno">3.7. </span><span class="content">Verification mechanics</span><a class="self-link" href="#verification"></a></h3>
+       The Mellon framework requires a way for actors to verify information in the network by (one or more) trusted thrid parties. 
+      <h4 class="heading settled" data-level="3.7.1" id="profile-verification"><span class="secno">3.7.1. </span><span class="content">Profile data verification</span><a class="self-link" href="#profile-verification"></a></h4>
+       A method SHOULD be in place for actors to have their profile information verified by external entities.
+This could mean for example past workplaces confirming that the actor has worked there (via an automatic API for example), or with confirmation of former colleagues. 
+      <h4 class="heading settled" data-level="3.7.2" id="publication-verification"><span class="secno">3.7.2. </span><span class="content">Publication data verification</span><a class="self-link" href="#publication-verification"></a></h4>
+       A publication MUST be verified by a trusted third party, in order to prove its legitimacy. This verification MUST be timestamped, in order for the actor publishing the research to prove that they were the first to publish this research.
+The third party MAY verify this publication to publications already present in its network, and MAY provide the actor with proof that they are the first to publish that research in the known state of the art. 
+      <h4 class="heading settled" data-level="3.7.3" id="peer-review-verification"><span class="secno">3.7.3. </span><span class="content">Peer review verification</span><a class="self-link" href="#peer-review-verification"></a></h4>
+       A mechanism is required to allow publications to be peer reviewed by external parties.
+External parties should be able to retrieve a specific version of the publication, on which a timestamped verification MUST be provided of the peer-review for that specific version of the publication. 
+      <h3 class="heading settled" data-level="3.8" id="ontology"><span class="secno">3.8. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h3>
+       Thought should be given to what ontologies are used to represent semantic information in the Mellon framework. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholary communication frameworks outside of its network. 
       <h2 class="heading settled" data-level="4" id="definitions"><span class="secno">4. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
      </yourcommentid>
     </exU0003Ahascomment>
