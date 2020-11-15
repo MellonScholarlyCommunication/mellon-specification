@@ -118,13 +118,16 @@ This provides Bob with a list of all actors in the network following him.
 In this list.
 
 #### View actors subscribed to publication
+Bob wishes to view actors subscribed to his last publication.
+Bob navigates to the publication view of his last publication, 
+and clicks on the following tab.
+Now Bob has a list of all actors to his last publication.
 
 
 ### View entities an actor is subscribed to
-
-#### View actors an actor is subscribed to (contacts)
-
-#### View publications an actor is subscribed to
+Bob wishes to see all actors he is subscribed to.
+For this, Bob navigates to his subscription view, where a list of all actors that Bob is subsribed to is available.
+Separate tabs are made available for the different kinds of subscribable entities in the network.
 
 ### Subscribe to a new entity
 Bob wishes to subscribe to a new entity in the network.
@@ -163,27 +166,25 @@ As the resource is published, READ permissions for the research are set to publi
 Bob decides to give public permissions to interact with the resource [[#permissions]].
 
 
-### View actor publications ### {#view-publications}
-
-### Edit actor publications ### {#edit-publications}
-
 ### Publication versioning ### {#publication-versioning}
 It may be of use to incorporate a versioning system for (published?) research.
 This allows the most up to date versions of research to be available for all parties, as well as for interactions such as comments on different versions of the publication to still make sense when the research has been update.
 
 #### View publication versions #### {#view-versions}
-
-#### Access publication versions #### {#get-versions}
+Bob wishes to see the available version for a publication.
+In the publication view, an option is availble to select the different versions of the publication.
+Bob selects the desired version, and the publication view is updated to show the data of the selected publication version.
 
 #### Link publication resources with a publication version #### {#link-versions}
-Bob wishes to view the version of the publication that is linked to a certain peer review resource linked with the publication. ... 
+Bob is going through the reviews of a publication.
+Bob notices a review was done on an older version of the publication. By following the reference to the outdated version of the publication, Bob is redirected to the publication view for the older version of the publication.
 
 
-### Support research objects ### {#research-objects}
+### Research objects ### {#research-objects}
 Bob wishes to not only publish the final research paper of a research project on Mellon, but wants to also publish the data, code, and other resources used during the research project to be used by other researchers and for later verification of the research. 
 For this, Bob creates an [RO-crate](https://www.researchobject.org/ro-crate/), and uploads this to the Mellon Web interface.
 
-### Support in-progress research ### {#in-progress-research}
+### In-progress research ### {#in-progress-research}
 
 #### Uploading in-progress research #### {#upload-in-progress-research}
 Bob uploads in-progress research to his solid pod.
@@ -201,10 +202,14 @@ For use cases involving permissions, see [[#publication-permissions]]
 
 
 ## Interactions ## {#interactions}
+Scholarly communication requires the ability for different actors in the network to interact with each other and with the done research and publications.
 
 ### Actor interactions ### {#actor-interactions}
 
 #### Direct message #### {#interaction-chat}
+Bob has discovered relevant publications by a Alice, and wants to discuss his current research with Alice.
+For this, Bob navigates to Alice's profile, and chooses one of the contact points of Alice listed in her profile.
+Bob decides to send a direct message to Alice's pod, instead of using external messaging tools.
 
 #### Public message (post) #### {#interaction-post}
 
@@ -213,6 +218,10 @@ For use cases involving permissions, see [[#publication-permissions]]
 #### Comment #### {#interaction-comment}
 
 #### Propose edit #### {#interaction-propose-edit}
+Bob is evaluating the research of his colleague Alice, that is still in-progress.
+In this process, he finds some things that should be adapted, and proposes some edits on the research paper. These edits are sent to Alice's pod using the notification mechanism, and are added as metadata to the in-progress research.
+A second colleague with full access to the in progress research sees the proposed edits, and decides to edit the paper to incorporate the proposed edits.
+
 This action depends on the type of publication, or can be outsourced to external tooling.
 
 
@@ -281,10 +290,29 @@ On verification that the publication is genuine, the service sends a notificatio
 
 Requirements {#requirements}
 ================================================================================
+In this section the requirements are listed based on the use cases proposed in [[#usecases]].
 
 ## Storage service ## {#storage-service}
+The Mellon framework aims to provide researches with the ability to publish their own research, and keep control of the data in the process.
+For this, pod environments such as Solid, that can be hosted by research groups themselves or on third party services, can be used.
 
-### Publication Storage ### {#publication-storage}
+### Publication storage ### {#publication-storage}
+Publications can be stored as documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in [[#data-discovery]].
+
+
+#### Publication format #### {#publication-format}
+The format of a publication has consequences on the interactions that are possible with the publication.
+Interactions possible with html files, will not be possible for research stored in a PDF or LATEX format.
+Because of this, EITHER research MUST be published in a set format, or services SHOULD advertise the formats they accept [[#services]].
+
+#### In-progress research storage #### {#publication-storage}
+Supporting in-progress research may provide an easy platform for research groups to evaluate research internally before publishing the research and making it public.
+In-progress research does not require additional functionality from the framework, but requires a different template to be available on upload, where permissions are automatically set on private for all resources, except for actors or groups of actors that are selected by the uploades (such as the research group of the uploader).
+
+#### Research Object Crate storage #### {#publication-storage}
+Research Object Crates or [RO-crates](https://www.researchobject.org/ro-crate/) are a format to store research projects, that allow different aspects of the research (paper, code, dataset, configuration files, ... ) to be bundeled.
+The Mellon framework would certainly benefit in requiring applications built on the Mellon Framework to be able to process RO-creates.
+This also allows datasets used for publications to be made public (given that permissions are set to public), and be reused by other researchers in the field.
 
 ### Interaction Storage ### {#interaction-storage}
 For Interactions making use of notifications, the notifications MUST follow a speciified format to be processed, and for the relevant data to be extracted from the notiication. 
@@ -300,97 +328,145 @@ In this case, some sort of protection SHOULD implemented, that prevents actors f
 
 
 ### Metadata Storage ### {#metadata-storage}
+There are multiple solutions to store metadata for a non-rdf resource on a Linked Data Platform. However, applications built over linked data should not only implement one method, but should fall back to other solutions if the metadata file cannot be retrieved using one approach. This enables the applications to interact with resources that are stored using another approach to storing metadata.
 
 #### .meta file #### {#meta-file}
+A straightforward way to store file metadata on a Linked Data Platform is making use of a .meta file. As the .meta is a naming convention, for every file the .meta file can be automatically retrieved.
+However, lately this seems to have been getting less and less traction in the comunity?
 
 #### describedby / seeAlso metadata #### {#describedby}
-Provide seeAlso metadata in rdf
-OpenResearch: Collaborative Management of Scholarly Communication Metadata
+Metadata can be provided in a more semantic way using predicates as ```rdf:seeAlso```.
+This metadata can be stored in the location where the relevant resource is stored. 
+A downside to this however is that if a resource is directly retrieved, this information will not be retrieved, and the metadata reference will be lost to the application retrieving the resource.
 
 #### Link header #### {#link-seeAlso}
-Provide seeAlso / describedby metadata in the LINK header when retrieving the file.
+A third solution is to provide [Link Relations](https://www.w3.org/TR/ldp/#link-relation-describedby)
+This solution returns the link to the metadata file in the response header of the HTTP request.
+Using this solution in combination with the previous solution of providing the link to the metadata file in the RDF data where the resource is stored, provides the most complete approach to storing metadata for a resource.
 
 
 
-## Subscription service ## {#subscription-service}
 
-### Activitypub service ### {#activitypub-service}
-
-
-## Notifications ## {#notifications}
-
-### Notification-shape matching ### {#notification-shape-matching}
-
-### Automatic notification retrieval ### {#notification-retrieve}
-
-### Automatic notification processing ### {#notification-processing-agent}
-
-
-
-## Permissions ## {#req-permissions}
-
-### Group permissions ### {#req-group-permissions}
-Support is required for handling permission groups.
-An actor SHOULD be able to create, edit, and delete permission groups.
-Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group.
-
-### Activitypub permissions ### {#activitypub-permissions}
-The activitypub service requires permission checking functionality, according to the [specification](https://www.w3.org/TR/activitypub/).
-
-
-
-## API ## {#interace}
+### Data discovery ### {#data-discovery}
 The Mellon framework requires an API for external services to be able to retrieve the publications of an actor, and its metadata, to index these publications and provide services over these publications. This implies that there should be a semantic way for external applications to discover the locations of publications and their metadata on a pod, and retrieve this data, if the application has the correct permissions.
 
-### Tree shapes ### {#tree-shapes}
+#### Tree shapes #### {#tree-shapes}
 OPTIONAL: Tree shapes can be used to indicate resource locations in a Solid pod environment.
 External services MAY be able to interpret these shapes, and retrieve resources from the relevant locations.
 
-### Tree Collection ### {#tree-collection}
+#### Tree Collection #### {#tree-collection}
 OPTIONAL: A Tree Collection can be specified for research papers, that MAY contain the shape of stored publications or RO-crates.
 External services MAY be able to parse this data, and retrieve the relevant resources this way.
 
-### RDF Collection ### {#rdf-collection}
+#### RDF Collection #### {#rdf-collection}
 As a default fallback, an RDF Collection SHOULD be created in the user vCard, that contains references to all publications and their metadata.
 
 
 
-## External services ## {#services}
-The Mellon framework requires services to be abailable that can be used by actors in the network to achieve several goals, such as getting verification for publications, finding relevant publications for a subject on the network, querying over the network, getting peer reviews for a publication, ... 
-All these services SHOULD not be specific for the Mellon framework alone, and could help connect different networks together, allowing researchers to query for publications and metadata over different networks of scholarly communication frameworks.
-
-### Data verification services ### {#verification-services}
-
-### Peer review services ### {#verification-services}
-
-### Indexing services ### {#verification-services}
-
-### Analytics services ### {#verification-services}
-
-### Activitypub services ### {#verification-services}
-
-
-
-## Verification mechanics ## {#verification}
-The Mellon framework requires a way for actors to verify information in the network by (one or more) trusted thrid parties.
-
-### Profile data verification ### {#profile-verification}
-A method SHOULD be in place for actors to have their profile information verified by external entities.
-This could mean for example past workplaces confirming that the actor has worked there (via an automatic API for example), or with confirmation of former colleagues.
-
-### Publication data verification ### {#publication-verification}
-A publication MUST be verified by a trusted third party, in order to prove its legitimacy. This verification MUST be timestamped, in order for the actor publishing the research to prove that they were the first to publish this research.
-The third party MAY verify this publication to publications already present in its network, and MAY provide the actor with proof that they are the first to publish that research in the known state of the art.
-
-### Peer review verification ### {#peer-review-verification}
-A mechanism is required to allow publications to be peer reviewed by external parties.
-External parties should be able to retrieve a specific version of the publication, on which a timestamped verification MUST be provided of the peer-review for that specific version of the publication.
-
-
-## Ontologies ## {#ontology}
+### Ontologies ### {#ontology}
 Thought should be given to what ontologies are used to represent semantic information in the Mellon framework. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholary communication frameworks outside of its network.
 
 
+### Publication versioning ### {#rq-publication-versioning}
+Versioning is a concept that is very relevant for scholarly communication, as publications can be iterated upon (incorporating reviews, ...).
+In order to support this behavior, a versioning system must be in place that allows for actors in the network to retrieve different versions of the same research publication.
+
+
+#### Publication interactions versioning #### {#rq-publication-interaction-versioning}
+Interactions with a publication SHOULD link the relevant version of the publication.
+This allows relevant interactions to be filtered for a specific version of the publication.
+Certainly in the case of edits and reviews, as these interactions may not make sense in the context of a leter version of the publication.
+
+
+### Subscription service ### {#subscription-service}
+
+#### Activitypub service #### {#activitypub-service}
+
+
+### Notifications ### {#notifications}
+As the Mellon framework makes use of Linked Data Platforms data pods to store data of the different actions, a method is required for these different pods to interact with each other.
+This functionality is achieved by making use of 
+
+#### Notification-shape matching #### {#notification-shape-matching}
+
+#### Automatic notification retrieval #### {#notification-retrieve}
+
+#### Automatic notification processing #### {#notification-processing-agent}
+
+### Activitypub ### {#activitypub}
+[Activitypub](https://www.w3.org/TR/activitypub/) is a social networking protocol based upon the [ActivityStreams](https://www.w3.org/TR/activitystreams-core/) 2.0 data format.
+It provides an API for creating, updating and deleting content, as well as a federated server to server API for delivering notifications and content
+
+
+
+### Permissions ### {#req-permissions}
+Actors in the network MUST be able to set and edit permissions for all actors in a network.
+As the Mellon framework makes use of Linked Data Platforms, permissions are handled using ACL files.
+
+
+#### READ permissions #### {#rq-publication-read-permissions}
+For all files an actor has control permissions for, the actor MUST be able to edit the READ permissions for all other actors in the network.
+This permission is required for other actors in the network to read the files in question.
+
+#### WRITE permissions #### {#rq-publication-write-permissions}
+For all files an actor has control permissions for, the actor MUST be able to edit the WRITE permissions for all other actors in the network.
+This permission is required for other actors in the network to write to the files in question.
+
+#### INTERACTION permissions #### {#rq-publication-interaction-permissions}
+For all resources where interactions are possible, the actor MUST be able to edit the INTERACTION permissions for all other actors in the network.
+INTERACTION permissions are permissions that enable certain interactions with a resource such as commenting on a resource, adding metadata, ...
+
+TODO -> is this viable? can for example not stop someone from liking a resource and store the like in their own pod
+
+#### CONTROL permissions #### {#rq-publication-control-permissions}
+For all files an actor has control permissions for, the actor MUST be able to edit the CONTROL permissions for all other actors in the network.
+This permission is required for other actors in the network edit permissions for the files in question.
+
+
+#### Group permissions #### {#req-group-permissions}
+Setting permissions for individual actors is often undesirable.
+Support is required for setting and editing permissions for groups of actors.
+Applications built on the Mellon framework SHOULD enable actors to to create, edit, and delete permissions for groups of actors.
+Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group.
+
+#### Activitypub permissions #### {#activitypub-permissions}
+The activitypub service requires permission checking functionality, according to the [specification](https://www.w3.org/TR/activitypub/).
+These considerations should be taken into account when designing the permission systems for the Mellon framework.
+
+
+
+
+### External services ### {#services}
+The Mellon framework requires services to be abailable that can be used by actors in the network to achieve several goals, such as getting verification for publications, finding relevant publications for a subject on the network, querying over the network, getting peer reviews for a publication, ... 
+All these services SHOULD not be specific for the Mellon framework alone, and could help connect different networks together, allowing researchers to query for publications and metadata over different networks of scholarly communication frameworks.
+
+#### Data verification services #### {#verification-services}
+
+
+#### Peer review services #### {#verification-services}
+
+#### Indexing services #### {#verification-services}
+
+#### Analytics services #### {#verification-services}
+
+#### Activitypub services #### {#verification-services}
+
+
+
+### Verification mechanics ### {#verification}
+The Mellon framework requires a way for actors to verify information in the network by (one or more) trusted thrid parties.
+
+#### Profile data verification #### {#profile-verification}
+A method SHOULD be in place for actors to have their profile information verified by external entities.
+This could mean for example past workplaces confirming that the actor has worked there (via an automatic API for example), or with confirmation of former colleagues.
+
+#### Publication data verification #### {#publication-verification}
+A publication MUST be verified by a trusted third party, in order to prove its legitimacy. This verification MUST be timestamped, in order for the actor publishing the research to prove that they were the first to publish this research.
+The third party MAY verify this publication to publications already present in its network, and MAY provide the actor with proof that they are the first to publish that research in the known state of the art.
+
+#### Peer review verification #### {#peer-review-verification}
+A mechanism is required to allow publications to be peer reviewed by external parties.
+External parties should be able to retrieve a specific version of the publication, on which a timestamped verification MUST be provided of the peer-review for that specific version of the publication.
 
 
 Definitions {#definitions}

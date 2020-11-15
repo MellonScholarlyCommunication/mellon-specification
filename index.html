@@ -1322,7 +1322,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 89ebb6ab, updated Fri Oct 9 15:32:07 2020 -0700" name="generator">
-  <meta content="f6199a5f531b8aae2ffa3398ff8a4a9fa1d3dbcb" name="document-revision">
+  <meta content="c82f93cacfe6f72754e4b9d87789bd1c684d9efe" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -1790,12 +1790,10 @@ dfn > a.self-link::before      { content: "#"; }
        <a href="#publications"><span class="secno">2.4</span> <span class="content">Publications</span></a>
        <ol class="toc">
         <li><a href="#add-publications"><span class="secno">2.4.1</span> <span class="content">Add new publication</span></a>
-        <li><a href="#view-publications"><span class="secno">2.4.2</span> <span class="content">View actor publications</span></a>
-        <li><a href="#edit-publications"><span class="secno">2.4.3</span> <span class="content">Edit actor publications</span></a>
-        <li><a href="#publication-versioning"><span class="secno">2.4.4</span> <span class="content">Publication versioning</span></a>
-        <li><a href="#research-objects"><span class="secno">2.4.5</span> <span class="content">Support research objects</span></a>
-        <li><a href="#in-progress-research"><span class="secno">2.4.6</span> <span class="content">Support in-progress research</span></a>
-        <li><a href="#publications-permissions-stump"><span class="secno">2.4.7</span> <span class="content">Publication permissions</span></a>
+        <li><a href="#publication-versioning"><span class="secno">2.4.2</span> <span class="content">Publication versioning</span></a>
+        <li><a href="#research-objects"><span class="secno">2.4.3</span> <span class="content">Research objects</span></a>
+        <li><a href="#in-progress-research"><span class="secno">2.4.4</span> <span class="content">In-progress research</span></a>
+        <li><a href="#publications-permissions-stump"><span class="secno">2.4.5</span> <span class="content">Publication permissions</span></a>
        </ol>
       <li>
        <a href="#interactions"><span class="secno">2.5</span> <span class="content">Interactions</span></a>
@@ -1829,52 +1827,19 @@ dfn > a.self-link::before      { content: "#"; }
       <li>
        <a href="#storage-service"><span class="secno">3.1</span> <span class="content">Storage service</span></a>
        <ol class="toc">
-        <li><a href="#publication-storage"><span class="secno">3.1.1</span> <span class="content">Publication Storage</span></a>
+        <li><a href="#publication-storage"><span class="secno">3.1.1</span> <span class="content">Publication storage</span></a>
         <li><a href="#interaction-storage"><span class="secno">3.1.2</span> <span class="content">Interaction Storage</span></a>
         <li><a href="#metadata-storage"><span class="secno">3.1.3</span> <span class="content">Metadata Storage</span></a>
+        <li><a href="#data-discovery"><span class="secno">3.1.4</span> <span class="content">Data discovery</span></a>
+        <li><a href="#ontology"><span class="secno">3.1.5</span> <span class="content">Ontologies</span></a>
+        <li><a href="#rq-publication-versioning"><span class="secno">3.1.6</span> <span class="content">Publication versioning</span></a>
+        <li><a href="#subscription-service"><span class="secno">3.1.7</span> <span class="content">Subscription service</span></a>
+        <li><a href="#notifications"><span class="secno">3.1.8</span> <span class="content">Notifications</span></a>
+        <li><a href="#activitypub"><span class="secno">3.1.9</span> <span class="content">Activitypub</span></a>
+        <li><a href="#req-permissions"><span class="secno">3.1.10</span> <span class="content">Permissions</span></a>
+        <li><a href="#services"><span class="secno">3.1.11</span> <span class="content">External services</span></a>
+        <li><a href="#verification"><span class="secno">3.1.12</span> <span class="content">Verification mechanics</span></a>
        </ol>
-      <li>
-       <a href="#subscription-service"><span class="secno">3.2</span> <span class="content">Subscription service</span></a>
-       <ol class="toc">
-        <li><a href="#activitypub-service"><span class="secno">3.2.1</span> <span class="content">Activitypub service</span></a>
-       </ol>
-      <li>
-       <a href="#notifications"><span class="secno">3.3</span> <span class="content">Notifications</span></a>
-       <ol class="toc">
-        <li><a href="#notification-shape-matching"><span class="secno">3.3.1</span> <span class="content">Notification-shape matching</span></a>
-        <li><a href="#notification-retrieve"><span class="secno">3.3.2</span> <span class="content">Automatic notification retrieval</span></a>
-        <li><a href="#notification-processing-agent"><span class="secno">3.3.3</span> <span class="content">Automatic notification processing</span></a>
-       </ol>
-      <li>
-       <a href="#req-permissions"><span class="secno">3.4</span> <span class="content">Permissions</span></a>
-       <ol class="toc">
-        <li><a href="#req-group-permissions"><span class="secno">3.4.1</span> <span class="content">Group permissions</span></a>
-        <li><a href="#activitypub-permissions"><span class="secno">3.4.2</span> <span class="content">Activitypub permissions</span></a>
-       </ol>
-      <li>
-       <a href="#interace"><span class="secno">3.5</span> <span class="content">API</span></a>
-       <ol class="toc">
-        <li><a href="#tree-shapes"><span class="secno">3.5.1</span> <span class="content">Tree shapes</span></a>
-        <li><a href="#tree-collection"><span class="secno">3.5.2</span> <span class="content">Tree Collection</span></a>
-        <li><a href="#rdf-collection"><span class="secno">3.5.3</span> <span class="content">RDF Collection</span></a>
-       </ol>
-      <li>
-       <a href="#services"><span class="secno">3.6</span> <span class="content">External services</span></a>
-       <ol class="toc">
-        <li><a href="#verification-services"><span class="secno">3.6.1</span> <span class="content">Data verification services</span></a>
-        <li><a href="#verification-services①"><span class="secno">3.6.2</span> <span class="content">Peer review services</span></a>
-        <li><a href="#verification-services②"><span class="secno">3.6.3</span> <span class="content">Indexing services</span></a>
-        <li><a href="#verification-services③"><span class="secno">3.6.4</span> <span class="content">Analytics services</span></a>
-        <li><a href="#verification-services④"><span class="secno">3.6.5</span> <span class="content">Activitypub services</span></a>
-       </ol>
-      <li>
-       <a href="#verification"><span class="secno">3.7</span> <span class="content">Verification mechanics</span></a>
-       <ol class="toc">
-        <li><a href="#profile-verification"><span class="secno">3.7.1</span> <span class="content">Profile data verification</span></a>
-        <li><a href="#publication-verification"><span class="secno">3.7.2</span> <span class="content">Publication data verification</span></a>
-        <li><a href="#peer-review-verification"><span class="secno">3.7.3</span> <span class="content">Peer review verification</span></a>
-       </ol>
-      <li><a href="#ontology"><span class="secno">3.8</span> <span class="content">Ontologies</span></a>
      </ol>
     <li><a href="#definitions"><span class="secno">4</span> <span class="content">Definitions</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
@@ -1930,9 +1895,14 @@ For this, Bob goes to his profile viewer, and goes to the followers view.
 This provides Bob with a list of all actors in the network following him.
 In this list. 
    <h5 class="heading settled" data-level="2.3.1.2" id="view-actors-subscribed-to-publication"><span class="secno">2.3.1.2. </span><span class="content">View actors subscribed to publication</span><a class="self-link" href="#view-actors-subscribed-to-publication"></a></h5>
+    Bob wishes to view actors subscribed to his last publication.
+Bob navigates to the publication view of his last publication, 
+and clicks on the following tab.
+Now Bob has a list of all actors to his last publication. 
    <h4 class="heading settled" data-level="2.3.2" id="view-entities-an-actor-is-subscribed-to"><span class="secno">2.3.2. </span><span class="content">View entities an actor is subscribed to</span><a class="self-link" href="#view-entities-an-actor-is-subscribed-to"></a></h4>
-   <h5 class="heading settled" data-level="2.3.2.1" id="view-actors-an-actor-is-subscribed-to-contacts"><span class="secno">2.3.2.1. </span><span class="content">View actors an actor is subscribed to (contacts)</span><a class="self-link" href="#view-actors-an-actor-is-subscribed-to-contacts"></a></h5>
-   <h5 class="heading settled" data-level="2.3.2.2" id="view-publications-an-actor-is-subscribed-to"><span class="secno">2.3.2.2. </span><span class="content">View publications an actor is subscribed to</span><a class="self-link" href="#view-publications-an-actor-is-subscribed-to"></a></h5>
+    Bob wishes to see all actors he is subscribed to.
+For this, Bob navigates to his subscription view, where a list of all actors that Bob is subsribed to is available.
+Separate tabs are made available for the different kinds of subscribable entities in the network. 
    <h4 class="heading settled" data-level="2.3.3" id="subscribe-to-a-new-entity"><span class="secno">2.3.3. </span><span class="content">Subscribe to a new entity</span><a class="self-link" href="#subscribe-to-a-new-entity"></a></h4>
     Bob wishes to subscribe to a new entity in the network. 
    <h5 class="heading settled" data-level="2.3.3.1" id="subscribe-to-a-new-actor--subscribe-to-actor"><span class="secno">2.3.3.1. </span><span class="content">Subscribe to a new actor #### {#subscribe to actor}</span><a class="self-link" href="#subscribe-to-a-new-actor--subscribe-to-actor"></a></h5>
@@ -1961,36 +1931,44 @@ As the research was never uploaded before, Bob now uploads the resource as a pub
 On upload, the research is sent to a third party for verification <a href="#third-party-certification">§ 2.8.2 Certify publications</a>.
 As the resource is published, READ permissions for the research are set to public.
 Bob decides to give public permissions to interact with the resource <a href="#permissions">§ 2.6 Permissions</a>. 
-   <h4 class="heading settled" data-level="2.4.2" id="view-publications"><span class="secno">2.4.2. </span><span class="content">View actor publications</span><a class="self-link" href="#view-publications"></a></h4>
-   <h4 class="heading settled" data-level="2.4.3" id="edit-publications"><span class="secno">2.4.3. </span><span class="content">Edit actor publications</span><a class="self-link" href="#edit-publications"></a></h4>
-   <h4 class="heading settled" data-level="2.4.4" id="publication-versioning"><span class="secno">2.4.4. </span><span class="content">Publication versioning</span><a class="self-link" href="#publication-versioning"></a></h4>
+   <h4 class="heading settled" data-level="2.4.2" id="publication-versioning"><span class="secno">2.4.2. </span><span class="content">Publication versioning</span><a class="self-link" href="#publication-versioning"></a></h4>
     It may be of use to incorporate a versioning system for (published?) research.
 This allows the most up to date versions of research to be available for all parties, as well as for interactions such as comments on different versions of the publication to still make sense when the research has been update. 
-   <h5 class="heading settled" data-level="2.4.4.1" id="view-versions"><span class="secno">2.4.4.1. </span><span class="content">View publication versions</span><a class="self-link" href="#view-versions"></a></h5>
-   <h5 class="heading settled" data-level="2.4.4.2" id="get-versions"><span class="secno">2.4.4.2. </span><span class="content">Access publication versions</span><a class="self-link" href="#get-versions"></a></h5>
-   <h5 class="heading settled" data-level="2.4.4.3" id="link-versions"><span class="secno">2.4.4.3. </span><span class="content">Link publication resources with a publication version</span><a class="self-link" href="#link-versions"></a></h5>
-    Bob wishes to view the version of the publication that is linked to a certain peer review resource linked with the publication. ... 
-   <h4 class="heading settled" data-level="2.4.5" id="research-objects"><span class="secno">2.4.5. </span><span class="content">Support research objects</span><a class="self-link" href="#research-objects"></a></h4>
+   <h5 class="heading settled" data-level="2.4.2.1" id="view-versions"><span class="secno">2.4.2.1. </span><span class="content">View publication versions</span><a class="self-link" href="#view-versions"></a></h5>
+    Bob wishes to see the available version for a publication.
+In the publication view, an option is availble to select the different versions of the publication.
+Bob selects the desired version, and the publication view is updated to show the data of the selected publication version. 
+   <h5 class="heading settled" data-level="2.4.2.2" id="link-versions"><span class="secno">2.4.2.2. </span><span class="content">Link publication resources with a publication version</span><a class="self-link" href="#link-versions"></a></h5>
+    Bob is going through the reviews of a publication.
+Bob notices a review was done on an older version of the publication. By following the reference to the outdated version of the publication, Bob is redirected to the publication view for the older version of the publication. 
+   <h4 class="heading settled" data-level="2.4.3" id="research-objects"><span class="secno">2.4.3. </span><span class="content">Research objects</span><a class="self-link" href="#research-objects"></a></h4>
     Bob wishes to not only publish the final research paper of a research project on Mellon, but wants to also publish the data, code, and other resources used during the research project to be used by other researchers and for later verification of the research. 
 For this, Bob creates an <a href="https://www.researchobject.org/ro-crate/">RO-crate</a>, and uploads this to the Mellon Web interface. 
-   <h4 class="heading settled" data-level="2.4.6" id="in-progress-research"><span class="secno">2.4.6. </span><span class="content">Support in-progress research</span><a class="self-link" href="#in-progress-research"></a></h4>
-   <h5 class="heading settled" data-level="2.4.6.1" id="upload-in-progress-research"><span class="secno">2.4.6.1. </span><span class="content">Uploading in-progress research</span><a class="self-link" href="#upload-in-progress-research"></a></h5>
+   <h4 class="heading settled" data-level="2.4.4" id="in-progress-research"><span class="secno">2.4.4. </span><span class="content">In-progress research</span><a class="self-link" href="#in-progress-research"></a></h4>
+   <h5 class="heading settled" data-level="2.4.4.1" id="upload-in-progress-research"><span class="secno">2.4.4.1. </span><span class="content">Uploading in-progress research</span><a class="self-link" href="#upload-in-progress-research"></a></h5>
     Bob uploads in-progress research to his solid pod.
 As the research is still in progress, Bob flags the research project as in-progress.
 On upload, Bob decides his research group can have read access to the resources, as well as the possibility to comment on the resource or propose edits. He <a href="#permissions">sets these permissions</a> in the upload screen <a href="#permissions">§ 2.6 Permissions</a>. 
-   <h5 class="heading settled" data-level="2.4.6.2" id="publish-in-progress-research"><span class="secno">2.4.6.2. </span><span class="content">Publish in-progress research</span><a class="self-link" href="#publish-in-progress-research"></a></h5>
+   <h5 class="heading settled" data-level="2.4.4.2" id="publish-in-progress-research"><span class="secno">2.4.4.2. </span><span class="content">Publish in-progress research</span><a class="self-link" href="#publish-in-progress-research"></a></h5>
     After completing the research, and finishing the paper, Bob decides to publish the research.
 As the research was already uploaded as in-progress, Bob now has the option to publish the research. This flags the research as published, and sends the research to a 3d party to be verified <a href="#third-party-certification">§ 2.8.2 Certify publications</a>. 
-   <h4 class="heading settled" data-level="2.4.7" id="publications-permissions-stump"><span class="secno">2.4.7. </span><span class="content">Publication permissions</span><a class="self-link" href="#publications-permissions-stump"></a></h4>
+   <h4 class="heading settled" data-level="2.4.5" id="publications-permissions-stump"><span class="secno">2.4.5. </span><span class="content">Publication permissions</span><a class="self-link" href="#publications-permissions-stump"></a></h4>
     For use cases involving permissions, see <a href="#publication-permissions">§ 2.6.2 Publication follower permissions</a> 
    <h3 class="heading settled" data-level="2.5" id="interactions"><span class="secno">2.5. </span><span class="content">Interactions</span><a class="self-link" href="#interactions"></a></h3>
+    Scholarly communication requires the ability for different actors in the network to interact with each other and with the done research and publications. 
    <h4 class="heading settled" data-level="2.5.1" id="actor-interactions"><span class="secno">2.5.1. </span><span class="content">Actor interactions</span><a class="self-link" href="#actor-interactions"></a></h4>
    <h5 class="heading settled" data-level="2.5.1.1" id="interaction-chat"><span class="secno">2.5.1.1. </span><span class="content">Direct message</span><a class="self-link" href="#interaction-chat"></a></h5>
+    Bob has discovered relevant publications by a Alice, and wants to discuss his current research with Alice.
+For this, Bob navigates to Alice’s profile, and chooses one of the contact points of Alice listed in her profile.
+Bob decides to send a direct message to Alice’s pod, instead of using external messaging tools. 
    <h5 class="heading settled" data-level="2.5.1.2" id="interaction-post"><span class="secno">2.5.1.2. </span><span class="content">Public message (post)</span><a class="self-link" href="#interaction-post"></a></h5>
    <h4 class="heading settled" data-level="2.5.2" id="publication-interactions"><span class="secno">2.5.2. </span><span class="content">Publication interactions</span><a class="self-link" href="#publication-interactions"></a></h4>
    <h5 class="heading settled" data-level="2.5.2.1" id="interaction-comment"><span class="secno">2.5.2.1. </span><span class="content">Comment</span><a class="self-link" href="#interaction-comment"></a></h5>
    <h5 class="heading settled" data-level="2.5.2.2" id="interaction-propose-edit"><span class="secno">2.5.2.2. </span><span class="content">Propose edit</span><a class="self-link" href="#interaction-propose-edit"></a></h5>
-    This action depends on the type of publication, or can be outsourced to external tooling. 
+    Bob is evaluating the research of his colleague Alice, that is still in-progress.
+In this process, he finds some things that should be adapted, and proposes some edits on the research paper. These edits are sent to Alice’s pod using the notification mechanism, and are added as metadata to the in-progress research.
+A second colleague with full access to the in progress research sees the proposed edits, and decides to edit the paper to incorporate the proposed edits. 
+   <p>This action depends on the type of publication, or can be outsourced to external tooling.</p>
    <h3 class="heading settled" data-level="2.6" id="permissions"><span class="secno">2.6. </span><span class="content">Permissions</span><a class="self-link" href="#permissions"></a></h3>
    <h4 class="heading settled" data-level="2.6.1" id="actor-permissions"><span class="secno">2.6.1. </span><span class="content">Actor follower permissions</span><a class="self-link" href="#actor-permissions"></a></h4>
    <h5 class="heading settled" data-level="2.6.1.1" id="follower-read-permissions"><span class="secno">2.6.1.1. </span><span class="content">READ permissions</span><a class="self-link" href="#follower-read-permissions"></a></h5>
@@ -2022,8 +2000,23 @@ For this, Bob sends the publication to a third party verification service.
 This service MUST return a timestamped proof that the publication has been proposed for certification.
 On verification that the publication is genuine, the service sends a notification to the pod inbox with a ceritification that the research has been verified by the third party. 
    <h2 class="heading settled" data-level="3" id="requirements"><span class="secno">3. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
+    In this section the requirements are listed based on the use cases proposed in <a href="#usecases">§ 2 Use Cases</a>. 
    <h3 class="heading settled" data-level="3.1" id="storage-service"><span class="secno">3.1. </span><span class="content">Storage service</span><a class="self-link" href="#storage-service"></a></h3>
-   <h4 class="heading settled" data-level="3.1.1" id="publication-storage"><span class="secno">3.1.1. </span><span class="content">Publication Storage</span><a class="self-link" href="#publication-storage"></a></h4>
+    The Mellon framework aims to provide researches with the ability to publish their own research, and keep control of the data in the process.
+For this, pod environments such as Solid, that can be hosted by research groups themselves or on third party services, can be used. 
+   <h4 class="heading settled" data-level="3.1.1" id="publication-storage"><span class="secno">3.1.1. </span><span class="content">Publication storage</span><a class="self-link" href="#publication-storage"></a></h4>
+    Publications can be stored as documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in <a href="#data-discovery">§ 3.1.4 Data discovery</a>. 
+   <h5 class="heading settled" data-level="3.1.1.1" id="publication-format"><span class="secno">3.1.1.1. </span><span class="content">Publication format</span><a class="self-link" href="#publication-format"></a></h5>
+    The format of a publication has consequences on the interactions that are possible with the publication.
+Interactions possible with html files, will not be possible for research stored in a PDF or LATEX format.
+Because of this, EITHER research MUST be published in a set format, or services SHOULD advertise the formats they accept <a href="#services">§ 3.1.11 External services</a>. 
+   <h5 class="heading settled" data-level="3.1.1.2" id="publication-storage①"><span class="secno">3.1.1.2. </span><span class="content">In-progress research storage</span><a class="self-link" href="#publication-storage①"></a></h5>
+    Supporting in-progress research may provide an easy platform for research groups to evaluate research internally before publishing the research and making it public.
+In-progress research does not require additional functionality from the framework, but requires a different template to be available on upload, where permissions are automatically set on private for all resources, except for actors or groups of actors that are selected by the uploades (such as the research group of the uploader). 
+   <h5 class="heading settled" data-level="3.1.1.3" id="publication-storage②"><span class="secno">3.1.1.3. </span><span class="content">Research Object Crate storage</span><a class="self-link" href="#publication-storage②"></a></h5>
+    Research Object Crates or <a href="https://www.researchobject.org/ro-crate/">RO-crates</a> are a format to store research projects, that allow different aspects of the research (paper, code, dataset, configuration files, ... ) to be bundeled.
+The Mellon framework would certainly benefit in requiring applications built on the Mellon Framework to be able to process RO-creates.
+This also allows datasets used for publications to be made public (given that permissions are set to public), and be reused by other researchers in the field. 
    <h4 class="heading settled" data-level="3.1.2" id="interaction-storage"><span class="secno">3.1.2. </span><span class="content">Interaction Storage</span><a class="self-link" href="#interaction-storage"></a></h4>
     For Interactions making use of notifications, the notifications MUST follow a speciified format to be processed, and for the relevant data to be extracted from the notiication. 
    <h5 class="heading settled" data-level="3.1.2.1" id="interaction-notification-processing"><span class="secno">3.1.2.1. </span><span class="content">Automatic notification processing</span><a class="self-link" href="#interaction-notification-processing"></a></h5>
@@ -2038,56 +2031,90 @@ In this case, some sort of protection SHOULD implemented, that prevents actors f
      <yourcommentid>
        can be added to the metadata file. 
       <h4 class="heading settled" data-level="3.1.3" id="metadata-storage"><span class="secno">3.1.3. </span><span class="content">Metadata Storage</span><a class="self-link" href="#metadata-storage"></a></h4>
+       There are multiple solutions to store metadata for a non-rdf resource on a Linked Data Platform. However, applications built over linked data should not only implement one method, but should fall back to other solutions if the metadata file cannot be retrieved using one approach. This enables the applications to interact with resources that are stored using another approach to storing metadata. 
       <h5 class="heading settled" data-level="3.1.3.1" id="meta-file"><span class="secno">3.1.3.1. </span><span class="content">.meta file</span><a class="self-link" href="#meta-file"></a></h5>
+       A straightforward way to store file metadata on a Linked Data Platform is making use of a .meta file. As the .meta is a naming convention, for every file the .meta file can be automatically retrieved.
+However, lately this seems to have been getting less and less traction in the comunity? 
       <h5 class="heading settled" data-level="3.1.3.2" id="describedby"><span class="secno">3.1.3.2. </span><span class="content">describedby / seeAlso metadata</span><a class="self-link" href="#describedby"></a></h5>
-       Provide seeAlso metadata in rdf
-OpenResearch: Collaborative Management of Scholarly Communication Metadata 
+       Metadata can be provided in a more semantic way using predicates as <code>rdf:seeAlso</code>.
+This metadata can be stored in the location where the relevant resource is stored. 
+A downside to this however is that if a resource is directly retrieved, this information will not be retrieved, and the metadata reference will be lost to the application retrieving the resource. 
       <h5 class="heading settled" data-level="3.1.3.3" id="link-seeAlso"><span class="secno">3.1.3.3. </span><span class="content">Link header</span><a class="self-link" href="#link-seeAlso"></a></h5>
-       Provide seeAlso / describedby metadata in the LINK header when retrieving the file. 
-      <h3 class="heading settled" data-level="3.2" id="subscription-service"><span class="secno">3.2. </span><span class="content">Subscription service</span><a class="self-link" href="#subscription-service"></a></h3>
-      <h4 class="heading settled" data-level="3.2.1" id="activitypub-service"><span class="secno">3.2.1. </span><span class="content">Activitypub service</span><a class="self-link" href="#activitypub-service"></a></h4>
-      <h3 class="heading settled" data-level="3.3" id="notifications"><span class="secno">3.3. </span><span class="content">Notifications</span><a class="self-link" href="#notifications"></a></h3>
-      <h4 class="heading settled" data-level="3.3.1" id="notification-shape-matching"><span class="secno">3.3.1. </span><span class="content">Notification-shape matching</span><a class="self-link" href="#notification-shape-matching"></a></h4>
-      <h4 class="heading settled" data-level="3.3.2" id="notification-retrieve"><span class="secno">3.3.2. </span><span class="content">Automatic notification retrieval</span><a class="self-link" href="#notification-retrieve"></a></h4>
-      <h4 class="heading settled" data-level="3.3.3" id="notification-processing-agent"><span class="secno">3.3.3. </span><span class="content">Automatic notification processing</span><a class="self-link" href="#notification-processing-agent"></a></h4>
-      <h3 class="heading settled" data-level="3.4" id="req-permissions"><span class="secno">3.4. </span><span class="content">Permissions</span><a class="self-link" href="#req-permissions"></a></h3>
-      <h4 class="heading settled" data-level="3.4.1" id="req-group-permissions"><span class="secno">3.4.1. </span><span class="content">Group permissions</span><a class="self-link" href="#req-group-permissions"></a></h4>
-       Support is required for handling permission groups.
-An actor SHOULD be able to create, edit, and delete permission groups.
-Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group. 
-      <h4 class="heading settled" data-level="3.4.2" id="activitypub-permissions"><span class="secno">3.4.2. </span><span class="content">Activitypub permissions</span><a class="self-link" href="#activitypub-permissions"></a></h4>
-       The activitypub service requires permission checking functionality, according to the <a href="https://www.w3.org/TR/activitypub/">specification</a>. 
-      <h3 class="heading settled" data-level="3.5" id="interace"><span class="secno">3.5. </span><span class="content">API</span><a class="self-link" href="#interace"></a></h3>
+       A third solution is to provide <a href="https://www.w3.org/TR/ldp/#link-relation-describedby">Link Relations</a> This solution returns the link to the metadata file in the response header of the HTTP request.
+Using this solution in combination with the previous solution of providing the link to the metadata file in the RDF data where the resource is stored, provides the most complete approach to storing metadata for a resource. 
+      <h4 class="heading settled" data-level="3.1.4" id="data-discovery"><span class="secno">3.1.4. </span><span class="content">Data discovery</span><a class="self-link" href="#data-discovery"></a></h4>
        The Mellon framework requires an API for external services to be able to retrieve the publications of an actor, and its metadata, to index these publications and provide services over these publications. This implies that there should be a semantic way for external applications to discover the locations of publications and their metadata on a pod, and retrieve this data, if the application has the correct permissions. 
-      <h4 class="heading settled" data-level="3.5.1" id="tree-shapes"><span class="secno">3.5.1. </span><span class="content">Tree shapes</span><a class="self-link" href="#tree-shapes"></a></h4>
+      <h5 class="heading settled" data-level="3.1.4.1" id="tree-shapes"><span class="secno">3.1.4.1. </span><span class="content">Tree shapes</span><a class="self-link" href="#tree-shapes"></a></h5>
        OPTIONAL: Tree shapes can be used to indicate resource locations in a Solid pod environment.
 External services MAY be able to interpret these shapes, and retrieve resources from the relevant locations. 
-      <h4 class="heading settled" data-level="3.5.2" id="tree-collection"><span class="secno">3.5.2. </span><span class="content">Tree Collection</span><a class="self-link" href="#tree-collection"></a></h4>
+      <h5 class="heading settled" data-level="3.1.4.2" id="tree-collection"><span class="secno">3.1.4.2. </span><span class="content">Tree Collection</span><a class="self-link" href="#tree-collection"></a></h5>
        OPTIONAL: A Tree Collection can be specified for research papers, that MAY contain the shape of stored publications or RO-crates.
 External services MAY be able to parse this data, and retrieve the relevant resources this way. 
-      <h4 class="heading settled" data-level="3.5.3" id="rdf-collection"><span class="secno">3.5.3. </span><span class="content">RDF Collection</span><a class="self-link" href="#rdf-collection"></a></h4>
+      <h5 class="heading settled" data-level="3.1.4.3" id="rdf-collection"><span class="secno">3.1.4.3. </span><span class="content">RDF Collection</span><a class="self-link" href="#rdf-collection"></a></h5>
        As a default fallback, an RDF Collection SHOULD be created in the user vCard, that contains references to all publications and their metadata. 
-      <h3 class="heading settled" data-level="3.6" id="services"><span class="secno">3.6. </span><span class="content">External services</span><a class="self-link" href="#services"></a></h3>
+      <h4 class="heading settled" data-level="3.1.5" id="ontology"><span class="secno">3.1.5. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h4>
+       Thought should be given to what ontologies are used to represent semantic information in the Mellon framework. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholary communication frameworks outside of its network. 
+      <h4 class="heading settled" data-level="3.1.6" id="rq-publication-versioning"><span class="secno">3.1.6. </span><span class="content">Publication versioning</span><a class="self-link" href="#rq-publication-versioning"></a></h4>
+       Versioning is a concept that is very relevant for scholarly communication, as publications can be iterated upon (incorporating reviews, ...).
+In order to support this behavior, a versioning system must be in place that allows for actors in the network to retrieve different versions of the same research publication. 
+      <h5 class="heading settled" data-level="3.1.6.1" id="rq-publication-interaction-versioning"><span class="secno">3.1.6.1. </span><span class="content">Publication interactions versioning</span><a class="self-link" href="#rq-publication-interaction-versioning"></a></h5>
+       Interactions with a publication SHOULD link the relevant version of the publication.
+This allows relevant interactions to be filtered for a specific version of the publication.
+Certainly in the case of edits and reviews, as these interactions may not make sense in the context of a leter version of the publication. 
+      <h4 class="heading settled" data-level="3.1.7" id="subscription-service"><span class="secno">3.1.7. </span><span class="content">Subscription service</span><a class="self-link" href="#subscription-service"></a></h4>
+      <h5 class="heading settled" data-level="3.1.7.1" id="activitypub-service"><span class="secno">3.1.7.1. </span><span class="content">Activitypub service</span><a class="self-link" href="#activitypub-service"></a></h5>
+      <h4 class="heading settled" data-level="3.1.8" id="notifications"><span class="secno">3.1.8. </span><span class="content">Notifications</span><a class="self-link" href="#notifications"></a></h4>
+       As the Mellon framework makes use of Linked Data Platforms data pods to store data of the different actions, a method is required for these different pods to interact with each other.
+This functionality is achieved by making use of 
+      <h5 class="heading settled" data-level="3.1.8.1" id="notification-shape-matching"><span class="secno">3.1.8.1. </span><span class="content">Notification-shape matching</span><a class="self-link" href="#notification-shape-matching"></a></h5>
+      <h5 class="heading settled" data-level="3.1.8.2" id="notification-retrieve"><span class="secno">3.1.8.2. </span><span class="content">Automatic notification retrieval</span><a class="self-link" href="#notification-retrieve"></a></h5>
+      <h5 class="heading settled" data-level="3.1.8.3" id="notification-processing-agent"><span class="secno">3.1.8.3. </span><span class="content">Automatic notification processing</span><a class="self-link" href="#notification-processing-agent"></a></h5>
+      <h4 class="heading settled" data-level="3.1.9" id="activitypub"><span class="secno">3.1.9. </span><span class="content">Activitypub</span><a class="self-link" href="#activitypub"></a></h4>
+       <a href="https://www.w3.org/TR/activitypub/">Activitypub</a> is a social networking protocol based upon the <a href="https://www.w3.org/TR/activitystreams-core/">ActivityStreams</a> 2.0 data format.
+It provides an API for creating, updating and deleting content, as well as a federated server to server API for delivering notifications and content 
+      <h4 class="heading settled" data-level="3.1.10" id="req-permissions"><span class="secno">3.1.10. </span><span class="content">Permissions</span><a class="self-link" href="#req-permissions"></a></h4>
+       Actors in the network MUST be able to set and edit permissions for all actors in a network.
+As the Mellon framework makes use of Linked Data Platforms, permissions are handled using ACL files. 
+      <h5 class="heading settled" data-level="3.1.10.1" id="rq-publication-read-permissions"><span class="secno">3.1.10.1. </span><span class="content">READ permissions</span><a class="self-link" href="#rq-publication-read-permissions"></a></h5>
+       For all files an actor has control permissions for, the actor MUST be able to edit the READ permissions for all other actors in the network.
+This permission is required for other actors in the network to read the files in question. 
+      <h5 class="heading settled" data-level="3.1.10.2" id="rq-publication-write-permissions"><span class="secno">3.1.10.2. </span><span class="content">WRITE permissions</span><a class="self-link" href="#rq-publication-write-permissions"></a></h5>
+       For all files an actor has control permissions for, the actor MUST be able to edit the WRITE permissions for all other actors in the network.
+This permission is required for other actors in the network to write to the files in question. 
+      <h5 class="heading settled" data-level="3.1.10.3" id="rq-publication-interaction-permissions"><span class="secno">3.1.10.3. </span><span class="content">INTERACTION permissions</span><a class="self-link" href="#rq-publication-interaction-permissions"></a></h5>
+       For all resources where interactions are possible, the actor MUST be able to edit the INTERACTION permissions for all other actors in the network.
+INTERACTION permissions are permissions that enable certain interactions with a resource such as commenting on a resource, adding metadata, ... 
+      <p>TODO -> is this viable? can for example not stop someone from liking a resource and store the like in their own pod</p>
+      <h5 class="heading settled" data-level="3.1.10.4" id="rq-publication-control-permissions"><span class="secno">3.1.10.4. </span><span class="content">CONTROL permissions</span><a class="self-link" href="#rq-publication-control-permissions"></a></h5>
+       For all files an actor has control permissions for, the actor MUST be able to edit the CONTROL permissions for all other actors in the network.
+This permission is required for other actors in the network edit permissions for the files in question. 
+      <h5 class="heading settled" data-level="3.1.10.5" id="req-group-permissions"><span class="secno">3.1.10.5. </span><span class="content">Group permissions</span><a class="self-link" href="#req-group-permissions"></a></h5>
+       Setting permissions for individual actors is often undesirable.
+Support is required for setting and editing permissions for groups of actors.
+Applications built on the Mellon framework SHOULD enable actors to to create, edit, and delete permissions for groups of actors.
+Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group. 
+      <h5 class="heading settled" data-level="3.1.10.6" id="activitypub-permissions"><span class="secno">3.1.10.6. </span><span class="content">Activitypub permissions</span><a class="self-link" href="#activitypub-permissions"></a></h5>
+       The activitypub service requires permission checking functionality, according to the <a href="https://www.w3.org/TR/activitypub/">specification</a>.
+These considerations should be taken into account when designing the permission systems for the Mellon framework. 
+      <h4 class="heading settled" data-level="3.1.11" id="services"><span class="secno">3.1.11. </span><span class="content">External services</span><a class="self-link" href="#services"></a></h4>
        The Mellon framework requires services to be abailable that can be used by actors in the network to achieve several goals, such as getting verification for publications, finding relevant publications for a subject on the network, querying over the network, getting peer reviews for a publication, ... 
 All these services SHOULD not be specific for the Mellon framework alone, and could help connect different networks together, allowing researchers to query for publications and metadata over different networks of scholarly communication frameworks. 
-      <h4 class="heading settled" data-level="3.6.1" id="verification-services"><span class="secno">3.6.1. </span><span class="content">Data verification services</span><a class="self-link" href="#verification-services"></a></h4>
-      <h4 class="heading settled" data-level="3.6.2" id="verification-services①"><span class="secno">3.6.2. </span><span class="content">Peer review services</span><a class="self-link" href="#verification-services①"></a></h4>
-      <h4 class="heading settled" data-level="3.6.3" id="verification-services②"><span class="secno">3.6.3. </span><span class="content">Indexing services</span><a class="self-link" href="#verification-services②"></a></h4>
-      <h4 class="heading settled" data-level="3.6.4" id="verification-services③"><span class="secno">3.6.4. </span><span class="content">Analytics services</span><a class="self-link" href="#verification-services③"></a></h4>
-      <h4 class="heading settled" data-level="3.6.5" id="verification-services④"><span class="secno">3.6.5. </span><span class="content">Activitypub services</span><a class="self-link" href="#verification-services④"></a></h4>
-      <h3 class="heading settled" data-level="3.7" id="verification"><span class="secno">3.7. </span><span class="content">Verification mechanics</span><a class="self-link" href="#verification"></a></h3>
+      <h5 class="heading settled" data-level="3.1.11.1" id="verification-services"><span class="secno">3.1.11.1. </span><span class="content">Data verification services</span><a class="self-link" href="#verification-services"></a></h5>
+      <h5 class="heading settled" data-level="3.1.11.2" id="verification-services①"><span class="secno">3.1.11.2. </span><span class="content">Peer review services</span><a class="self-link" href="#verification-services①"></a></h5>
+      <h5 class="heading settled" data-level="3.1.11.3" id="verification-services②"><span class="secno">3.1.11.3. </span><span class="content">Indexing services</span><a class="self-link" href="#verification-services②"></a></h5>
+      <h5 class="heading settled" data-level="3.1.11.4" id="verification-services③"><span class="secno">3.1.11.4. </span><span class="content">Analytics services</span><a class="self-link" href="#verification-services③"></a></h5>
+      <h5 class="heading settled" data-level="3.1.11.5" id="verification-services④"><span class="secno">3.1.11.5. </span><span class="content">Activitypub services</span><a class="self-link" href="#verification-services④"></a></h5>
+      <h4 class="heading settled" data-level="3.1.12" id="verification"><span class="secno">3.1.12. </span><span class="content">Verification mechanics</span><a class="self-link" href="#verification"></a></h4>
        The Mellon framework requires a way for actors to verify information in the network by (one or more) trusted thrid parties. 
-      <h4 class="heading settled" data-level="3.7.1" id="profile-verification"><span class="secno">3.7.1. </span><span class="content">Profile data verification</span><a class="self-link" href="#profile-verification"></a></h4>
+      <h5 class="heading settled" data-level="3.1.12.1" id="profile-verification"><span class="secno">3.1.12.1. </span><span class="content">Profile data verification</span><a class="self-link" href="#profile-verification"></a></h5>
        A method SHOULD be in place for actors to have their profile information verified by external entities.
 This could mean for example past workplaces confirming that the actor has worked there (via an automatic API for example), or with confirmation of former colleagues. 
-      <h4 class="heading settled" data-level="3.7.2" id="publication-verification"><span class="secno">3.7.2. </span><span class="content">Publication data verification</span><a class="self-link" href="#publication-verification"></a></h4>
+      <h5 class="heading settled" data-level="3.1.12.2" id="publication-verification"><span class="secno">3.1.12.2. </span><span class="content">Publication data verification</span><a class="self-link" href="#publication-verification"></a></h5>
        A publication MUST be verified by a trusted third party, in order to prove its legitimacy. This verification MUST be timestamped, in order for the actor publishing the research to prove that they were the first to publish this research.
 The third party MAY verify this publication to publications already present in its network, and MAY provide the actor with proof that they are the first to publish that research in the known state of the art. 
-      <h4 class="heading settled" data-level="3.7.3" id="peer-review-verification"><span class="secno">3.7.3. </span><span class="content">Peer review verification</span><a class="self-link" href="#peer-review-verification"></a></h4>
+      <h5 class="heading settled" data-level="3.1.12.3" id="peer-review-verification"><span class="secno">3.1.12.3. </span><span class="content">Peer review verification</span><a class="self-link" href="#peer-review-verification"></a></h5>
        A mechanism is required to allow publications to be peer reviewed by external parties.
 External parties should be able to retrieve a specific version of the publication, on which a timestamped verification MUST be provided of the peer-review for that specific version of the publication. 
-      <h3 class="heading settled" data-level="3.8" id="ontology"><span class="secno">3.8. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h3>
-       Thought should be given to what ontologies are used to represent semantic information in the Mellon framework. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholary communication frameworks outside of its network. 
       <h2 class="heading settled" data-level="4" id="definitions"><span class="secno">4. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
      </yourcommentid>
     </exU0003Ahascomment>
