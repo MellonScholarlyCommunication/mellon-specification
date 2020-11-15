@@ -1322,7 +1322,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 89ebb6ab, updated Fri Oct 9 15:32:07 2020 -0700" name="generator">
-  <meta content="c82f93cacfe6f72754e4b9d87789bd1c684d9efe" name="document-revision">
+  <meta content="1a7b4a1a27a3431151b5f8ee76b6d8da1cf55114" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -1740,7 +1740,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">Use Cases and Requirements for Linked Data Notifications in the Mellon Project</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-11-15">15 November 2020</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2020-11-16">16 November 2020</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1833,12 +1833,11 @@ dfn > a.self-link::before      { content: "#"; }
         <li><a href="#data-discovery"><span class="secno">3.1.4</span> <span class="content">Data discovery</span></a>
         <li><a href="#ontology"><span class="secno">3.1.5</span> <span class="content">Ontologies</span></a>
         <li><a href="#rq-publication-versioning"><span class="secno">3.1.6</span> <span class="content">Publication versioning</span></a>
-        <li><a href="#subscription-service"><span class="secno">3.1.7</span> <span class="content">Subscription service</span></a>
+        <li><a href="#subscription-service"><span class="secno">3.1.7</span> <span class="content">Subscribing</span></a>
         <li><a href="#notifications"><span class="secno">3.1.8</span> <span class="content">Notifications</span></a>
-        <li><a href="#activitypub"><span class="secno">3.1.9</span> <span class="content">Activitypub</span></a>
-        <li><a href="#req-permissions"><span class="secno">3.1.10</span> <span class="content">Permissions</span></a>
-        <li><a href="#services"><span class="secno">3.1.11</span> <span class="content">External services</span></a>
-        <li><a href="#verification"><span class="secno">3.1.12</span> <span class="content">Verification mechanics</span></a>
+        <li><a href="#req-permissions"><span class="secno">3.1.9</span> <span class="content">Permissions</span></a>
+        <li><a href="#services"><span class="secno">3.1.10</span> <span class="content">External services</span></a>
+        <li><a href="#verification"><span class="secno">3.1.11</span> <span class="content">Verification mechanics</span></a>
        </ol>
      </ol>
     <li><a href="#definitions"><span class="secno">4</span> <span class="content">Definitions</span></a>
@@ -2009,7 +2008,7 @@ For this, pod environments such as Solid, that can be hosted by research groups 
    <h5 class="heading settled" data-level="3.1.1.1" id="publication-format"><span class="secno">3.1.1.1. </span><span class="content">Publication format</span><a class="self-link" href="#publication-format"></a></h5>
     The format of a publication has consequences on the interactions that are possible with the publication.
 Interactions possible with html files, will not be possible for research stored in a PDF or LATEX format.
-Because of this, EITHER research MUST be published in a set format, or services SHOULD advertise the formats they accept <a href="#services">§ 3.1.11 External services</a>. 
+Because of this, EITHER research MUST be published in a set format, or services SHOULD advertise the formats they accept <a href="#services">§ 3.1.10 External services</a>. 
    <h5 class="heading settled" data-level="3.1.1.2" id="publication-storage①"><span class="secno">3.1.1.2. </span><span class="content">In-progress research storage</span><a class="self-link" href="#publication-storage①"></a></h5>
     Supporting in-progress research may provide an easy platform for research groups to evaluate research internally before publishing the research and making it public.
 In-progress research does not require additional functionality from the framework, but requires a different template to be available on upload, where permissions are automatically set on private for all resources, except for actors or groups of actors that are selected by the uploades (such as the research group of the uploader). 
@@ -2021,8 +2020,7 @@ This also allows datasets used for publications to be made public (given that pe
     For Interactions making use of notifications, the notifications MUST follow a speciified format to be processed, and for the relevant data to be extracted from the notiication. 
    <h5 class="heading settled" data-level="3.1.2.1" id="interaction-notification-processing"><span class="secno">3.1.2.1. </span><span class="content">Automatic notification processing</span><a class="self-link" href="#interaction-notification-processing"></a></h5>
     Intercations could be added by using automatic notification processing.
-This requires a service to be watching the pod inbox, and filter new notifications to exectute the required actions if the sender has the appropriate authentication.
-This processing engine could then automatically update the resource metadata file with references to new comments, edit proposals, ... 
+This requirement is handled in <a href="#rq-notification-processing-agent">§ 3.1.8.3 Automatic notification processing</a>. 
    <h5 class="heading settled" data-level="3.1.2.2" id="appendable-metadata-file"><span class="secno">3.1.2.2. </span><span class="content">Appendable-metadata-file</span><a class="self-link" href="#appendable-metadata-file"></a></h5>
     Provide a (separate ?,) appendable metadata file, that actors can append comment, ... metadata references to, provided they have the correct authentication.
 In this case, some sort of protection SHOULD implemented, that prevents actors from appending data differing from a specified format. e.g. only triples of the form 
@@ -2061,58 +2059,74 @@ In order to support this behavior, a versioning system must be in place that all
        Interactions with a publication SHOULD link the relevant version of the publication.
 This allows relevant interactions to be filtered for a specific version of the publication.
 Certainly in the case of edits and reviews, as these interactions may not make sense in the context of a leter version of the publication. 
-      <h4 class="heading settled" data-level="3.1.7" id="subscription-service"><span class="secno">3.1.7. </span><span class="content">Subscription service</span><a class="self-link" href="#subscription-service"></a></h4>
-      <h5 class="heading settled" data-level="3.1.7.1" id="activitypub-service"><span class="secno">3.1.7.1. </span><span class="content">Activitypub service</span><a class="self-link" href="#activitypub-service"></a></h5>
-      <h4 class="heading settled" data-level="3.1.8" id="notifications"><span class="secno">3.1.8. </span><span class="content">Notifications</span><a class="self-link" href="#notifications"></a></h4>
-       As the Mellon framework makes use of Linked Data Platforms data pods to store data of the different actions, a method is required for these different pods to interact with each other.
-This functionality is achieved by making use of 
-      <h5 class="heading settled" data-level="3.1.8.1" id="notification-shape-matching"><span class="secno">3.1.8.1. </span><span class="content">Notification-shape matching</span><a class="self-link" href="#notification-shape-matching"></a></h5>
-      <h5 class="heading settled" data-level="3.1.8.2" id="notification-retrieve"><span class="secno">3.1.8.2. </span><span class="content">Automatic notification retrieval</span><a class="self-link" href="#notification-retrieve"></a></h5>
-      <h5 class="heading settled" data-level="3.1.8.3" id="notification-processing-agent"><span class="secno">3.1.8.3. </span><span class="content">Automatic notification processing</span><a class="self-link" href="#notification-processing-agent"></a></h5>
-      <h4 class="heading settled" data-level="3.1.9" id="activitypub"><span class="secno">3.1.9. </span><span class="content">Activitypub</span><a class="self-link" href="#activitypub"></a></h4>
+      <h4 class="heading settled" data-level="3.1.7" id="subscription-service"><span class="secno">3.1.7. </span><span class="content">Subscribing</span><a class="self-link" href="#subscription-service"></a></h4>
+       The mellon framework requires the possibility for actors in the network to subscribe to the entities in the network.
+Several protocols already exist for subscribing to resources on Linked Data Platforms. 
+      <h5 class="heading settled" data-level="3.1.7.1" id="activitypub"><span class="secno">3.1.7.1. </span><span class="content">Activitypub</span><a class="self-link" href="#activitypub"></a></h5>
        <a href="https://www.w3.org/TR/activitypub/">Activitypub</a> is a social networking protocol based upon the <a href="https://www.w3.org/TR/activitystreams-core/">ActivityStreams</a> 2.0 data format.
-It provides an API for creating, updating and deleting content, as well as a federated server to server API for delivering notifications and content 
-      <h4 class="heading settled" data-level="3.1.10" id="req-permissions"><span class="secno">3.1.10. </span><span class="content">Permissions</span><a class="self-link" href="#req-permissions"></a></h4>
+The Activitypub protocol specifies an API that allows actors in the network to create a <code>Follow</code> activity, that subscribes the sender to the activities of another actor.
+This way, the subscribed actor will now be notified of activities such as the creation of new publications, public posts, ... of the actor that they subscribed to.
+If publications are handles as actors in the network, they can also be subscribed to, enabling actors that subscribe to a publication to see new activities such as edits or added comments to the publication.
+In this case however publications SHOULD provide a unique outbox for the activitypub protocol. If this is not the case all posts in the pod outbox for all publications have to be traversed to find relevant information for a single publication. 
+      <h4 class="heading settled" data-level="3.1.8" id="notifications"><span class="secno">3.1.8. </span><span class="content">Notifications</span><a class="self-link" href="#notifications"></a></h4>
+       Notifications are at the center of passing messages between actors in a network of Linked Data Platforms.
+The Activitypub procotol specified above <a href="#activitypub">§ 3.1.7.1 Activitypub</a> requires notifications to notify followers of change in the entities they are subscribed to.
+However, as notifications are prevalent in these networks, they require efficient tooling to retrieve and process. 
+      <h5 class="heading settled" data-level="3.1.8.1" id="notification-shape-matching"><span class="secno">3.1.8.1. </span><span class="content">Notification shape matching</span><a class="self-link" href="#notification-shape-matching"></a></h5>
+       Notification shape matching tooling is required to retrieve notifications in a an inbox, that conform to a specified shape.
+Shape matching makes use of a shape ontology, for which both <a href="https://www.w3.org/TR/shacl/">SHACL</a> and <a href="https://shex.io/">SHEX</a> are currently the most relevant shape ontologies.
+Notification shape matching tools MUST return ALL notifications in an inbox that conform to a given shape. 
+      <h5 class="heading settled" data-level="3.1.8.2" id="notification-retrieve"><span class="secno">3.1.8.2. </span><span class="content">Automatic inbox updating</span><a class="self-link" href="#notification-retrieve"></a></h5>
+       Tools are required that automatically retrieve new notifications for a specified inbox when new notifications arrive in this inbox.
+This is necessary for applications that need to provide actors with real time updates of new notifications.
+These tools MAY incorporate shape matching tools <a href="#notification-shape-matching">§ 3.1.8.1 Notification shape matching</a>. 
+      <h5 class="heading settled" data-level="3.1.8.3" id="rq-notification-processing-agent"><span class="secno">3.1.8.3. </span><span class="content">Automatic notification processing</span><a class="self-link" href="#rq-notification-processing-agent"></a></h5>
+       Applications built on the Mellon Framework may require automatic actions to be executed on receiving notifications matching a given shape.
+For matching the notification shape, shape matching tools <a href="#notification-shape-matching">§ 3.1.8.1 Notification shape matching</a> are required.
+Automatic processing of notifications requires an active agent to be watching the pod inbox, and filter the new notifications to exectute the required actions if the sender has the appropriate permissions to execute the required action.
+An automatic processing agent can be used to update resource metadata, in contrast to allowing external actors to directly update resource metadata.
+This gives much more control over what can be added, as the notification processing agent can be tuned to refuse all attempted updates if they do not conform to a given shape. 
+      <h4 class="heading settled" data-level="3.1.9" id="req-permissions"><span class="secno">3.1.9. </span><span class="content">Permissions</span><a class="self-link" href="#req-permissions"></a></h4>
        Actors in the network MUST be able to set and edit permissions for all actors in a network.
 As the Mellon framework makes use of Linked Data Platforms, permissions are handled using ACL files. 
-      <h5 class="heading settled" data-level="3.1.10.1" id="rq-publication-read-permissions"><span class="secno">3.1.10.1. </span><span class="content">READ permissions</span><a class="self-link" href="#rq-publication-read-permissions"></a></h5>
+      <h5 class="heading settled" data-level="3.1.9.1" id="rq-publication-read-permissions"><span class="secno">3.1.9.1. </span><span class="content">READ permissions</span><a class="self-link" href="#rq-publication-read-permissions"></a></h5>
        For all files an actor has control permissions for, the actor MUST be able to edit the READ permissions for all other actors in the network.
 This permission is required for other actors in the network to read the files in question. 
-      <h5 class="heading settled" data-level="3.1.10.2" id="rq-publication-write-permissions"><span class="secno">3.1.10.2. </span><span class="content">WRITE permissions</span><a class="self-link" href="#rq-publication-write-permissions"></a></h5>
+      <h5 class="heading settled" data-level="3.1.9.2" id="rq-publication-write-permissions"><span class="secno">3.1.9.2. </span><span class="content">WRITE permissions</span><a class="self-link" href="#rq-publication-write-permissions"></a></h5>
        For all files an actor has control permissions for, the actor MUST be able to edit the WRITE permissions for all other actors in the network.
 This permission is required for other actors in the network to write to the files in question. 
-      <h5 class="heading settled" data-level="3.1.10.3" id="rq-publication-interaction-permissions"><span class="secno">3.1.10.3. </span><span class="content">INTERACTION permissions</span><a class="self-link" href="#rq-publication-interaction-permissions"></a></h5>
+      <h5 class="heading settled" data-level="3.1.9.3" id="rq-publication-interaction-permissions"><span class="secno">3.1.9.3. </span><span class="content">INTERACTION permissions</span><a class="self-link" href="#rq-publication-interaction-permissions"></a></h5>
        For all resources where interactions are possible, the actor MUST be able to edit the INTERACTION permissions for all other actors in the network.
 INTERACTION permissions are permissions that enable certain interactions with a resource such as commenting on a resource, adding metadata, ... 
       <p>TODO -> is this viable? can for example not stop someone from liking a resource and store the like in their own pod</p>
-      <h5 class="heading settled" data-level="3.1.10.4" id="rq-publication-control-permissions"><span class="secno">3.1.10.4. </span><span class="content">CONTROL permissions</span><a class="self-link" href="#rq-publication-control-permissions"></a></h5>
+      <h5 class="heading settled" data-level="3.1.9.4" id="rq-publication-control-permissions"><span class="secno">3.1.9.4. </span><span class="content">CONTROL permissions</span><a class="self-link" href="#rq-publication-control-permissions"></a></h5>
        For all files an actor has control permissions for, the actor MUST be able to edit the CONTROL permissions for all other actors in the network.
 This permission is required for other actors in the network edit permissions for the files in question. 
-      <h5 class="heading settled" data-level="3.1.10.5" id="req-group-permissions"><span class="secno">3.1.10.5. </span><span class="content">Group permissions</span><a class="self-link" href="#req-group-permissions"></a></h5>
+      <h5 class="heading settled" data-level="3.1.9.5" id="req-group-permissions"><span class="secno">3.1.9.5. </span><span class="content">Group permissions</span><a class="self-link" href="#req-group-permissions"></a></h5>
        Setting permissions for individual actors is often undesirable.
 Support is required for setting and editing permissions for groups of actors.
 Applications built on the Mellon framework SHOULD enable actors to to create, edit, and delete permissions for groups of actors.
 Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group. 
-      <h5 class="heading settled" data-level="3.1.10.6" id="activitypub-permissions"><span class="secno">3.1.10.6. </span><span class="content">Activitypub permissions</span><a class="self-link" href="#activitypub-permissions"></a></h5>
+      <h5 class="heading settled" data-level="3.1.9.6" id="activitypub-permissions"><span class="secno">3.1.9.6. </span><span class="content">Activitypub permissions</span><a class="self-link" href="#activitypub-permissions"></a></h5>
        The activitypub service requires permission checking functionality, according to the <a href="https://www.w3.org/TR/activitypub/">specification</a>.
 These considerations should be taken into account when designing the permission systems for the Mellon framework. 
-      <h4 class="heading settled" data-level="3.1.11" id="services"><span class="secno">3.1.11. </span><span class="content">External services</span><a class="self-link" href="#services"></a></h4>
+      <h4 class="heading settled" data-level="3.1.10" id="services"><span class="secno">3.1.10. </span><span class="content">External services</span><a class="self-link" href="#services"></a></h4>
        The Mellon framework requires services to be abailable that can be used by actors in the network to achieve several goals, such as getting verification for publications, finding relevant publications for a subject on the network, querying over the network, getting peer reviews for a publication, ... 
 All these services SHOULD not be specific for the Mellon framework alone, and could help connect different networks together, allowing researchers to query for publications and metadata over different networks of scholarly communication frameworks. 
-      <h5 class="heading settled" data-level="3.1.11.1" id="verification-services"><span class="secno">3.1.11.1. </span><span class="content">Data verification services</span><a class="self-link" href="#verification-services"></a></h5>
-      <h5 class="heading settled" data-level="3.1.11.2" id="verification-services①"><span class="secno">3.1.11.2. </span><span class="content">Peer review services</span><a class="self-link" href="#verification-services①"></a></h5>
-      <h5 class="heading settled" data-level="3.1.11.3" id="verification-services②"><span class="secno">3.1.11.3. </span><span class="content">Indexing services</span><a class="self-link" href="#verification-services②"></a></h5>
-      <h5 class="heading settled" data-level="3.1.11.4" id="verification-services③"><span class="secno">3.1.11.4. </span><span class="content">Analytics services</span><a class="self-link" href="#verification-services③"></a></h5>
-      <h5 class="heading settled" data-level="3.1.11.5" id="verification-services④"><span class="secno">3.1.11.5. </span><span class="content">Activitypub services</span><a class="self-link" href="#verification-services④"></a></h5>
-      <h4 class="heading settled" data-level="3.1.12" id="verification"><span class="secno">3.1.12. </span><span class="content">Verification mechanics</span><a class="self-link" href="#verification"></a></h4>
+      <h5 class="heading settled" data-level="3.1.10.1" id="verification-services"><span class="secno">3.1.10.1. </span><span class="content">Data verification services</span><a class="self-link" href="#verification-services"></a></h5>
+      <h5 class="heading settled" data-level="3.1.10.2" id="verification-services①"><span class="secno">3.1.10.2. </span><span class="content">Peer review services</span><a class="self-link" href="#verification-services①"></a></h5>
+      <h5 class="heading settled" data-level="3.1.10.3" id="verification-services②"><span class="secno">3.1.10.3. </span><span class="content">Indexing services</span><a class="self-link" href="#verification-services②"></a></h5>
+      <h5 class="heading settled" data-level="3.1.10.4" id="verification-services③"><span class="secno">3.1.10.4. </span><span class="content">Analytics services</span><a class="self-link" href="#verification-services③"></a></h5>
+      <h5 class="heading settled" data-level="3.1.10.5" id="verification-services④"><span class="secno">3.1.10.5. </span><span class="content">Activitypub services</span><a class="self-link" href="#verification-services④"></a></h5>
+      <h4 class="heading settled" data-level="3.1.11" id="verification"><span class="secno">3.1.11. </span><span class="content">Verification mechanics</span><a class="self-link" href="#verification"></a></h4>
        The Mellon framework requires a way for actors to verify information in the network by (one or more) trusted thrid parties. 
-      <h5 class="heading settled" data-level="3.1.12.1" id="profile-verification"><span class="secno">3.1.12.1. </span><span class="content">Profile data verification</span><a class="self-link" href="#profile-verification"></a></h5>
+      <h5 class="heading settled" data-level="3.1.11.1" id="profile-verification"><span class="secno">3.1.11.1. </span><span class="content">Profile data verification</span><a class="self-link" href="#profile-verification"></a></h5>
        A method SHOULD be in place for actors to have their profile information verified by external entities.
 This could mean for example past workplaces confirming that the actor has worked there (via an automatic API for example), or with confirmation of former colleagues. 
-      <h5 class="heading settled" data-level="3.1.12.2" id="publication-verification"><span class="secno">3.1.12.2. </span><span class="content">Publication data verification</span><a class="self-link" href="#publication-verification"></a></h5>
+      <h5 class="heading settled" data-level="3.1.11.2" id="publication-verification"><span class="secno">3.1.11.2. </span><span class="content">Publication data verification</span><a class="self-link" href="#publication-verification"></a></h5>
        A publication MUST be verified by a trusted third party, in order to prove its legitimacy. This verification MUST be timestamped, in order for the actor publishing the research to prove that they were the first to publish this research.
 The third party MAY verify this publication to publications already present in its network, and MAY provide the actor with proof that they are the first to publish that research in the known state of the art. 
-      <h5 class="heading settled" data-level="3.1.12.3" id="peer-review-verification"><span class="secno">3.1.12.3. </span><span class="content">Peer review verification</span><a class="self-link" href="#peer-review-verification"></a></h5>
+      <h5 class="heading settled" data-level="3.1.11.3" id="peer-review-verification"><span class="secno">3.1.11.3. </span><span class="content">Peer review verification</span><a class="self-link" href="#peer-review-verification"></a></h5>
        A mechanism is required to allow publications to be peer reviewed by external parties.
 External parties should be able to retrieve a specific version of the publication, on which a timestamped verification MUST be provided of the peer-review for that specific version of the publication. 
       <h2 class="heading settled" data-level="4" id="definitions"><span class="secno">4. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>

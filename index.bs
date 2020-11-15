@@ -319,8 +319,7 @@ For Interactions making use of notifications, the notifications MUST follow a sp
 
 #### Automatic notification processing #### {#interaction-notification-processing}
 Intercations could be added by using automatic notification processing.
-This requires a service to be watching the pod inbox, and filter new notifications to exectute the required actions if the sender has the appropriate authentication.
-This processing engine could then automatically update the resource metadata file with references to new comments, edit proposals, ...
+This requirement is handled in [[#rq-notification-processing-agent]].
 
 #### Appendable-metadata-file #### {#appendable-metadata-file}
 Provide a (separate ?,) appendable metadata file, that actors can append comment, ... metadata references to, provided they have the correct authentication.
@@ -378,25 +377,40 @@ This allows relevant interactions to be filtered for a specific version of the p
 Certainly in the case of edits and reviews, as these interactions may not make sense in the context of a leter version of the publication.
 
 
-### Subscription service ### {#subscription-service}
+### Subscribing ### {#subscription-service}
+The mellon framework requires the possibility for actors in the network to subscribe to the entities in the network.
+Several protocols already exist for subscribing to resources on Linked Data Platforms.
 
-#### Activitypub service #### {#activitypub-service}
+#### Activitypub #### {#activitypub}
+[Activitypub](https://www.w3.org/TR/activitypub/) is a social networking protocol based upon the [ActivityStreams](https://www.w3.org/TR/activitystreams-core/) 2.0 data format.
+The Activitypub protocol specifies an API that allows actors in the network to create a ```Follow``` activity, that subscribes the sender to the activities of another actor.
+This way, the subscribed actor will now be notified of activities such as the creation of new publications, public posts, ... of the actor that they subscribed to.
+If publications are handles as actors in the network, they can also be subscribed to, enabling actors that subscribe to a publication to see new activities such as edits or added comments to the publication.
+In this case however publications SHOULD provide a unique outbox for the activitypub protocol. If this is not the case all posts in the pod outbox for all publications have to be traversed to find relevant information for a single publication.
+
 
 
 ### Notifications ### {#notifications}
-As the Mellon framework makes use of Linked Data Platforms data pods to store data of the different actions, a method is required for these different pods to interact with each other.
-This functionality is achieved by making use of 
+Notifications are at the center of passing messages between actors in a network of Linked Data Platforms.
+The Activitypub procotol specified above [[#activitypub]] requires notifications to notify followers of change in the entities they are subscribed to.
+However, as notifications are prevalent in these networks, they require efficient tooling to retrieve and process.
 
-#### Notification-shape matching #### {#notification-shape-matching}
+#### Notification shape matching #### {#notification-shape-matching}
+Notification shape matching tooling is required to retrieve notifications in a an inbox, that conform to a specified shape.
+Shape matching makes use of a shape ontology, for which both [SHACL](https://www.w3.org/TR/shacl/) and [SHEX](https://shex.io/) are currently the most relevant shape ontologies.
+Notification shape matching tools MUST return ALL notifications in an inbox that conform to a given shape.
 
-#### Automatic notification retrieval #### {#notification-retrieve}
+#### Automatic inbox updating #### {#notification-retrieve}
+Tools are required that automatically retrieve new notifications for a specified inbox when new notifications arrive in this inbox.
+This is necessary for applications that need to provide actors with real time updates of new notifications.
+These tools MAY incorporate shape matching tools [[#notification-shape-matching]].
 
-#### Automatic notification processing #### {#notification-processing-agent}
-
-### Activitypub ### {#activitypub}
-[Activitypub](https://www.w3.org/TR/activitypub/) is a social networking protocol based upon the [ActivityStreams](https://www.w3.org/TR/activitystreams-core/) 2.0 data format.
-It provides an API for creating, updating and deleting content, as well as a federated server to server API for delivering notifications and content
-
+#### Automatic notification processing #### {#rq-notification-processing-agent}
+Applications built on the Mellon Framework may require automatic actions to be executed on receiving notifications matching a given shape.
+For matching the notification shape, shape matching tools [[#notification-shape-matching]] are required.
+Automatic processing of notifications requires an active agent to be watching the pod inbox, and filter the new notifications to exectute the required actions if the sender has the appropriate permissions to execute the required action.
+An automatic processing agent can be used to update resource metadata, in contrast to allowing external actors to directly update resource metadata.
+This gives much more control over what can be added, as the notification processing agent can be tuned to refuse all attempted updates if they do not conform to a given shape.
 
 
 ### Permissions ### {#req-permissions}
