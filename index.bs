@@ -1,0 +1,347 @@
+<pre class='metadata'>
+Title: Use Cases and Requirements for Linked Data Notifications in the Mellon Project
+Shortname: ldnp-req
+Level: 1
+Max ToC Depth: 3
+Status: w3c/ED
+Group: UGent-Imec
+URL: 
+Editor: Ruben Dedecker (UGent - Imec)
+Markup Shorthands: markdown yes
+Abstract:
+  Use Cases and Requirements for Linked Data Notifications in the Mellon Project.
+</pre>
+
+<!-- For bikeshed style overrides -->
+<style>
+
+  table.collections thead tr {
+    font-size: 16px;
+  }
+
+  table.collections tbody tr:nth-child(even) {
+    background-color: lightgray;
+    font-size: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    table.collections tbody tr:nth-child(even) {
+      background-color: DarkSlateGray;
+    }
+  }
+
+  table.collections tbody td {
+    font-size: 12px;
+  }
+
+  figcaption {
+    text-align: left;
+  }
+
+  a[data-link-type=dfn] {
+    color: #000000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a[data-link-type=dfn] {
+      color: #FFFFFF;
+    }
+  }
+
+}
+
+</style>
+
+<div boilerplate="copyright">
+MIT License Copyright 2019 - 2020 UGent - Imec
+</div>
+
+Introduction {#intro}
+================================================================================
+
+The Mellon Project is framework that is designed to enable researchers to store and publish their research-related data on the Web, and make it easily accessible.
+
+In order to design this framework, certain technical limitations have to be overcome.
+In order to situate these limitations, we present some [[#usecases]] in this document that represent functionality of the Mellon framework.
+From these usecases, we dericve the [[#requirements]] in this document.
+
+
+Use Cases {#usecases}
+================================================================================
+For the purposes of simplicity, the use cases herein assume that named individuals (i.e. Alice, Bob, Carol, etc.) are already authenticated agents, that have a Solid pod (except for point in [[#login]]).
+
+## Logging in ## {#login}
+To interact with actors and resources in Mellon, the user must have a valid pod environment to store these interactions. Because of this, Mellon must provide the capabilities to create a pod environment and login to this pod environment.
+
+### Create a researcher pod ### {#create-pod}
+Bob wants to interact with resources in Mellon, but does not have a personal pod environment.
+The Mellon website gives the option to login to an existing pod, or to create a new pod.
+Bob chooses the option to create a new pod, and is redirected to an environment to create a new Solid Pod.
+
+### Logging in to existing researcher pod ### {#login-pod}
+Bob already has a Solid pod, and wants to login on the Mellon website.
+The Mellon website gives the option to login to an existing pod, or to create a new pod.
+Bob chooses the option to login to an existing pod, and is redirected to an environment to login to a new Solid Pod.
+On login, Bob is redirected to the home page of the website.
+
+
+## Profile ## {#profile}
+
+### View actor researcher profile ### {#view-profile}
+
+### Edit actor researcher profile ### {#edit-profile}
+
+
+## Subscribtions ## {#subscribe}
+
+### View actors subscribed to entity 
+
+#### View actors subscribed to actor
+
+#### View actors subscribed to publication
+
+
+### View entities an actor is subscribed to
+
+#### View actors an actor is subscribed to (contacts)
+
+#### View publications an actor is subscribed to
+
+### Subscribe to a new entity
+
+#### Subscribe to a new actor
+
+#### Subscribe to a new publication
+
+
+## Publications ## {#publications}
+
+### Add new publication ### {#add-publications}
+Bob decides to publish a new research paper.
+As the research was never uploaded before, Bob now uploads the resource as a publication.
+On upload, the research is sent to a third party for verification [[#third-party-certification]].
+As the resource is published, READ permissions for the research are set to public.
+Bob decides to give public permissions to interact with the resource [[#permissions]].
+
+
+### View actor publications ### {#view-publications}
+
+### Edit actor publications ### {#edit-publications}
+
+### Publication versioning ### {#publication-versioning}
+It may be of use to incorporate a versioning system for (published?) research.
+This allows the most up to date versions of research to be available for all parties, as well as for interactions such as comments on different versions of the publication to still make sense when the research has been update.
+
+#### View publication versions #### {#view-versions}
+
+#### Access publication versions #### {#get-versions}
+
+#### Link publication resources with a publication version #### {#link-versions}
+Bob wishes to view the version of the publication that is linked to a certain peer review resource linked with the publication. ... 
+
+
+### Support research objects ### {#research-objects}
+Bob wishes to not only publish the final research paper of a research project on Mellon, but wants to also publish the data, code, and other resources used during the research project to be used by other researchers and for later verification of the research. 
+For this, Bob creates an [RO-crate](https://www.researchobject.org/ro-crate/), and uploads this to the Mellon Web interface.
+
+### Support in-progress research ### {#in-progress-research}
+
+#### Uploading in-progress research #### {#upload-in-progress-research}
+Bob uploads in-progress research to his solid pod.
+As the research is still in progress, Bob flags the research project as in-progress.
+On upload, Bob decides his research group can have read access to the resources, as well as the possibility to comment on the resource or propose edits. He [sets these permissions](#permissions) in the upload screen [[#permissions]].
+
+#### Publish in-progress research #### {#publish-in-progress-research}
+After completing the research, and finishing the paper, Bob decides to publish the research.
+As the research was already uploaded as in-progress, Bob now has the option to publish the research. This flags the research as published, and sends the research to a 3d party to be verified [[#third-party-certification]].
+
+
+
+### Publication permissions ### {#publications-permissions-stump}
+For use cases involving permissions, see [[#publication-permissions]]
+
+
+## Interactions ## {#interactions}
+
+### Actor interactions ### {#actor-interactions}
+
+#### Direct message #### {#interaction-chat}
+
+#### Public message (post) #### {#interaction-post}
+
+### Publication interactions ### {#publication-interactions}
+
+#### Comment #### {#interaction-comment}
+
+#### Propose edit #### {#interaction-propose-edit}
+This action depends on the type of publication, or can be outsourced to external tooling.
+
+
+
+
+## Permissions ## {#permissions}
+
+### Actor follower permissions ### {#actor-permissions}
+
+#### READ permissions #### {#follower-read-permissions}
+
+#### WRITE permissions #### {#follower-write-permissions}
+
+#### INTERACTION permissions #### {#follower-interaction-permissions}
+
+#### CONTROL permissions #### {#follower-control-permissions}
+
+
+### Publication follower permissions ### {#publication-permissions}
+
+#### READ permissions #### {#publication-read-permissions}
+
+#### WRITE permissions #### {#publication-write-permissions}
+
+#### INTERACTION permissions #### {#publication-interaction-permissions}
+
+#### CONTROL permissions #### {#publication-control-permissions}
+
+### Group permissions ### {#group-permissions}
+
+#### Create group permissions #### {#create-group-permissions}
+
+#### Edit group permissions #### {#edit-group-permissions}
+
+
+
+
+## News feed ## {#feed}
+
+### Personalized news feed ### {#news-feed}
+
+### Post feed of other actors ### {#post-feed}
+
+
+
+## Third party services ## {#third-party}
+The Mellon framework can serves as a 
+
+### Subscribe pod to service ### {#third-party-subscribe}
+Bob wishes to make use of the Ugent service that indexes and archives all research of the UGent.
+Bob registres his pod to the UGent service via the UGent service endpoint.
+Bob grants the UGent service READ access to the publications of his pod.
+The UGent service can now index Bob's publications, and provide services such as related publications, statistics, ... 
+The UGent service can also act as an [activitypub](https://www.w3.org/TR/activitypub/) service.
+
+### Certify publications ### {#third-party-certification}
+On publication of a resource, Bob wants to cerify this publication with a third party.
+For this, Bob sends the publication to a third party verification service.
+This service MUST return a timestamped proof that the publication has been proposed for certification.
+On verification that the publication is genuine, the service sends a notification to the pod inbox with a ceritification that the research has been verified by the third party.
+
+
+
+
+
+
+Requirements {#requirements}
+================================================================================
+
+## Storage service ## {#storage-service}
+
+### Publication Storage ### {#publication-storage}
+
+### Interaction Storage ### {#interaction-storage}
+For Interactions making use of notifications, the notifications MUST follow a speciified format to be processed, and for the relevant data to be extracted from the notiication. 
+
+#### Automatic notification processing #### {#interaction-notification-processing}
+Intercations could be added by using automatic notification processing.
+This requires a service to be watching the pod inbox, and filter new notifications to exectute the required actions if the sender has the appropriate authentication.
+This processing engine could then automatically update the resource metadata file with references to new comments, edit proposals, ...
+
+#### Appendable-metadata-file #### {#appendable-metadata-file}
+Provide a (separate ?,) appendable metadata file, that actors can append comment, ... metadata references to, provided they have the correct authentication.
+In this case, some sort of protection SHOULD implemented, that prevents actors from appending data differing from a specified format. e.g. only triples of the form <publicationId> <ex:hasComment> <yourcommentId> can be added to the metadata file.
+
+
+### Metadata Storage ### {#metadata-storage}
+
+#### .meta file #### {#meta-file}
+
+#### describedby / seeAlso metadata #### {#describedby}
+Provide seeAlso metadata in rdf
+
+#### Link header #### {#link-seeAlso}
+Provide seeAlso / describedby metadata in the LINK header when retrieving the file.
+
+
+
+## Subscription service ## {#subscription-service}
+
+### Activitypub service ### {#activitypub-service}
+
+
+## Notifications ## {#notifications}
+
+### Notification-shape matching ### {#notification-shape-matching}
+
+### Automatic notification retrieval ### {#notification-retrieve}
+
+### Automatic notification processing ### {#notification-processing-agent}
+
+
+
+## Permissions ## {#req-permissions}
+
+### Group permissions ### {#req-group-permissions}
+Support is required for handling permission groups.
+An actor SHOULD be able to create, edit, and delete permission groups.
+Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group.
+
+### Activitypub permissions ### {#activitypub-permissions}
+The activitypub service requires permission checking functionality, according to the [specification](https://www.w3.org/TR/activitypub/).
+
+
+
+## API ## {#interace}
+The Mellon framework requires an API for external services to be able to retrieve the publications of an actor, and its metadata, to index these publications and provide services over these publications. This implies that there should be a semantic way for external applications to discover the locations of publications and their metadata on a pod, and retrieve this data, if the application has the correct permissions.
+
+### Tree shapes ### {#tree-shapes}
+OPTIONAL: Tree shapes can be used to indicate resource locations in a Solid pod environment.
+External services MAY be able to interpret these shapes, and retrieve resources from the relevant locations.
+
+### Tree Collection ### {#tree-collection}
+OPTIONAL: A Tree Collection can be specified for research papers, that MAY contain the shape of stored publications or RO-crates.
+External services MAY be able to parse this data, and retrieve the relevant resources this way.
+
+### RDF Collection ### {#rdf-collection}
+As a default fallback, an RDF Collection SHOULD be created in the user vCard, that contains references to all publications and their metadata.
+
+
+Definitions {#definitions}
+================================================================================
+
+<!-- A <dfn>notification</dfn> is a distinct individual, group, organization, or piece of
+software with an [=identity=] that can be strongly authenticated. -->
+
+<pre class="biblio">
+ {
+<!--  "webid": {
+    "href": "https://www.w3.org/2005/Incubator/webid/spec/identity/",
+    "title": "WebID 1.0",
+    "authors": [
+      "Tim Berners-Lee",
+      "Henry Story",
+      "Andrei Sambra"
+    ]
+  },
+  "did": {
+    "href": "https://www.w3.org/TR/did-core/",
+    "title": "Decentralized Identifiers (DIDs) v1.0",
+    "authors": [
+      "Drummond Reed",
+      "Manu Sporney",
+      "Dave Longley",
+      "Christopher Allen",
+      "Ryan Grant",
+      "Markus Sabadello"
+    ]
+    }-->
+  } 
+</pre>
