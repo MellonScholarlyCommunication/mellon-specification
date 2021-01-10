@@ -59,19 +59,19 @@ MIT License Copyright 2019 - 2020 UGent - Imec
 Introduction {#intro}
 ================================================================================
 The goal of the mellon project is to design a framework that enables scholarly communication over a decentralized network, where researchers can retain ownership and control over their published research.
-In order to design this framework, different approaches to distrubuted networks have to be considered, and technical limitations have to be overcome.
+In order to design this framework, different approaches to distributed networks have to be considered, and technical limitations have to be overcome.
 
-In [[#scholary-communication]], the requirements and vision for scholarly communication are explained.
+In [[#scholarly-communication]], the requirements and vision for scholarly communication are explained.
 In [[#decentralization]], an architecture is proposed for scholarly communication over decentralized networks based on pod based data storage.
 The artefacts required for scholarly communication are listed in [[$artefacts]].
 For the proposed architecture, concrete use-cases are worked out in [[#usecases]].
 From these use-cases, requirements are derived in [[#requirements]].
 
 
-Scholarly communication {#scholary-communication}
+Scholarly communication {#scholarly-communication}
 ================================================================================
 
-## Core functions of scholarly communication ## {#functions-scholary-communication}
+## Core functions of scholarly communication ## {#functions-scholarly-communication}
 For scholarly communication to be successful, [four core functions](http://www.dlib.org/dlib/september04/vandesompel/09vandesompel.html) have to be fulfilled.
 <table style="width:100%">
   <tr style="border-bottom: 1px solid #000;">
@@ -102,13 +102,13 @@ In the context of a decentralized network, registration can also be viewed as a 
 ## Researcher-centric scholarly communication model
 The goal is that researchers’ pods are hosted by their respective institutions, as part of the infrastructure provided in support of research and education. When a researcher moves on to another institution, the pod moves along and becomes hosted by the new institution. Researchers without institutional affiliation or with multiple affiliations can opt for commercial pod hosting platforms, national/regional academic hosting provisions that can be assumed to emerge, or host the pod themselves. Over time, a researcher’s pod accumulates an overview of scholarly contributions made throughout a career path. 
 
-## The role of Instutions in a decentralized scholarly communication network ## {#institutions-decentralized-network-trust}
+## The role of institutions in a decentralized scholarly communication network ## {#institutions-decentralized-network-trust}
 As decentralized networks do not have a single central service that actors can trust, actors in the network require an approach that allows them to trust other actors present in the network.
 
 In these networks, institutions can take on the role as the orchestrators of a decentralized scholarly communication network.
-These orchestrators connect the regisered researcher pods with the available service hubs in the network, and serve as a trusted mediator between the researchers and the service hubs.
-Service hubs can trust all researcher pods registered to a trusted orchestrator (managed by an institution), as they trust that every researcher pod registered to that orchestrator is managed by a person affiliated with the managing institution of that orchestrator.
-In the other direction, researchers registering their pods to the orchestrator managed by their institution trust the service hubs advertised by that orchestrator.
+These orchestrators connect the registered researcher pods with the available service hubs in the network, and serve as a trusted mediator between the researchers and the service hubs.
+Service hubs can trust all researcher pods registered to / making use of a trusted orchestrator (managed by an institution), as they trust that every researcher pod registered to / using that orchestrator is managed by a person affiliated with the managing institution of that orchestrator.
+In the other direction, researchers registering their pods to / using the orchestrator managed by their institution trust the service hubs advertised by that orchestrator.
 In the case of problems, the institution can change from / advertise multiple different service hubs, by changing the policies.
 
 This way, institutions actively participate in the decentralized network of scholarly communication as orchestrators and trusted parties.
@@ -119,7 +119,7 @@ Architecture of a Decentralized Network for Scholarly Communication {#decentrali
 
 <figure>
 	<img src="images/ecosystem.png" />
-	<figcaption>A decentralized, decoupled scholarly communication ecosystem with researcher pod, scholarly dashboard, orchestrator, Service Hubs, scholarly browser.</figcaption>
+	<figcaption>A decentralized, decoupled scholarly communication ecosystem with researcher pod, scholarly dashboard, orchestrator, Service Hubs, scholarly browser. </figcaption>
 </figure>
 
 
@@ -141,7 +141,7 @@ A researcher pod stores the following information:
   </tr>
   <tr>
     <th>Functions of scholarly communication</th> 
-    <td>Lifecycle event metadata pertaining to the fulfilment of the functions of scholarly communication for the researcher’s personal contributions. Through the intermediation of the Orchestrator, this information is obtained via Service Hubs of platforms that fulfil the respective functions</td>
+    <td>Lifecycle event metadata pertaining to the fulfillment of the functions of scholarly communication for the researcher’s personal contributions. Through the intermediation of the Orchestrator, this information is obtained via Service Hubs of platforms that fulfil the respective functions</td>
   </tr>
   <tr>
     <th>Peer contributions</th> 
@@ -154,30 +154,29 @@ A researcher pod stores the following information:
 </table>
 
 ## Orchestrator (managed by Institutions) ## {#orchestrator}
-Institutions participate in the decentralized scholarly communication network by providing one or more orchestrators that the researchers affiliated with the institutions can register to.
-This way, an institution manages their affiliated researchers, and has a responsability for the registered pods. 
-The orchestrators connect researcher pods with a relevant set of service hubs that enable the researcher pod to fulfill all the [functions of scholarly communication](#functions-scholary-communication) 
+Institutions participate in the decentralized scholarly communication network by providing orchestrator services to the network. In this way, an institution can manages their affiliated researchers using these orchestrators. 
+The orchestrators connect researcher pods with a relevant set of service hubs that enable the researcher pod to fulfill all the [functions of scholarly communication](#functions-scholarly-communication) 
 In its role as an orchestrator, it can set policies that are enforced in the communication between the research pods and the service hubs.
 
 Orchestrators should be linked to institutions to allow for [trust based operating of the network](#institutions-decentralized-network-trust).
 
 ## Service hubs ## {#service-hub}
 Service hubs provide services to the network.
-These services are necessary to enable the execution of the [functions of scholarly communication](#functions-scholary-communication) by the network.
+These services are necessary to enable the execution of the [functions of scholarly communication](#functions-scholarly-communication) by the network.
 Service hubs are a way to decentralize the functionality that is currently primarily contained to centralized services.
 Orchestrators have a choice between all the available service hubs in the network to, and can require one (or multiple) of the available service hubs to be used by the affiliated researcher pods to fulfill a function of scholarly communication.
 
 ## Collector ## {#collector}
 A Collector is a service that collects and indexes information on the artefacts in the network.
 It collects this information from the available service hubs in the network. (It might make sense to also allow collectors to retrieve information directly from researcher pods. Else the interaction artefacts have to pass through a service hub that can be retrieved by a collector in the network. Also it can bypass service hubs if they are not willing to provide all required information themselves / only partly).
-It stores information about the available artefacts, and the linked lyfecycle events and interaction artefacts.
+It stores information about the available artefacts, and the linked lifecycle events and interaction artefacts.
 The collector provides an outward API that enables querying of the artefact information in the network. It can also provide indexing information to enable clients to filter over the exposed data. (This might be an interesting use case for event streams!).
 In the case of multiple distributed networks, collectors can collect data from / refer to other collectors in other networks to enable evaluating queries over all linked networks.
 
 ## Scholarly Dashboard ## {#scholarly-dashboard}
 The scholarly dashboard is the interface that can be used by researchers to execute the lifecycle events of an artefact (publish an artefact, review an artefact, interact with an artefact, ...)
 (This dashboard may also include functionality for direct interactions between researchers, however this is out of scope for a basis scholarly dashboard).
-A scholarly dashboard can be managed by an institution, requiring the users to have a data pod registered with the institution in order to use the dashboard to create and interact with artefacts in the network.
+A scholarly dashboard can be managed by an institution, requiring users to provide login credentials of said institution. (or be from external parties providing other possibilities / interactions?)
 
 ## Scholarly Browser ## {#scholarly-browser}
 The scholarly browser is the interface that can be used by anyone to query the distributed network for information on scholarly artefacts.
@@ -214,7 +213,7 @@ These artefacts are the result of research done by a researcher.
     <td>Images, datasets, software, ..., supporting the research and their respective metadata</td> 
   </tr>
   <tr>
-    <td>RO's</td> 
+    <td>Research objects</td> 
     <td>Research objects ([Research Object Crates](http://www.researchobject.org/ro-crate/)) is an approach to packaging research data and metadata. 
     This may be useful to create a unified semantic layer over published components of research.</td> 
   </tr>
@@ -293,7 +292,7 @@ This metadata enables actors in the network to follow the events in the artefact
 
 ## Subscribing to artefacts in the network ## {#subscribable-entities}
 Actors inside (and outside) the network may be interested in following specific research topics, authors, ... .
-This is a core function of scholarly communication: [Awareness](#functions-scholary-communication).
+This is a core function of scholarly communication: [Awareness](#functions-scholarly-communication).
 For scholarly communication, it should be possible to subscribe on all lifecycle events of artefacts in the network (for which an actor has the correct permissions).
 This can be handled by the available [Service Hubs for awareness](#service-hub) present in the network. [Collectors](#collector) present in the network can also pose as an awareness service hub, as it indexes lifecycle information of all artefacts present in the network
 These [Service Hubs for awareness](#service-hub) should be equipped to enable actors in the network to subscribe to specific lifecycle information for research artefacts that match given filter criteria.
@@ -303,59 +302,40 @@ The service hub should be able to advertise the available options for filtering 
 Use Cases {#usecases}
 ================================================================================
 
-## Joining a network
+## Joining a scholarly communication network
 In order to create or interact with artefacts in a scholarly communication network, a user must have a valid data pod environment to store these (interaction) artefacts.
 In order for these artefacts to be taken into the scholarly record, they have to be passed to the respective service hubs that fulfil these functions.
-For this to be possible, the data pod must be registered with an orchestrator, that will ensure that the created artefacts can follow the correct steps to be included in the scholarly record.
-
+For this to be possible, the data pod must have access to an orchestrator in the network, that will ensure that the created artefacts can follow the correct steps to be included in the scholarly record.
 
 ### Creating a data pod ### {#uc-create-pod}
 Bob wants to interact with published artefacts in the network, but does not have a data pod available to store these interactions.
-The [scholarly dashboard](#scholarly-dashboard) used to interact with artefacts in the network provides an option to login to an existing pod, register an existing data pod or to create a new data pod.
-Bob chooses the option to create a new pod, and is redirected to an environment where he can create a new data Pod (The available environments can depend on the institution managing the scholarly dashboard, and may require the registered data pods to be hosted one or more specific platforms).
+Any [scholarly dashboard](#scholarly-dashboard) used to interact with artefacts in the network SHOULD provide an option to login to an existing pod, register an existing data pod or to create a new data pod.
+Bob chooses the option to create a new pod, and is redirected to an environment where he can create a new data Pod (The available environments can be selected by the scholarly dashboard, as the use of specific platforms can be advertised / enforced).
 
-
-### Registring a data pod to the network ### {#uc-register-pod}
+### Participating in the network with a data pod ### {#uc-participate-network}
 Bob wants to interact with published artefacts in the network, and has a data pod available.
-Bob chooses the option of the [scholarly dashboard](#scholarly-dashboard) to register an existing data pod.
-The institution managing the scholarly dashboard checks the validity of the data pod and the pod owner, and may choose to register the applicant in their system.
-With the pod being registered to the network, it receives a reference to the orchestrator service(s) present in the network (and tied to that institution).
-
-### Logging in to a scholarly dashboard ### {#uc-login-dashboard}
-TODO
+Bob chooses the option of the [scholarly dashboard](#scholarly-dashboard) to login with an existing data pod.
+The institution managing the scholarly dashboard MAY require Bob to authenticate himself to the institution before allowing use of the dashboard.
+On authentication, Bob is given access to the functionality available in the scholarly dashboard, and interactions in with artefacts may be handled by an orchestrator already linked in the Bob's pod, or by an orchestrator advertised / enforced by the scholarly dashboard.
 
 
+## The researcher profile ## {#uc-profile}
+On initial participation in a scholarly communication network, actors in the network MAY enforce that connecting data pods require a researcher profile to be complete, in order to validate affiliations to certain institutions.
+Any [scholarly dashboard](#scholarly-dashboard) used to interact with the scholarly communication network SHOULD provide functionality / redirect to services for researchers to create their profile.
+Institutions SHOULD provide functionality for researchers to receive a token of sorts proving their affiliation to the institution, that can be used by actors in the network to verify the researcher's affiliations.
 
-### Logging in to existing researcher pod ### {#login-pod}
-Bob already has an existing pod environment, and wants to login on the Mellon project web view.
-On opening the view, he is given the option to login to an existing pod, or to create a new pod.
-Bob chooses the option to login to an existing pod, and is redirected to an environment to login to a new Solid Pod.
-On login, Bob is redirected to the landing page.
+#### Creating a researcher profile #### {#uc-create-researcher-profile}
+Bob logs on to a [scholarly dashboard](#scholarly-dashboard) with a newly created data pod by authenticating himself to the dashboard.
+The dashboard analyses Bob's data pod, and cannot discover a researcher profile.
+The dashboard SHOULD provide a way for Bob to create a researcher profile / the dashboard can create a researcher profile automatically if it has the available information using Bob's authentication to the dashboard.
+Bob's researcher profile is now added to Bob's data pod, and is passed to one or more orchestrators in the network (connected to Bob's data pod or to the scholarly browser).
+The orchestrators make sure that the information is passed to the relevant services, so that Bob's updated information is now available in the network.
 
-
-
-
-## Managing a researcher profile ## {#uc-profile}
-A framework designed for scholarly communication requires researchers to be able to setup and edit a personal profile.
-A profile is required for actors in the network to discover and index the researchers present in a network.
-A profile SHOULD be created on joining a network, as the profile information is required to verify the identity of the researcher managing the data pod (services can decide to not trust pods of which the validitiy / researcher cannot be verified).
-
-
-### View researcher profile ### {#view-profile}
-Bob encounteres an interesting research paper made by Alice.
-Bob clicks on Alice's name, and is redirected to a profile viewer.
-This profile viewer shows all relevant information available for Alice.
-It also gives the option to subscribe to all future research of Alice, or to block Alice from subscribing to your research. [[#subscribe-to-actor]].
-
-
-#### Edit researcher profile #### {#edit-profile}
-While viewing his own profile, Bob decides to edit the profile information.
-Bob clicks on the edit button to go to a profile editor view.
-Bob fills in additional information about work location and previous work locations.
-Bob saves the edits, and they are saved to his profile.
-Bob is redirected to the profile view, where the information has been updated, and is displayed correctly according to the changes made.
-
-This action can be performed for all profile cards where Bob has the correct edit permissions (which is usually only his own profile card).
+### Updating a researcher profile ### {#view-profile}
+Bob has changed jobs and now works at a new research institution.
+The Scholarly Dashboard of the new institution SHOULD provide functionality for Bob to update his researcher profile. 
+On submission of the new information, it is passed to one or more orchestrators in the network (connected to Bob's data pod or to the scholarly browser).
+The orchestrators make sure that the information is passed to the relevant services, so that Bob's updated information is now available in the network.
 
 ### Institution Profile ### {#institution-profile}
 
@@ -384,17 +364,17 @@ e.g. subscribe to research with a certain title / from a certain author / that c
   </tr>
   <tr>
     <td>id (one specific research)</td> 
-    <td>research view / author profile / orginisation / 3d party indexing services</td> 
+    <td>research view / author profile / indexing services</td> 
     <td>All lifecycle events for the specific research</td>
   </tr>
   <tr>
     <td>author</td> 
-    <td>author profile / orginisation / 3d party indexing services</td> 
+    <td>author profile / indexing services</td> 
     <td>Creation of new research, updates of existing research</td>
   </tr>
   <tr>
     <td>tags, title, date, ...</td> 
-    <td>author profile (only for research by this author) / orginisation (only for research by this orginisation) / 3d party indexing services (only for research indexed by this 3d party service)</td> 
+    <td>author profile (only for research by this author) / indexing services</td> 
     <td>Creation of new research, updates of existing research</td>
   </tr>
 </table>
@@ -419,7 +399,7 @@ Now Bob has a list of all actors to his last publication.
 
 ### View entities an actor is subscribed to
 Bob wishes to see all actors he is subscribed to.
-For this, Bob navigates to his subscription view, where a list of all actors that Bob is subsribed to is available.
+For this, Bob navigates to his subscription view, where a list of all actors that Bob is subscribed to is available.
 Separate tabs are made available for the different kinds of subscribable entities in the network.
 
 ### Subscribe to a new entity
@@ -436,14 +416,14 @@ Bob wishes to receive updates of events of a certain publication that he is inte
 Bob heads to the publication view, and clicks the follow option.
 For all future events in the publication lifecycle, Bob now receives a notification.
 
-### Unsubscribe from an entitiy 
+### Unsubscribe from an entity 
 Bob does not wish to receive updates from a certain actor anymore that he is following.
 Bob navigates to the following view, showing the entities that Bob is following in the network.
-Bob searches for the entity in the list that he wants to unsibscribe from.
-Bob clicks ubsubscribe, after which Bob is unsubscribed from the entity and the entitiy is removed from the list.
+Bob searches for the entity in the list that he wants to unsubscribe from.
+Bob clicks unsubscribe, after which Bob is unsubscribed from the entity and the entity is removed from the list.
 
 ### Block actors subscribed to entity 
-Bob wishes to remove an actor from his followers list (or from the followers list of one of his pubications).
+Bob wishes to remove an actor from his followers list (or from the followers list of one of his publications).
 For this, Bob navigates to the followers view of the resource in question.
 Here, bob searches for the actor that he wants to block from a resource.
 Bob adds this actor to the blocked list for the resource in question.
@@ -465,7 +445,7 @@ This allows the most up to date versions of research to be available for all par
 
 #### View publication versions #### {#view-versions}
 Bob wishes to see the available version for a publication.
-In the publication view, an option is availble to select the different versions of the publication.
+In the publication view, an option is available to select the different versions of the publication.
 Bob selects the desired version, and the publication view is updated to show the data of the selected publication version.
 
 #### Link publication resources with a publication version #### {#link-versions}
@@ -553,17 +533,17 @@ TODO::
 
 
 ### Subscribe pod to service ### {#service-hub-subscribe}
-Bob wishes to make use of the Ugent service that indexes and archives all research of the UGent.
-Bob registres his pod to the UGent service via the UGent service endpoint.
-Bob grants the UGent service READ access to the publications of his pod.
-The UGent service can now index Bob's publications, and provide services such as related publications, statistics, ... 
-The UGent service can also act as an [activitypub](https://www.w3.org/TR/activitypub/) service.
+Bob wishes to make use of the university service that indexes and archives all research of the university.
+Bob registers his pod to the university service via the university service endpoint.
+Bob grants the university service READ access to the publications of his pod.
+The university service can now index Bob's publications, and provide services such as related publications, statistics, ... 
+The university service can also act as an [activitypub](https://www.w3.org/TR/activitypub/) service.
 
 ### Certify publications ### {#service-hub-certification}
-On publication of a resource, Bob wants to cerify this publication with a service hub.
+On publication of a resource, Bob wants to certify this publication with a service hub.
 For this, Bob sends the publication to a verification service hub .
 This service MUST return a timestamped proof that the publication has been proposed for certification.
-On verification that the publication is genuine, the service sends a notification to the pod inbox with a ceritification that the research has been verified by the service hub .
+On verification that the publication is genuine, the service sends a notification to the pod inbox with a certification that the research has been verified by the service hub .
 
 
 
@@ -590,22 +570,22 @@ Because of this, EITHER research MUST be published in a set format, or services 
 
 #### In-progress research storage #### {#publication-storage}
 Supporting in-progress research may provide an easy platform for research groups to evaluate research internally before publishing the research and making it public.
-In-progress research does not require additional functionality from the framework, but requires a different template to be available on upload, where permissions are automatically set on private for all resources, except for actors or groups of actors that are selected by the uploades (such as the research group of the uploader).
+In-progress research does not require additional functionality from the framework, but requires a different template to be available on upload, where permissions are automatically set on private for all resources, except for actors or groups of actors that are selected by the uploader (such as the research group of the uploader).
 
 #### Research Object Crate storage #### {#publication-storage}
-Research Object Crates or [RO-crates](https://www.researchobject.org/ro-crate/) are a format to store research projects, that allow different aspects of the research (paper, code, dataset, configuration files, ... ) to be bundeled.
+Research Object Crates or [RO-crates](https://www.researchobject.org/ro-crate/) are a format to store research projects, that allow different aspects of the research (paper, code, dataset, configuration files, ... ) to be bundled.
 The Mellon framework would certainly benefit in requiring applications built on the Mellon Framework to be able to process RO-creates.
 This also allows datasets used for publications to be made public (given that permissions are set to public), and be reused by other researchers in the field.
 
 ### Interaction Storage ### {#interaction-storage}
-For Interactions making use of notifications, the notifications MUST follow a speciified format to be processed, and for the relevant data to be extracted from the notiication. 
+For Interactions making use of notifications, the notifications MUST follow a specified format to be processed, and for the relevant data to be extracted from the notiication. 
 
 #### Automatic notification processing #### {#interaction-notification-processing}
-Intercations could be added by using automatic notification processing.
+Interactions could be added by using automatic notification processing.
 This requirement is handled in [[#rq-notification-processing-agent]].
 
-#### Appendable-metadata-file #### {#appendable-metadata-file}
-Provide a (separate ?,) appendable metadata file, that actors can append comment, ... metadata references to, provided they have the correct authentication.
+#### Appending to metadata file #### {#appending-to-metadata-file}
+Provide a (separate ?,) metadata file with specific permissions set, that actors can append comment, ... metadata references to, provided they have the correct authentication.
 In this case, some sort of protection SHOULD implemented, that prevents actors from appending data differing from a specified format. e.g. only triples of the form <publicationId> <ex:hasComment> <yourcommentId> can be added to the metadata file.
 
 
@@ -614,7 +594,7 @@ There are multiple solutions to store metadata for a non-rdf resource on a Linke
 
 #### .meta file #### {#meta-file}
 A straightforward way to store file metadata on a Linked Data Platform is making use of a .meta file. As the .meta is a naming convention, for every file the .meta file can be automatically retrieved.
-However, lately this seems to have been getting less and less traction in the comunity?
+However, lately this seems to have been getting less and less traction in the community?
 
 #### describedby / seeAlso metadata #### {#describedby}
 Metadata can be provided in a more semantic way using predicates as ```rdf:seeAlso```.
@@ -635,12 +615,12 @@ There should be a semantic way for external applications and services to discove
 
 ### Posting data to a pod ### {#req-pod-posting-data}
 External services that need to post data to the researcher pod (e.g. registration service hub returning a certificate of registration) need to be aware of the location where they can post this data.
-This could be handles with solutions like shape trees, where the pod indicates a location for data being added matching a predetermined format, or this can be done by notifying the pod of data needing to be added, and putting the responsability of retrieving and storing the data at the data pod.
+This could be handles with solutions like shape trees, where the pod indicates a location for data being added matching a predetermined format, or this can be done by notifying the pod of data needing to be added, and putting the responsibility of retrieving and storing the data at the data pod.
 Data discovery is required for external services to retrieve artefacts from a researcher pod, on being notified of new data.
 There should be a semantic way for external applications and services to discover the locations of certain types of artefacts and their metadata, and retrieve this data, given the correct permissions.
 
 ### Ontologies ### {#ontology}
-Thought should be given to what ontologies are used to represent semantic information in the Mellon framework. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholary communication frameworks outside of its network.
+Thought should be given to what ontologies are used to represent semantic information in the Mellon framework. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network.
 
 
 ### Publication versioning ### {#rq-publication-versioning}
@@ -669,7 +649,7 @@ In this case however publications SHOULD provide a unique outbox for the activit
 
 ### Notifications ### {#notifications}
 Notifications are at the center of passing messages between actors in a network of Linked Data Platforms.
-The Activitypub procotol specified above [[#activitypub]] requires notifications to notify followers of change in the entities they are subscribed to.
+The Activitypub protocol specified above [[#activitypub]] requires notifications to notify followers of change in the entities they are subscribed to.
 However, as notifications are prevalent in these networks, they require efficient tooling to retrieve and process.
 
 #### Notification shape matching #### {#notification-shape-matching}
@@ -685,7 +665,7 @@ These tools MAY incorporate shape matching tools [[#notification-shape-matching]
 #### Automatic notification processing #### {#rq-notification-processing-agent}
 Applications built on the Mellon Framework may require automatic actions to be executed on receiving notifications matching a given shape.
 For matching the notification shape, shape matching tools [[#notification-shape-matching]] are required.
-Automatic processing of notifications requires an active agent to be watching the pod inbox, and filter the new notifications to exectute the required actions if the sender has the appropriate permissions to execute the required action.
+Automatic processing of notifications requires an active agent to be watching the pod inbox, and filter the new notifications to execute the required actions if the sender has the appropriate permissions to execute the required action.
 An automatic processing agent can be used to update resource metadata, in contrast to allowing external actors to directly update resource metadata.
 This gives much more control over what can be added, as the notification processing agent can be tuned to refuse all attempted updates if they do not conform to a given shape.
 
