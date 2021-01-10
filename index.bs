@@ -71,7 +71,7 @@ From these use-cases, requirements are derived in [[#requirements]].
 Scholarly communication {#scholary-communication}
 ================================================================================
 
-## Core functions of scholarly communication {#functions-scholary-communication}
+## Core functions of scholarly communication ## {#functions-scholary-communication}
 For scholarly communication to be successful, [four core functions](http://www.dlib.org/dlib/september04/vandesompel/09vandesompel.html) have to be fulfilled.
 <table style="width:100%">
   <tr style="border-bottom: 1px solid #000;">
@@ -102,7 +102,7 @@ In the context of a decentralized network, registration can also be viewed as a 
 ## Researcher-centric scholarly communication model
 The goal is that researchers’ pods are hosted by their respective institutions, as part of the infrastructure provided in support of research and education. When a researcher moves on to another institution, the pod moves along and becomes hosted by the new institution. Researchers without institutional affiliation or with multiple affiliations can opt for commercial pod hosting platforms, national/regional academic hosting provisions that can be assumed to emerge, or host the pod themselves. Over time, a researcher’s pod accumulates an overview of scholarly contributions made throughout a career path. 
 
-## The role of Instutions in a decentralized scholarly communication network {#institutions-decentralized-network-trust}
+## The role of Instutions in a decentralized scholarly communication network ## {#institutions-decentralized-network-trust}
 As decentralized networks do not have a single central service that actors can trust, actors in the network require an approach that allows them to trust other actors present in the network.
 
 In these networks, institutions can take on the role as the orchestrators of a decentralized scholarly communication network.
