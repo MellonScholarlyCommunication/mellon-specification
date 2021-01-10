@@ -1,5 +1,5 @@
 <pre class='metadata'>
-Title: Use Cases and Requirements for Linked Data Notifications in the Mellon Project
+Title: Use Cases and Requirements for the Mellon Project
 Shortname: ldnp-req
 Level: 1
 Max ToC Depth: 3
@@ -9,7 +9,7 @@ URL:
 Editor: Ruben Dedecker (UGent - Imec)
 Markup Shorthands: markdown yes
 Abstract:
-  Use Cases and Requirements for Linked Data Notifications in the Mellon Project.
+  Use Cases and Requirements for the Mellon Project.
 </pre>
 
 <!-- For bikeshed style overrides -->
@@ -62,7 +62,7 @@ The goal of the mellon project is to design a framework that enables scholarly c
 In order to design this framework, different approaches to distributed networks have to be considered, and technical limitations have to be overcome.
 
 In [[#scholarly-communication]], the requirements and vision for scholarly communication are explained.
-In [[#decentralization]], an architecture is proposed for scholarly communication over decentralized networks based on pod based data storage.
+In [[#architecture]], an architecture is proposed for scholarly communication over decentralized networks based on pod based data storage.
 The artefacts required for scholarly communication are listed in [[$artefacts]].
 For the proposed architecture, concrete use-cases are worked out in [[#usecases]].
 From these use-cases, requirements are derived in [[#requirements]].
@@ -99,7 +99,7 @@ For scholarly communication to be successful, [four core functions](http://www.d
 These four functions are required in the network to be able to do scholarly communication.
 In the context of a decentralized network, registration can also be viewed as a way to link researchers to their institutions, allowing for trust in the validity of the researcher and their research.
 
-## Researcher-centric scholarly communication model
+## Researcher-centric scholarly communication model ## {#research-centric-model}
 The goal is that researchers’ pods are hosted by their respective institutions, as part of the infrastructure provided in support of research and education. When a researcher moves on to another institution, the pod moves along and becomes hosted by the new institution. Researchers without institutional affiliation or with multiple affiliations can opt for commercial pod hosting platforms, national/regional academic hosting provisions that can be assumed to emerge, or host the pod themselves. Over time, a researcher’s pod accumulates an overview of scholarly contributions made throughout a career path. 
 
 ## The role of institutions in a decentralized scholarly communication network ## {#institutions-decentralized-network-trust}
@@ -114,7 +114,7 @@ In the case of problems, the institution can change from / advertise multiple di
 This way, institutions actively participate in the decentralized network of scholarly communication as orchestrators and trusted parties.
 
 
-Architecture of a Decentralized Network for Scholarly Communication {#decentralization}
+Architecture of a Decentralized Network for Scholarly Communication {#architecture}
 ================================================================================
 
 <figure>
@@ -183,7 +183,7 @@ The scholarly browser is the interface that can be used by anyone to query the d
 It provides information about the artefact, as well as lifecycle events and the available interactions with the artefact.
 
 
-Artefacts of scholarly communication {#artefacts}
+Artefacts of scholarly communication {#artefacts-scholarly-communication}
 ================================================================================
 The functions of scholarly communication produce artefacts.
 These artefacts need to be stored on the relevant locations, and should be retrievable by the appropriate actors to fulfil the functions of scholarly communication.
@@ -299,10 +299,44 @@ These [Service Hubs for awareness](#service-hub) should be equipped to enable ac
 E.g. an actor should be able to subscribe to creation lifecycle events of artefacts tagged with "Scholarly Communication".
 The service hub should be able to advertise the available options for filtering research, and the lifecycle information which can be subscribed to.
 
+
+
+Policies {#policies}
+================================================================================
+Policies must be enforcable in the network to enforce the policies present in the research institutions. There are different actors in the network that can enforce different kinds of policies.
+
+
+## Researcher pod policies ## {#researcher-pod-policies}
+The researcher has full control over his researcher pod.
+Because of this, the researcher can set policies that must be adhered to for their own data pod.
+An example of this is providing shape trees that enforce where certain data must be stored on the pod (interaction artefacts, lifecycle information, ...).
+Because of these policies, it is important that all information submitted from a researcher pod is also stored and archived by the service hubs, as the policies set by a data pod may reject certain data from being stored on the pod.
+
+## Orchestrator policies ## {#orchestrator-policies}
+The orchestrators in the network serve as the mediators between the researcher pods and the service hubs in the network.
+Because of this position, the orchestrator can enforce policies on the data being submitted from the researcher pods to the service hubs.
+Examples of enforceable policies are requiring artefacts to be peer reviewed before certification, requiring all artefact metadata to be present before submitting to services,  advertising / enforcing certain service hubs, ...)
+The orchestrator policies are set by the institution managing the orchestrator.
+
+## Scholarly Dashboard policies ## {#scholarly-dashboard-policies}
+The scholarly dashboard can enforce it's own set of policies.
+It can enforce the orchestrators that are used, decide on data formats, ...
+These policies can be essential to the correct working of the dashboard (e.g. require specific data formats to show statistics, edit artefacts, ...). 
+The scholarly dashboard policies are set by the institution managing the scholarly dashboard.
+
+
+## Service hub policies ## {#service-hub-policies}
+Service hubs may also enforce policies on the received submission.
+E.g. they may require all metadata to be filled out for a submitted artefact, or require a specific file format for submissions.
+Ideally these policies should be also enforced by the scholarly dashboard / orchestrator making use of the service.
+The service hub policies are set by the institution or third party managing the service hub.
+
+
+
 Use Cases {#usecases}
 ================================================================================
 
-## Joining a scholarly communication network
+## Joining a scholarly communication network ## {#joining-scholarly-communication-network}
 In order to create or interact with artefacts in a scholarly communication network, a user must have a valid data pod environment to store these (interaction) artefacts.
 In order for these artefacts to be taken into the scholarly record, they have to be passed to the respective service hubs that fulfil these functions.
 For this to be possible, the data pod must have access to an orchestrator in the network, that will ensure that the created artefacts can follow the correct steps to be included in the scholarly record.
@@ -312,7 +346,7 @@ Bob wants to interact with published artefacts in the network, but does not have
 Any [scholarly dashboard](#scholarly-dashboard) used to interact with artefacts in the network SHOULD provide an option to login to an existing pod, register an existing data pod or to create a new data pod.
 Bob chooses the option to create a new pod, and is redirected to an environment where he can create a new data Pod (The available environments can be selected by the scholarly dashboard, as the use of specific platforms can be advertised / enforced).
 
-### Participating in the network with a data pod ### {#uc-participate-network}
+### Participating in the network with an existing data pod ### {#uc-participate-network}
 Bob wants to interact with published artefacts in the network, and has a data pod available.
 Bob chooses the option of the [scholarly dashboard](#scholarly-dashboard) to login with an existing data pod.
 The institution managing the scholarly dashboard MAY require Bob to authenticate himself to the institution before allowing use of the dashboard.
@@ -324,7 +358,7 @@ On initial participation in a scholarly communication network, actors in the net
 Any [scholarly dashboard](#scholarly-dashboard) used to interact with the scholarly communication network SHOULD provide functionality / redirect to services for researchers to create their profile.
 Institutions SHOULD provide functionality for researchers to receive a token of sorts proving their affiliation to the institution, that can be used by actors in the network to verify the researcher's affiliations.
 
-#### Creating a researcher profile #### {#uc-create-researcher-profile}
+### Creating a researcher profile ### {#uc-create-researcher-profile}
 Bob logs on to a [scholarly dashboard](#scholarly-dashboard) with a newly created data pod by authenticating himself to the dashboard.
 The dashboard analyses Bob's data pod, and cannot discover a researcher profile.
 The dashboard SHOULD provide a way for Bob to create a researcher profile / the dashboard can create a researcher profile automatically if it has the available information using Bob's authentication to the dashboard.
@@ -337,260 +371,31 @@ The Scholarly Dashboard of the new institution SHOULD provide functionality for 
 On submission of the new information, it is passed to one or more orchestrators in the network (connected to Bob's data pod or to the scholarly browser).
 The orchestrators make sure that the information is passed to the relevant services, so that Bob's updated information is now available in the network.
 
-### Institution Profile ### {#institution-profile}
 
-#### View institution profile #### {#view-institution-profile}
-TODO::
-
-#### Edit institution profile #### {#edit-institution-profile}
-TODO::
-
-## Subscribing to entities in the network ## {#subscribe}
-Scholarly communication requires actors in the network to be able to follow the developments of existing research and to be notified of new research.
-As an actor is likely to not be interested in all research fields, the actor should be able to specify the relevant research for which the actor wishes to receive updates.
-
-There are multiple dimensions on which an actor should be able to subscribe to relevant research.
-To enable actors to subscribe to new research for a given dimension, functionality needs to be in place to automatically notify all actors subscribed to a certain dimensions. 
-e.g. subscribe to research with a certain title / from a certain author / that contains certain tags.
-
-
-
-<table style="width:100%">
-
-  <tr>
-    <th style="padding-top: 15px; padding-bottom: 15px;">Dimension of research on which can be filtered</th> 
-    <th style="padding-top: 15px; padding-bottom: 15px;">Actors that can index the relevant information</th>
-    <th style="padding-top: 15px; padding-bottom: 15px;">Events for which subscribers are notified</th>
-  </tr>
-  <tr>
-    <td>id (one specific research)</td> 
-    <td>research view / author profile / indexing services</td> 
-    <td>All lifecycle events for the specific research</td>
-  </tr>
-  <tr>
-    <td>author</td> 
-    <td>author profile / indexing services</td> 
-    <td>Creation of new research, updates of existing research</td>
-  </tr>
-  <tr>
-    <td>tags, title, date, ...</td> 
-    <td>author profile (only for research by this author) / indexing services</td> 
-    <td>Creation of new research, updates of existing research</td>
-  </tr>
-</table>
-
-To enable subscriptions to certain research dimensions, the actor responsible for handing these subscriptions needs to have infrastructure in place to keep track of the current subscribers for a given dimension, and notify these subscribers of new events.
-An actor is also required to indicate the dimensions for which they can support subscriptions (e.g. does the actor allow to subscribe on the tags / title / ... of available research).
-
-### View actors subscribed to entity 
-For all subscribable entities in the network, an actor should be able to view the actors subscribed to the entity, given the correct permissions.
-
-#### View actors subscribed to actor
-Bob wants to view the actors in the network that are subscribed to him.
-For this, Bob goes to his profile viewer, and goes to the followers view.
-This provides Bob with a list of all actors in the network following him.
-
-#### View actors subscribed to publication
-Bob wishes to view actors subscribed to his last publication.
-Bob navigates to the publication view of his last publication, 
-and clicks on the following tab.
-Now Bob has a list of all actors to his last publication.
-
-
-### View entities an actor is subscribed to
-Bob wishes to see all actors he is subscribed to.
-For this, Bob navigates to his subscription view, where a list of all actors that Bob is subscribed to is available.
-Separate tabs are made available for the different kinds of subscribable entities in the network.
-
-### Subscribe to a new entity
-Bob wishes to subscribe to a new entity in the network.
-
-#### Subscribe to a new actor #### {#subscribe-to-actor}
-Bob wishes to receive updates of events of his colleague Alice.
-For this, Bob heads to the profile of Alice, and clicks the follow option.
-This adds Alice to the following list of Bob, and adds Bob to the followers list of Alice.
-For all future events of Alice, Bob now receives a notification for the event.
-
-#### Subscribe to a new publication
-Bob wishes to receive updates of events of a certain publication that he is interested in.
-Bob heads to the publication view, and clicks the follow option.
-For all future events in the publication lifecycle, Bob now receives a notification.
-
-### Unsubscribe from an entity 
-Bob does not wish to receive updates from a certain actor anymore that he is following.
-Bob navigates to the following view, showing the entities that Bob is following in the network.
-Bob searches for the entity in the list that he wants to unsubscribe from.
-Bob clicks unsubscribe, after which Bob is unsubscribed from the entity and the entity is removed from the list.
-
-### Block actors subscribed to entity 
-Bob wishes to remove an actor from his followers list (or from the followers list of one of his publications).
-For this, Bob navigates to the followers view of the resource in question.
-Here, bob searches for the actor that he wants to block from a resource.
-Bob adds this actor to the blocked list for the resource in question.
-
-
-## Publications ## {#publications}
-
-### Add new publication ### {#add-publications}
-Bob decides to publish a new research paper.
-As the research was never uploaded before, Bob now uploads the resource as a publication.
-On upload, the research is sent to a service hub for verification [[#service-hub-certification]].
-As the resource is published, READ permissions for the research are set to public.
-Bob decides to give public permissions to interact with the resource [[#permissions]].
-
-
-### Publication versioning ### {#publication-versioning}
-It may be of use to incorporate a versioning system for (published?) research.
-This allows the most up to date versions of research to be available for all parties, as well as for interactions such as comments on different versions of the publication to still make sense when the research has been update.
-
-#### View publication versions #### {#view-versions}
-Bob wishes to see the available version for a publication.
-In the publication view, an option is available to select the different versions of the publication.
-Bob selects the desired version, and the publication view is updated to show the data of the selected publication version.
-
-#### Link publication resources with a publication version #### {#link-versions}
-Bob is going through the reviews of a publication.
-Bob notices a review was done on an older version of the publication. By following the reference to the outdated version of the publication, Bob is redirected to the publication view for the older version of the publication.
-
-
-### In-progress research ### {#in-progress-research}
-
-#### Uploading in-progress research #### {#upload-in-progress-research}
-Bob uploads in-progress research to his solid pod.
-As the research is still in progress, Bob flags the research project as in-progress.
-On upload, Bob decides his research group can have read access to the resources, as well as the possibility to comment on the resource or propose edits. He [sets these permissions](#permissions) in the upload screen [[#permissions]].
-
-#### Publish in-progress research #### {#publish-in-progress-research}
-After completing the research, and finishing the paper, Bob decides to publish the research.
-As the research was already uploaded as in-progress, Bob now has the option to publish the research. This flags the research as published, and sends the research to a 3d party to be verified [[#service-hub-certification]].
-
-
-
-### Publication permissions ### {#publications-permissions-stump}
-For use cases involving permissions, see [[#publication-permissions]]
-
-
-## Interactions ## {#interactions}
-Scholarly communication requires the ability for different actors in the network to interact with each other and with the done research and publications.
-
-
-
-### Comment ### {#interaction-comment}
-
-### Propose edit ### {#interaction-propose-edit}
-Bob is evaluating the research of his colleague Alice, that is still in-progress.
-In this process, he finds some things that should be adapted, and proposes some edits on the research paper. These edits are sent to Alice's pod using the notification mechanism, and are added as metadata to the in-progress research.
-A second colleague with full access to the in progress research sees the proposed edits, and decides to edit the paper to incorporate the proposed edits.
-
-This action depends on the type of publication, or can be outsourced to external tooling.
-
-
-
-
-## Permissions ## {#permissions}
-TODO::
-
-### Actor follower permissions ### {#actor-permissions}
-
-#### READ permissions #### {#follower-read-permissions}
-
-#### WRITE permissions #### {#follower-write-permissions}
-
-#### INTERACTION permissions #### {#follower-interaction-permissions}
-
-#### CONTROL permissions #### {#follower-control-permissions}
-
-
-### Publication follower permissions ### {#publication-permissions}
-
-#### READ permissions #### {#publication-read-permissions}
-
-#### WRITE permissions #### {#publication-write-permissions}
-
-#### INTERACTION permissions #### {#publication-interaction-permissions}
-
-#### CONTROL permissions #### {#publication-control-permissions}
-
-### Group permissions ### {#group-permissions}
-
-#### Create group permissions #### {#create-group-permissions}
-
-#### Edit group permissions #### {#edit-group-permissions}
-
-
-
-
-## News feed ## {#feed}
-TODO::
-
-### Personalized news feed ### {#news-feed}
-
-### Post feed of other actors ### {#post-feed}
-
-
-
-## Third party services ## {#service-hub}
-
-
-### Subscribe pod to service ### {#service-hub-subscribe}
-Bob wishes to make use of the university service that indexes and archives all research of the university.
-Bob registers his pod to the university service via the university service endpoint.
-Bob grants the university service READ access to the publications of his pod.
-The university service can now index Bob's publications, and provide services such as related publications, statistics, ... 
-The university service can also act as an [activitypub](https://www.w3.org/TR/activitypub/) service.
-
-### Certify publications ### {#service-hub-certification}
-On publication of a resource, Bob wants to certify this publication with a service hub.
-For this, Bob sends the publication to a verification service hub .
-This service MUST return a timestamped proof that the publication has been proposed for certification.
-On verification that the publication is genuine, the service sends a notification to the pod inbox with a certification that the research has been verified by the service hub .
-
-
-
+TODO:: additional use cases
 
 
 
 Requirements {#requirements}
 ================================================================================
-In this section the requirements are listed based on the use cases proposed in [[#usecases]].
-
-## Solid Data Storage ## {#solid-storage}
-TODO:
-The Mellon framework aims to provide researches with the ability to publish their own research, and keep control of the data in the process.
-For this, pod environments such as Solid, that can be hosted by research groups themselves or on third party services, can be used.
-
-### Publication storage ### {#publication-storage}
-Publications can be stored as documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in [[#req-data-discovery]].
+In this section the requirements are listed based on the proposed architecture [[#architecture]] and use cases [[#usecases]].
 
 
-#### Publication format #### {#publication-format}
-The format of a publication has consequences on the interactions that are possible with the publication.
-Interactions possible with html files, will not be possible for research stored in a PDF or LATEX format.
-Because of this, EITHER research MUST be published in a set format, or services SHOULD advertise the formats they accept [[#services]].
 
-#### In-progress research storage #### {#publication-storage}
-Supporting in-progress research may provide an easy platform for research groups to evaluate research internally before publishing the research and making it public.
-In-progress research does not require additional functionality from the framework, but requires a different template to be available on upload, where permissions are automatically set on private for all resources, except for actors or groups of actors that are selected by the uploader (such as the research group of the uploader).
+## Data Storage ## {#rq-solid-storage}
+To provide researchers with the possibility to store their own research artefacts and interactions, while keeping control of the data in the process, pod environments such as Solid can be used.
+These can be hosted by the research institutions themselves, or by recommended third party services.
 
-#### Research Object Crate storage #### {#publication-storage}
-Research Object Crates or [RO-crates](https://www.researchobject.org/ro-crate/) are a format to store research projects, that allow different aspects of the research (paper, code, dataset, configuration files, ... ) to be bundled.
-The Mellon framework would certainly benefit in requiring applications built on the Mellon Framework to be able to process RO-creates.
-This also allows datasets used for publications to be made public (given that permissions are set to public), and be reused by other researchers in the field.
+### Research Artefact Storage ### {#rq-artefact-storage}
+Research artefacts (Papers, images, datasets, ...) can be stored as (non-)rdf documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in [[#rq-data-discovery]].
 
-### Interaction Storage ### {#interaction-storage}
-For Interactions making use of notifications, the notifications MUST follow a specified format to be processed, and for the relevant data to be extracted from the notiication. 
-
-#### Automatic notification processing #### {#interaction-notification-processing}
-Interactions could be added by using automatic notification processing.
-This requirement is handled in [[#rq-notification-processing-agent]].
-
-#### Appending to metadata file #### {#appending-to-metadata-file}
-Provide a (separate ?,) metadata file with specific permissions set, that actors can append comment, ... metadata references to, provided they have the correct authentication.
-In this case, some sort of protection SHOULD implemented, that prevents actors from appending data differing from a specified format. e.g. only triples of the form <publicationId> <ex:hasComment> <yourcommentId> can be added to the metadata file.
+### Interaction artefacts storage ### {#rq-interaction-artefact-storage}
+Research artefacts (Papers, images, datasets, ...) 
+Publications can be stored as documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in [[#rq-data-discovery]].
 
 
-### Metadata Storage ### {#metadata-storage}
-There are multiple solutions to store metadata for a non-rdf resource on a Linked Data Platform. However, applications built over linked data should not only implement one method, but should fall back to other solutions if the metadata file cannot be retrieved using one approach. This enables the applications to interact with resources that are stored using another approach to storing metadata.
+### Metadata Storage ### {#rq-metadata-storage}
+There are multiple solutions to store metadata for (non-)rdf data on a Linked Data Platform. However, it may benefit applications to support multiple approaches to metadata storage, and fall back on less ideal approaches in case the required metadata cannot be discovered.
 
 #### .meta file #### {#meta-file}
 A straightforward way to store file metadata on a Linked Data Platform is making use of a .meta file. As the .meta is a naming convention, for every file the .meta file can be automatically retrieved.
@@ -606,139 +411,114 @@ A third solution is to provide [Link Relations](https://www.w3.org/TR/ldp/#link-
 This solution returns the link to the metadata file in the response header of the HTTP request.
 Using this solution in combination with the previous solution of providing the link to the metadata file in the RDF data where the resource is stored, provides the most complete approach to storing metadata for a resource.
 
-
-
-
-### Data discovery ### {#req-data-discovery}
+### Data Discovery ### {#rq-data-discovery}
 Data discovery is required for external services to retrieve artefacts from a researcher pod, on being notified of new data.
 There should be a semantic way for external applications and services to discover the locations of certain types of artefacts and their metadata, and retrieve this data, given the correct permissions.
+Currently, **shape trees** are considered as the go-to approach to enable data discovery on linked data platforms.
 
-### Posting data to a pod ### {#req-pod-posting-data}
+### Location aware data storage ### {#rq-location-aware-storage}
 External services that need to post data to the researcher pod (e.g. registration service hub returning a certificate of registration) need to be aware of the location where they can post this data.
-This could be handles with solutions like shape trees, where the pod indicates a location for data being added matching a predetermined format, or this can be done by notifying the pod of data needing to be added, and putting the responsibility of retrieving and storing the data at the data pod.
-Data discovery is required for external services to retrieve artefacts from a researcher pod, on being notified of new data.
-There should be a semantic way for external applications and services to discover the locations of certain types of artefacts and their metadata, and retrieve this data, given the correct permissions.
+The **shape tree** approach used for data discovery can also be used to make the actor posting data aware of the location where data matching a given shape should be posted.
 
-### Ontologies ### {#ontology}
-Thought should be given to what ontologies are used to represent semantic information in the Mellon framework. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network.
-
-
-### Publication versioning ### {#rq-publication-versioning}
-Versioning is a concept that is very relevant for scholarly communication, as publications can be iterated upon (incorporating reviews, ...).
+### Artefact versioning ### {#rq-artefact-versioning}
+Versioning is a concept that is very relevant for scholarly communication, as certain artefacts (datasets, papers, ...) can be iterated upon (incorporating reviews, ...).
 In order to support this behavior, a versioning system must be in place that allows for actors in the network to retrieve different versions of the same research publication.
+This versioning system also should take into account the available lifecycle event information for the artefacts in question (Using the avialable lifecycle information, an actor in the network SHOULD be able construct the whole timeline of an artefact: creation, updates, publication, interactions, ...).
+This concept could also be applied for interaction artefacts (e.g. see comments on proposed edits, see updates of made comments, ...)
 
 
-#### Publication interactions versioning #### {#rq-publication-interaction-versioning}
-Interactions with a publication SHOULD link the relevant version of the publication.
-This allows relevant interactions to be filtered for a specific version of the publication.
-Certainly in the case of edits and reviews, as these interactions may not make sense in the context of a leter version of the publication.
+### Permissions ### {#rq-permissions}
+Permissions are an important tool for data pods to protect private information.
+Only actors with the correct permissions set have access to resources in a pod environment.
+In pod environments, permissions are handled using ACL files.
 
-
-### Subscribing ### {#subscription-service}
-The mellon framework requires the possibility for actors in the network to subscribe to the entities in the network.
-Several protocols already exist for subscribing to resources on Linked Data Platforms.
-
-#### Activitypub #### {#activitypub}
-[Activitypub](https://www.w3.org/TR/activitypub/) is a social networking protocol based upon the [ActivityStreams](https://www.w3.org/TR/activitystreams-core/) 2.0 data format.
-The Activitypub protocol specifies an API that allows actors in the network to create a ```Follow``` activity, that subscribes the sender to the activities of another actor.
-This way, the subscribed actor will now be notified of activities such as the creation of new publications, public posts, ... of the actor that they subscribed to.
-If publications are handles as actors in the network, they can also be subscribed to, enabling actors that subscribe to a publication to see new activities such as edits or added comments to the publication.
-In this case however publications SHOULD provide a unique outbox for the activitypub protocol. If this is not the case all posts in the pod outbox for all publications have to be traversed to find relevant information for a single publication.
-
-
-
-### Notifications ### {#notifications}
-Notifications are at the center of passing messages between actors in a network of Linked Data Platforms.
-The Activitypub protocol specified above [[#activitypub]] requires notifications to notify followers of change in the entities they are subscribed to.
-However, as notifications are prevalent in these networks, they require efficient tooling to retrieve and process.
-
-#### Notification shape matching #### {#notification-shape-matching}
-Notification shape matching tooling is required to retrieve notifications in a an inbox, that conform to a specified shape.
-Shape matching makes use of a shape ontology, for which both [shacl](https://www.w3.org/TR/shacl/) and [shex](https://shex.io/) are currently the most relevant shape ontologies.
-Notification shape matching tools MUST return ALL notifications in an inbox that conform to a given shape.
-
-#### Automatic inbox updating #### {#notification-retrieve}
-Tools are required that automatically retrieve new notifications for a specified inbox when new notifications arrive in this inbox.
-This is necessary for applications that need to provide actors with real time updates of new notifications.
-These tools MAY incorporate shape matching tools [[#notification-shape-matching]].
-
-#### Automatic notification processing #### {#rq-notification-processing-agent}
-Applications built on the Mellon Framework may require automatic actions to be executed on receiving notifications matching a given shape.
-For matching the notification shape, shape matching tools [[#notification-shape-matching]] are required.
-Automatic processing of notifications requires an active agent to be watching the pod inbox, and filter the new notifications to execute the required actions if the sender has the appropriate permissions to execute the required action.
-An automatic processing agent can be used to update resource metadata, in contrast to allowing external actors to directly update resource metadata.
-This gives much more control over what can be added, as the notification processing agent can be tuned to refuse all attempted updates if they do not conform to a given shape.
-
-
-### Permissions ### {#req-permissions}
-Actors in the network MUST be able to set and edit permissions for all actors in a network.
-As the Mellon framework makes use of Linked Data Platforms, permissions are handled using ACL files.
-
-
-#### READ permissions #### {#rq-publication-read-permissions}
-For all files an actor has control permissions for, the actor MUST be able to edit the READ permissions for all other actors in the network.
-This permission is required for other actors in the network to read the files in question.
-
-#### WRITE permissions #### {#rq-publication-write-permissions}
-For all files an actor has control permissions for, the actor MUST be able to edit the WRITE permissions for all other actors in the network.
-This permission is required for other actors in the network to write to the files in question.
-
-#### INTERACTION permissions #### {#rq-publication-interaction-permissions}
-For all resources where interactions are possible, the actor MUST be able to edit the INTERACTION permissions for all other actors in the network.
-INTERACTION permissions are permissions that enable certain interactions with a resource such as commenting on a resource, adding metadata, ...
-
-TODO -> is this viable? can for example not stop someone from liking a resource and store the like in their own pod
-
-#### CONTROL permissions #### {#rq-publication-control-permissions}
-For all files an actor has control permissions for, the actor MUST be able to edit the CONTROL permissions for all other actors in the network.
-This permission is required for other actors in the network edit permissions for the files in question.
-
+#### Setting permissions #### {#rq-set-permissions}
+Functionality must be in place for all allowed to set permissions in a data pod.
+This requires that researchers are able to allow e.g. a scholarly dashboard to edit the permissions of their data pod (for specific locations).
 
 #### Group permissions #### {#req-group-permissions}
-Setting permissions for individual actors is often undesirable.
-Support is required for setting and editing permissions for groups of actors.
+Setting permissions for individual actors can be insufficient at times.
 Applications built on the Mellon framework SHOULD enable actors to to create, edit, and delete permissions for groups of actors.
 Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group.
-
-#### Activitypub permissions #### {#activitypub-permissions}
-The activitypub service requires permission checking functionality, according to the [specification](https://www.w3.org/TR/activitypub/).
-These considerations should be taken into account when designing the permission systems for the Mellon framework.
+This can be useful for e.g. creating a permissions group for your research group, so that permissions for created research can be automatically granted for the whole research group, instead of needing to set all permissions individually.
 
 
 
+## Events ## {#rq-events}
 
-### External services ### {#services}
-The Mellon framework requires services to be abailable that can be used by actors in the network to achieve several goals, such as getting verification for publications, finding relevant publications for a subject on the network, querying over the network, getting peer reviews for a publication, ... 
-All these services SHOULD not be specific for the Mellon framework alone, and could help connect different networks together, allowing researchers to query for publications and metadata over different networks of scholarly communication frameworks.
+### Notifications ### {#rq-notifications}
+Notifications are required for the scholarly dashboard to notify the user of new information (received from e.g. the awareness service).
 
-#### Data verification services #### {#verification-services}
+#### Notification filtering #### {#rq-notification-filtering}
+A scholarly dashboard application SHOULD be able to filter notifications based on preset shapes.
+This enables the scholarly dashboard to filter the notifiactions for relevant lifecycle information of searched artefacts.
 
-
-#### Peer review services #### {#verification-services}
-
-#### Indexing services #### {#verification-services}
-
-#### Analytics services #### {#verification-services}
-
-#### Activitypub services #### {#verification-services}
+#### Notification based actions #### {#rq-notification-based-actions}
+In the case that notifications are used to notify of important artefact lifecycle information (in the case this is not directly posted to the researcher pod because of design reasons?), fucntionality is required that can evaluated the received notifications and execute automatic actions.
+This can be avoided by making notifications non-essentialy by posting the important life cycle events directly to the data pod, and making the notifications secondary to this and only point out the locations of the newly added data.
 
 
+## Policies ## {#rq-policy}
+Functionality is required for actors to enforce policies on data being generated / submitted / ... in the network.
 
-### Verification mechanics ### {#verification}
-The Mellon framework requires a way for actors to verify information in the network by (one or more) service hubs.
+### Shape matching ### {#rq-policy-shapes}
+Shape matching functionality is a vital part of enforcing policies for actors to match the shape of artefacts and their metadata in case of RDF data. 
+Shape matching makes use of a shape ontology, for which both [shacl](https://www.w3.org/TR/shacl/) and [shex](https://shex.io/) are currently the most relevant shape ontologies.
+In case of non-rdf data, other solutions may be required.
 
-#### Profile data verification #### {#profile-verification}
-A method SHOULD be in place for actors to have their profile information verified by external entities.
-This could mean for example past workplaces confirming that the actor has worked there (via an automatic API for example), or with confirmation of former colleagues.
 
-#### Publication data verification #### {#publication-verification}
-A publication MUST be verified by a service hub , in order to prove its legitimacy. This verification MUST be timestamped, in order for the actor publishing the research to prove that they were the first to publish this research.
-The service hub MAY verify this publication to publications already present in its network, and MAY provide the actor with proof that they are the first to publish that research in the known state of the art.
+## Service hubs ## {#rq-service-hubs}
+In this sections the requirements for the different service hubs are listed.
 
-#### Peer review verification #### {#peer-review-verification}
-A mechanism is required to allow publications to be peer reviewed by external parties.
-External parties should be able to retrieve a specific version of the publication, on which a timestamped verification MUST be provided of the peer-review for that specific version of the publication.
+### Service hub discovery ### {#rq-service-discovery}
+Service hubs in the network MUST be discoverable via advertisement of a service hub by orchestrators in the network.
 
+
+### Service hub interactions ### {#rq-service-interactions}
+Service hubs MUST advertise the specific services they provide.
+Multiple service hubs may be used simultaneously to fulfil the same service (e.g. a researcher may register his created artefacts at multiple service hubs).
+
+### Service hub functions ### {#rq-service-functions}
+Here the different available services in the network are listed.
+The proposed registration tokens are not bindingm and could be replaced by other verification mechanisms (see [[#rq-verification]]).
+
+### Registration service ### {#rq-registration-service}
+A registration service MUST provide a token of registration to the pod where the submitted artefact is stored. This token MUST be timestamped to allow actors in the network to verify claims of precedence.
+A copy of this token (and the submitted artefact) MUST be stored locally, to allow for verification by actors in the network, and should be provided to an archiving service.
+
+### Certification service ### {#rq-certification-service}
+A certification service MUST compare a submitted artefact with the current *state-of-the-art* in the respective field.
+If the submitted artefact is novel, the service MUST provide a certification token to the pod where the submitted artefact is stored.
+A copy of this token (and the submitted artefact) MUST be stored locally, to allow for verification by actors in the network, and should be provided to an archiving service.
+
+
+#### Peer review service #### {#rq-peer-review-service}
+In the case of peer reviews, the a service may be setup that forwards a submitted artefact to a set of peers the network for review.
+The reviews of these MUST be returned to the service (before a set deadline), where the service will return a token with the attached reviews.
+
+### Awareness service ### {#rq-awareness-service}
+The service MUST advertise the available dimensions of the artefacts on the network for which an actor can subscribe (e.g. title, tags, creator, ...).
+Next to artefacts, an awareness service MAY also advertise new actors (researchers / service hubs / ...) connected to the network.
+The service MUST provide an interface for actors in the network to subscribe to specific lifecycle events of artefacts that can be filtered on all advertised dimensions.
+The awareness service MUST update all relevant subscribers of new information in the network.
+The service MUST provide an interface to undo specific subscriptions.
+
+### Archiving service ### {#rq-archiving-service}
+An archiving service MUST store all submitted artefact data it receives.
+The service MUST provide an interface to retrieve specific data from the service.
+
+## Verification mechanics ## {#rq-verification}
+A scholarly communication network requires a way for actors in the network to verify data and entities in the network.
+
+### Researcher profile verification ### {#rq-profile-verification}
+A method MUST be in place for actors to have their profile information verified by actors in the network. This requires an authority (in this case probably a research institution) to provide a token to the researcher pod that can be verified by a verification service provided by the institution.
+
+### Artefact data verification ### {#rq-publication-verification}
+An actor in the network MUST be able to verify an artefact in the network at the service hubs specified in the artefact metadata. E.g. An actor can verify the registration of the artefact by for example verifying a registration token available for the artefact at the registration service hub specified in the artefact metadata or lifecycle events.
+
+
+## Ontologies ## {#ontology}
+Thought should be given to what ontologies are to be used to semantically describe the artefacts and events. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network.
 
 Definitions {#definitions}
 ================================================================================
