@@ -1322,7 +1322,7 @@ Possible extra rowspan handling
 	}
 </style>
   <meta content="Bikeshed version 89ebb6ab, updated Fri Oct 9 15:32:07 2020 -0700" name="generator">
-  <meta content="e09e0024e70ecf0151ab1fce7aaa95b5021745f3" name="document-revision">
+  <meta content="79685616ee6502d5abf2230e67c479e1c910cb34" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -1814,12 +1814,20 @@ dfn > a.self-link::before      { content: "#"; }
         <li><a href="#uc-create-researcher-profile"><span class="secno">6.2.1</span> <span class="content">Creating a researcher profile</span></a>
         <li><a href="#view-profile"><span class="secno">6.2.2</span> <span class="content">Updating a researcher profile</span></a>
        </ol>
-      <li><a href="#uc-add-artefact"><span class="secno">6.3</span> <span class="content">Adding artefacts to the network</span></a>
-      <li><a href="#uc-link-artefact"><span class="secno">6.4</span> <span class="content">Linking new artefacts to existing artefacts in the network</span></a>
-      <li><a href="#uc-interact-artefact"><span class="secno">6.5</span> <span class="content">Interacting with artefacts in the network</span></a>
-      <li><a href="#uc-subscribing"><span class="secno">6.6</span> <span class="content">Subscribing to entities in the network</span></a>
-      <li><a href="#uc-subscribe-artefact"><span class="secno">6.7</span> <span class="content">Subscribing to artefacts of a specific author in the network</span></a>
-      <li><a href="#uc-unsubscribe-artefact"><span class="secno">6.8</span> <span class="content">Undo a specific subscription</span></a>
+      <li>
+       <a href="#uc-upload-artefact"><span class="secno">6.3</span> <span class="content">Uploading artefacts</span></a>
+       <ol class="toc">
+        <li><a href="#uc-add-artefact"><span class="secno">6.3.1</span> <span class="content">Adding artefacts to the network</span></a>
+        <li><a href="#uc-link-artefact"><span class="secno">6.3.2</span> <span class="content">Linking new artefacts to existing artefacts in the network</span></a>
+       </ol>
+      <li>
+       <a href="#uc-interact-artefact"><span class="secno">6.4</span> <span class="content">Interacting with artefacts in the network</span></a>
+       <ol class="toc">
+        <li><a href="#uc-create-interaction-comment"><span class="secno">6.4.1</span> <span class="content">Commenting on an existing artefact in the network</span></a>
+       </ol>
+      <li><a href="#uc-subscribing"><span class="secno">6.5</span> <span class="content">Subscribing to entities in the network</span></a>
+      <li><a href="#uc-subscribe-artefact"><span class="secno">6.6</span> <span class="content">Subscribing to artefacts of a specific author in the network</span></a>
+      <li><a href="#uc-unsubscribe-artefact"><span class="secno">6.7</span> <span class="content">Undo a specific subscription</span></a>
      </ol>
     <li>
      <a href="#requirements"><span class="secno">7</span> <span class="content">Requirements</span></a>
@@ -2099,7 +2107,9 @@ The orchestrators make sure that the information is passed to the relevant servi
 The Scholarly Dashboard of the new institution SHOULD provide functionality for Bob to update his researcher profile. 
 On submission of the new information, it is passed to one or more orchestrators in the network (connected to Bob’s data pod or to the scholarly browser).
 The orchestrators make sure that the information is passed to the relevant services, so that Bob’s updated information is now available in the network. 
-   <h3 class="heading settled" data-level="6.3" id="uc-add-artefact"><span class="secno">6.3. </span><span class="content">Adding artefacts to the network</span><a class="self-link" href="#uc-add-artefact"></a></h3>
+   <h3 class="heading settled" data-level="6.3" id="uc-upload-artefact"><span class="secno">6.3. </span><span class="content">Uploading artefacts</span><a class="self-link" href="#uc-upload-artefact"></a></h3>
+    Here we present some use-cases for adding artefacts to the network. 
+   <h4 class="heading settled" data-level="6.3.1" id="uc-add-artefact"><span class="secno">6.3.1. </span><span class="content">Adding artefacts to the network</span><a class="self-link" href="#uc-add-artefact"></a></h4>
     Bob has created a new research paper.
 Bob wishes to add the artefact to the network.
 Bob opens the scholarly dashboard, and navigates to the upload section.
@@ -2108,7 +2118,7 @@ On submission, the scholarly dashboard stores the artefact in the data pod of Bo
 The scholarly dashboard receives the information for all relevant service hubs from the orchestrator.
 The artefact data is sent to all relevant service hubs (At least the registration service hub for claims of precedence).
 The created lifecycle events are stored on Bob’s data pod, and are distributed to all subscribed actors in the network via the awareness service hub. 
-   <h3 class="heading settled" data-level="6.4" id="uc-link-artefact"><span class="secno">6.4. </span><span class="content">Linking new artefacts to existing artefacts in the network</span><a class="self-link" href="#uc-link-artefact"></a></h3>
+   <h4 class="heading settled" data-level="6.3.2" id="uc-link-artefact"><span class="secno">6.3.2. </span><span class="content">Linking new artefacts to existing artefacts in the network</span><a class="self-link" href="#uc-link-artefact"></a></h4>
     Bob wishes to add relevant datasets for a previous published paper (by him) in the network.
 In the case the published paper is not his, an approach is needed that allows the original creator of the linked artefact to accept the new link.
 Bob opens the scholarly dashboard, and navigates to the upload view.
@@ -2117,12 +2127,23 @@ Bob selects the artefact that the new artefact is linked to in a "Link" section 
 On submission, the scholarly dashboard stores the artefact in the data pod of Bob on the designated location (designated by Bob, or designated by the shape tree present in the pod).
 The scholarly dashboard receives the information for all relevant service hubs from the orchestrator.
 The artefact data is sent to all relevant service hubs. 
-   <h3 class="heading settled" data-level="6.5" id="uc-interact-artefact"><span class="secno">6.5. </span><span class="content">Interacting with artefacts in the network</span><a class="self-link" href="#uc-interact-artefact"></a></h3>
-   <h3 class="heading settled" data-level="6.6" id="uc-subscribing"><span class="secno">6.6. </span><span class="content">Subscribing to entities in the network</span><a class="self-link" href="#uc-subscribing"></a></h3>
+   <h3 class="heading settled" data-level="6.4" id="uc-interact-artefact"><span class="secno">6.4. </span><span class="content">Interacting with artefacts in the network</span><a class="self-link" href="#uc-interact-artefact"></a></h3>
+    Here we present some use-cases for interacting with artefacts in the network. 
+   <h4 class="heading settled" data-level="6.4.1" id="uc-create-interaction-comment"><span class="secno">6.4.1. </span><span class="content">Commenting on an existing artefact in the network</span><a class="self-link" href="#uc-create-interaction-comment"></a></h4>
+    Bob has some questions over an artefact created in the network.
+Bob opens the scholarly dashboard, and navigates to the artefact view.
+Bob selects the option to add a new comment.
+In the new comment view, Bob writes his comment and submits.
+The dashboard stores the comment and the relevant data on Bob’s data pod.
+The scholarly dashboard retrieves the awareness and archiving service hub information (registering interactions is not necessary?).
+The archiving service stores the comment and indexes it to be retrievable with the data for the original (multiple?) referenced artefact(s).
+The awareness hub extracts the artefact(s) that are referenced by (in) the comment, and notifies all actors subscribed to these artefacts of a new interaction lifecycle event.
+Here we present some use-cases for interacting with artefacts in the network. 
+   <h3 class="heading settled" data-level="6.5" id="uc-subscribing"><span class="secno">6.5. </span><span class="content">Subscribing to entities in the network</span><a class="self-link" href="#uc-subscribing"></a></h3>
     Actors in the network SHOULD be able to subscribe to artefact lifecycle events for artefacts in the network.
 Additionally, actors MAY be able to subscribe to the events of new actors being added to the network.
 Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts (or actors), that can be filtered by the actor on the available dimensions of artefacts in the network. 
-   <h3 class="heading settled" data-level="6.7" id="uc-subscribe-artefact"><span class="secno">6.7. </span><span class="content">Subscribing to artefacts of a specific author in the network</span><a class="self-link" href="#uc-subscribe-artefact"></a></h3>
+   <h3 class="heading settled" data-level="6.6" id="uc-subscribe-artefact"><span class="secno">6.6. </span><span class="content">Subscribing to artefacts of a specific author in the network</span><a class="self-link" href="#uc-subscribe-artefact"></a></h3>
     Bob wishes to subscribe to all artefacts created by Alice in the network, to receive updates of all new lifecycle information of her artefacts.
 Bob uses the scholarly dashboard and navigates to the subscription page.
 The scholarly dashboard retrieves the awareness subscription hub information from the used orchestrator.
@@ -2132,7 +2153,7 @@ Bob decides to filter the artefacts based on their author, and enters the webId 
 Bob decides to subscribe to the "create" and "publish" lifecycle events.
 On submission, the availability service hub saves the subscription, and on subsequent relevant lifecycle events of artefacts with Alice as the author, Bob receives a notification of these events.
 The subscription is also stored with the necessary metadata on Bob’s pod, allowing Bob to easily list and undo created subscriptions. 
-   <h3 class="heading settled" data-level="6.8" id="uc-unsubscribe-artefact"><span class="secno">6.8. </span><span class="content">Undo a specific subscription</span><a class="self-link" href="#uc-unsubscribe-artefact"></a></h3>
+   <h3 class="heading settled" data-level="6.7" id="uc-unsubscribe-artefact"><span class="secno">6.7. </span><span class="content">Undo a specific subscription</span><a class="self-link" href="#uc-unsubscribe-artefact"></a></h3>
     Bob wishes to undo a specific subscription because of too much events.
 Bob navigates to the subscription page of the scholarly dashboard.
 All previous subscriptions are listed on the page.

@@ -374,8 +374,10 @@ The orchestrators make sure that the information is passed to the relevant servi
 
 
 
+## Uploading artefacts ## {#uc-upload-artefact}
+Here we present some use-cases for adding artefacts to the network.
 
-## Adding artefacts to the network ## {#uc-add-artefact}
+### Adding artefacts to the network ### {#uc-add-artefact}
 Bob has created a new research paper.
 Bob wishes to add the artefact to the network.
 Bob opens the scholarly dashboard, and navigates to the upload section.
@@ -385,7 +387,7 @@ The scholarly dashboard receives the information for all relevant service hubs f
 The artefact data is sent to all relevant service hubs (At least the registration service hub for claims of precedence).
 The created lifecycle events are stored on Bob's data pod, and are distributed to all subscribed actors in the network via the awareness service hub.
 
-## Linking new artefacts to existing artefacts in the network ## {#uc-link-artefact}
+### Linking new artefacts to existing artefacts in the network ### {#uc-link-artefact}
 Bob wishes to add relevant datasets for a previous published paper (by him) in the network.
 In the case the published paper is not his, an approach is needed that allows the original creator of the linked artefact to accept the new link.
 Bob opens the scholarly dashboard, and navigates to the upload view.
@@ -397,6 +399,18 @@ The artefact data is sent to all relevant service hubs.
 
 
 ## Interacting with artefacts in the network ## {#uc-interact-artefact}
+Here we present some use-cases for interacting with artefacts in the network.
+
+### Commenting on an existing artefact in the network ### {#uc-create-interaction-comment}
+Bob has some questions over an artefact created in the network.
+Bob opens the scholarly dashboard, and navigates to the artefact view.
+Bob selects the option to add a new comment.
+In the new comment view, Bob writes his comment and submits.
+The dashboard stores the comment and the relevant data on Bob's data pod.
+The scholarly dashboard retrieves the awareness and archiving service hub information (registering interactions is not necessary?).
+The archiving service stores the comment and indexes it to be retrievable with the data for the original (multiple?) referenced artefact(s).
+The awareness hub extracts the artefact(s) that are referenced by (in) the comment, and notifies all actors subscribed to these artefacts of a new interaction lifecycle event.
+Here we present some use-cases for interacting with artefacts in the network.
 
 
 
