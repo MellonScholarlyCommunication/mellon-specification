@@ -372,8 +372,57 @@ On submission of the new information, it is passed to one or more orchestrators 
 The orchestrators make sure that the information is passed to the relevant services, so that Bob's updated information is now available in the network.
 
 
-TODO:: additional use cases
 
+
+
+## Adding artefacts to the network ## {#uc-add-artefact}
+Bob has created a new research paper.
+Bob wishes to add the artefact to the network.
+Bob opens the scholarly dashboard, and navigates to the upload section.
+Bob selects the artefact he wishes to add, and completes all required information that cannot be automatically extracted from the uploaded artefact.
+On submission, the scholarly dashboard stores the artefact in the data pod of Bob on the designated location (designated by Bob, or designated by the shape tree present in the pod).
+The scholarly dashboard receives the information for all relevant service hubs from the orchestrator.
+The artefact data is sent to all relevant service hubs (At least the registration service hub for claims of precedence).
+The created lifecycle events are stored on Bob's data pod, and are distributed to all subscribed actors in the network via the awareness service hub.
+
+## Linking new artefacts to existing artefacts in the network ## {#uc-link-artefact}
+Bob wishes to add relevant datasets for a previous published paper (by him) in the network.
+In the case the published paper is not his, an approach is needed that allows the original creator of the linked artefact to accept the new link.
+Bob opens the scholarly dashboard, and navigates to the upload view.
+Bob uploads the new artefact.
+Bob selects the artefact that the new artefact is linked to in a "Link" section of the view.
+On submission, the scholarly dashboard stores the artefact in the data pod of Bob on the designated location (designated by Bob, or designated by the shape tree present in the pod).
+The scholarly dashboard receives the information for all relevant service hubs from the orchestrator.
+The artefact data is sent to all relevant service hubs.
+
+
+## Interacting with artefacts in the network ## {#uc-interact-artefact}
+
+
+
+## Subscribing to entities in the network ## {#uc-subscribing}
+Actors in the network SHOULD be able to subscribe to artefact lifecycle events for artefacts in the network.
+Additionally, actors MAY be able to subscribe to the events of new actors being added to the network.
+Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts (or actors), that can be filtered by the actor on the available dimensions of artefacts in the network.
+
+## Subscribing to artefacts of a specific author in the network ## {#uc-subscribe-artefact}
+Bob wishes to subscribe to all artefacts created by Alice in the network, to receive updates of all new lifecycle information of her artefacts.
+Bob uses the scholarly dashboard and navigates to the subscription page.
+The scholarly dashboard retrieves the awareness subscription hub information from the used orchestrator.
+The subscription service hub advertises the available dimensions on which artefacts in the network can be filtered, and the available lifecycle information to which can be subscribed.
+The scholarly dashboard represents these options to Bob.
+Bob decides to filter the artefacts based on their author, and enters the webId of Alice into the filter.
+Bob decides to subscribe to the "create" and "publish" lifecycle events.
+On submission, the availability service hub saves the subscription, and on subsequent relevant lifecycle events of artefacts with Alice as the author, Bob receives a notification of these events.
+The subscription is also stored with the necessary metadata on Bob's pod, allowing Bob to easily list and undo created subscriptions.
+
+## Undo a specific subscription ## {#uc-unsubscribe-artefact}
+Bob wishes to undo a specific subscription because of too much events.
+Bob navigates to the subscription page of the scholarly dashboard.
+All previous subscriptions are listed on the page.
+Bob selects a subscription, and chooses the remove option.
+The awareness service hub is notified that the specific subscription should be removed.
+On success from the service hub, the scholarly dashboard removes the subscription from Bob's pod.
 
 
 Requirements {#requirements}
