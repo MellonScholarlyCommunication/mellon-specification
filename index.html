@@ -1,1328 +1,13 @@
 <!doctype html><html lang="en">
  <head>
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-  <title>Use Cases and Requirements for the Mellon Project</title>
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-<style data-fill-with="stylesheet">/******************************************************************************
- *                   Style sheet for the W3C specifications                   *
- *
- * Special classes handled by this style sheet include:
- *
- * Indices
- *   - .toc for the Table of Contents (<ol class="toc">)
- *     + <span class="secno"> for the section numbers
- *   - #toc for the Table of Contents (<nav id="toc">)
- *   - ul.index for Indices (<a href="#ref">term</a><span>, in §N.M</span>)
- *   - table.index for Index Tables (e.g. for properties or elements)
- *
- * Structural Markup
- *   - table.data for general data tables
- *     -> use 'scope' attribute, <colgroup>, <thead>, and <tbody> for best results !
- *     -> use <table class='complex data'> for extra-complex tables
- *     -> use <td class='long'> for paragraph-length cell content
- *     -> use <td class='pre'> when manual line breaks/indentation would help readability
- *   - dl.switch for switch statements
- *   - ol.algorithm for algorithms (helps to visualize nesting)
- *   - .figure and .caption (HTML4) and figure and figcaption (HTML5)
- *     -> .sidefigure for right-floated figures
- *   - ins/del
- *
- * Code
- *   - pre and code
- *
- * Special Sections
- *   - .note       for informative notes             (div, p, span, aside, details)
- *   - .example    for informative examples          (div, p, pre, span)
- *   - .issue      for issues                        (div, p, span)
- *   - .assertion  for assertions                    (div, p, span)
- *   - .advisement for loud normative statements     (div, p, strong)
- *   - .annoying-warning for spec obsoletion notices (div, aside, details)
- *
- * Definition Boxes
- *   - pre.def   for WebIDL definitions
- *   - table.def for tables that define other entities (e.g. CSS properties)
- *   - dl.def    for definition lists that define other entitles (e.g. HTML elements)
- *
- * Numbering
- *   - .secno for section numbers in .toc and headings (<span class='secno'>3.2</span>)
- *   - .marker for source-inserted example/figure/issue numbers (<span class='marker'>Issue 4</span>)
- *   - ::before styled for CSS-generated issue/example/figure numbers:
- *     -> Documents wishing to use this only need to add
- *        figcaption::before,
- *        .caption::before { content: "Figure "  counter(figure) " ";  }
- *        .example::before { content: "Example " counter(example) " "; }
- *        .issue::before   { content: "Issue "   counter(issue) " ";   }
- *
- * Header Stuff (ignore, just don't conflict with these classes)
- *   - .head for the header
- *   - .copyright for the copyright
- *
- * Miscellaneous
- *   - .overlarge for things that should be as wide as possible, even if
- *     that overflows the body text area. This can be used on an item or
- *     on its container, depending on the effect desired.
- *     Note that this styling basically doesn't help at all when printing,
- *     since A4 paper isn't much wider than the max-width here.
- *     It's better to design things to fit into a narrower measure if possible.
- *   - js-added ToC jump links (see fixup.js)
- *
- ******************************************************************************/
-
-/* color variables included separately for reliability */
-
-/******************************************************************************/
-/*                                   Body                                     */
-/******************************************************************************/
-
-	html {
-		color: black;
-		color: var(--text);
-		background-color: white;
-		background-color: var(--bg);
-	}
-
-	body {
-		counter-reset: example figure issue;
-
-		/* Layout */
-		max-width: 50em;               /* limit line length to 50em for readability   */
-		margin: 0 auto;                /* center text within page                     */
-		padding: 1.6em 1.5em 2em 50px; /* assume 16px font size for downlevel clients */
-		padding: 1.6em 1.5em 2em calc(26px + 1.5em); /* leave space for status flag     */
-
-		/* Typography */
-		line-height: 1.5;
-		font-family: sans-serif;
-		widows: 2;
-		orphans: 2;
-		word-wrap: break-word;
-		overflow-wrap: break-word;
-		hyphens: auto;
-
-		background: transparent top left fixed no-repeat;
-		background-size: 25px auto;
-	}
-
-
-/******************************************************************************/
-/*                         Front Matter & Navigation                          */
-/******************************************************************************/
-
-/** Header ********************************************************************/
-
-	div.head { margin-bottom: 1em }
-	div.head hr { border-style: solid; }
-
-	div.head h1 {
-		font-weight: bold;
-		margin: 0 0 .1em;
-		font-size: 220%;
-	}
-
-	div.head h2 { margin-bottom: 1.5em;}
-
-/** W3C Logo ******************************************************************/
-
-	.head .logo {
-		float: right;
-		margin: 0.4rem 0 0.2rem .4rem;
-	}
-
-	.head img[src*="logos/W3C"] {
-		display: block;
-		border: solid #1a5e9a;
-		border: solid var(--logo-bg);
-		border-width: .65rem .7rem .6rem;
-		border-radius: .4rem;
-		background: #1a5e9a;
-		background: var(--logo-bg);
-		color: white;
-		color: var(--logo-text);
-		font-weight: bold;
-	}
-
-	.head a:hover > img[src*="logos/W3C"],
-	.head a:focus > img[src*="logos/W3C"] {
-		opacity: .8;
-	}
-
-	.head a:active > img[src*="logos/W3C"] {
-		background: #c00;
-		background: var(--logo-active-bg);
-		border-color: #c00;
-		border-color: var(--logo-active-bg);
-	}
-
-	/* see also additional rules in Link Styling section */
-
-/** Copyright *****************************************************************/
-
-	p.copyright,
-	p.copyright small { font-size: small }
-
-/** Back to Top / ToC Toggle **************************************************/
-
-	@media print {
-		#toc-nav {
-			display: none;
-		}
-	}
-	@media not print {
-		#toc-nav {
-			position: fixed;
-			z-index: 2;
-			bottom: 0; left: 0;
-			margin: 0;
-			min-width: 1.33em;
-			border-top-right-radius: 2rem;
-			box-shadow: 0 0 2px;
-			font-size: 1.5em;
-		}
-		#toc-nav > a {
-			display: block;
-			white-space: nowrap;
-
-			height: 1.33em;
-			padding: .1em 0.3em;
-			margin: 0;
-
-			box-shadow: 0 0 2px;
-			border: none;
-			border-top-right-radius: 1.33em;
-
-			color: #707070;
-			color: var(--tocnav-normal-text);
-			background: white;
-			background: var(--tocnav-normal-bg);
-		}
-		#toc-nav > a:hover,
-		#toc-nav > a:focus {
-			color: black;
-			color: var(--tocnav-hover-text);
-			background: #f8f8f8;
-			background: var(--tocnav-hover-bg);
-		}
-		#toc-nav > a:active {
-			color: #c00;
-			color: var(--tocnav-active-text);
-			background: white;
-			background: var(--tocnav-active-bg);
-		}
-
-		#toc-nav > #toc-jump {
-			padding-bottom: 2em;
-			margin-bottom: -1.9em;
-		}
-
-		/* statusbar gets in the way on keyboard focus; remove once browsers fix */
-		#toc-nav > a[href="#toc"]:not(:hover):focus:last-child {
-			padding-bottom: 1.5rem;
-		}
-
-		#toc-nav:not(:hover) > a:not(:focus) > span + span {
-			/* Ideally this uses :focus-within on #toc-nav */
-			display: none;
-		}
-		#toc-nav > a > span + span {
-			padding-right: 0.2em;
-		}
-	}
-
-/** ToC Sidebar ***************************************************************/
-
-	/* Floating sidebar */
-	@media screen {
-		body.toc-sidebar #toc {
-			position: fixed;
-			top: 0; bottom: 0;
-			left: 0;
-			width: 23.5em;
-			max-width: 80%;
-			max-width: calc(100% - 2em - 26px);
-			overflow: auto;
-			padding: 0 1em;
-			padding-left: 42px;
-			padding-left: calc(1em + 26px);
-			color: black;
-			color: var(--tocsidebar-text);
-			background: inherit;
-			background-color: #f7f8f9;
-			background-color: var(--tocsidebar-bg);
-			z-index: 1;
-			box-shadow: -.1em 0 .25em rgba(0,0,0,.1) inset;
-			box-shadow: -.1em 0 .25em var(--tocsidebar-shadow) inset;
-		}
-		body.toc-sidebar #toc h2 {
-			margin-top: .8rem;
-			font-variant: small-caps;
-			font-variant: all-small-caps;
-			text-transform: lowercase;
-			font-weight: bold;
-			color: gray;
-			color: hsla(203,20%,40%,.7);
-			color: var(--tocsidebar-heading-text);
-		}
-		body.toc-sidebar #toc-jump:not(:focus) {
-			width: 0;
-			height: 0;
-			padding: 0;
-			position: absolute;
-			overflow: hidden;
-		}
-	}
-	/* Hide main scroller when only the ToC is visible anyway */
-	@media screen and (max-width: 28em) {
-		body.toc-sidebar {
-			overflow: hidden;
-		}
-	}
-
-	/* Sidebar with its own space */
-	@media screen and (min-width: 78em) {
-		body:not(.toc-inline) #toc {
-			position: fixed;
-			top: 0; bottom: 0;
-			left: 0;
-			width: 23.5em;
-			overflow: auto;
-			padding: 0 1em;
-			padding-left: 42px;
-			padding-left: calc(1em + 26px);
-			color: black;
-			color: var(--tocsidebar-text);
-			background: inherit;
-			background-color: #f7f8f9;
-			background-color: var(--tocsidebar-bg);
-			z-index: 1;
-			box-shadow: -.1em 0 .25em rgba(0,0,0,.1) inset;
-			box-shadow: -.1em 0 .25em var(--tocsidebar-shadow) inset;
-		}
-		body:not(.toc-inline) #toc h2 {
-			margin-top: .8rem;
-			font-variant: small-caps;
-			font-variant: all-small-caps;
-			text-transform: lowercase;
-			font-weight: bold;
-			color: gray;
-			color: hsla(203,20%,40%,.7);
-			color: var(--tocsidebar-heading-text);
-		}
-
-		body:not(.toc-inline) {
-			padding-left: 29em;
-		}
-		/* See also Overflow section at the bottom */
-
-		body:not(.toc-inline) #toc-jump:not(:focus) {
-			width: 0;
-			height: 0;
-			padding: 0;
-			position: absolute;
-			overflow: hidden;
-		}
-	}
-	@media screen and (min-width: 90em) {
-		body:not(.toc-inline) {
-			margin: 0 4em;
-		}
-	}
-
-/******************************************************************************/
-/*                                Sectioning                                  */
-/******************************************************************************/
-
-/** Headings ******************************************************************/
-
-	h1, h2, h3, h4, h5, h6, dt {
-		page-break-after: avoid;
-		page-break-inside: avoid;
-		font: 100% sans-serif;   /* Reset all font styling to clear out UA styles */
-		font-family: inherit;    /* Inherit the font family. */
-		line-height: 1.2;        /* Keep wrapped headings compact */
-		hyphens: manual;         /* Hyphenated headings look weird */
-	}
-
-	h2, h3, h4, h5, h6 {
-		margin-top: 3rem;
-	}
-
-	h1, h2, h3 {
-		color: #005A9C;
-		color: var(--heading-text);
-	}
-
-	h1 { font-size: 170%; }
-	h2 { font-size: 140%; }
-	h3 { font-size: 120%; }
-	h4 { font-weight: bold; }
-	h5 { font-style: italic; }
-	h6 { font-variant: small-caps; }
-	dt { font-weight: bold; }
-
-/** Subheadings ***************************************************************/
-
-	h1 + h2,
-	#subtitle {
-		/* #subtitle is a subtitle in an H2 under the H1 */
-		margin-top: 0;
-	}
-	h2 + h3,
-	h3 + h4,
-	h4 + h5,
-	h5 + h6 {
-		margin-top: 1.2em; /* = 1 x line-height */
-	}
-
-/** Section divider ***********************************************************/
-
-	:not(.head) > :not(.head) + hr {
-		font-size: 1.5em;
-		text-align: center;
-		margin: 1em auto;
-		height: auto;
-		color: black;
-		color: var(--hr-text);
-		border: transparent solid 0;
-		background: transparent;
-	}
-	:not(.head) > hr::before {
-		content: "\2727\2003\2003\2727\2003\2003\2727";
-	}
-
-/******************************************************************************/
-/*                            Paragraphs and Lists                            */
-/******************************************************************************/
-
-	p {
-		margin: 1em 0;
-	}
-
-	dd > p:first-child,
-	li > p:first-child {
-		margin-top: 0;
-	}
-
-	ul, ol {
-		margin-left: 0;
-		padding-left: 2em;
-	}
-
-	li {
-		margin: 0.25em 0 0.5em;
-		padding: 0;
-	}
-
-	dl dd {
-		margin: 0 0 .5em 2em;
-	}
-
-	.head dd + dd { /* compact for header */
-		margin-top: -.5em;
-	}
-
-	/* Style for algorithms */
-	ol.algorithm ol:not(.algorithm),
-	.algorithm > ol ol:not(.algorithm) {
-	 border-left: 0.5em solid #DEF;
-	 border-left: 0.5em solid var(--algo-border);
-	}
-
-	/* Put nice boxes around each algorithm. */
-	[data-algorithm]:not(.heading) {
-	  padding: .5em;
-	  border: thin solid #ddd;
-	  border: thin solid var(--algo-border);
-	  border-radius: .5em;
-	  margin: .5em calc(-0.5em - 1px);
-	}
-	[data-algorithm]:not(.heading) > :first-child {
-	  margin-top: 0;
-	}
-	[data-algorithm]:not(.heading) > :last-child {
-	  margin-bottom: 0;
-	}
-
-	/* Style for switch/case <dl>s */
-	dl.switch > dd > ol.only,
-	dl.switch > dd > .only > ol {
-	 margin-left: 0;
-	}
-	dl.switch > dd > ol.algorithm,
-	dl.switch > dd > .algorithm > ol {
-	 margin-left: -2em;
-	}
-	dl.switch {
-	 padding-left: 2em;
-	}
-	dl.switch > dt {
-	 text-indent: -1.5em;
-	 margin-top: 1em;
-	}
-	dl.switch > dt + dt {
-	 margin-top: 0;
-	}
-	dl.switch > dt::before {
-	 content: '\21AA';
-	 padding: 0 0.5em 0 0;
-	 display: inline-block;
-	 width: 1em;
-	 text-align: right;
-	 line-height: 0.5em;
-	}
-
-/** Terminology Markup ********************************************************/
-
-
-/******************************************************************************/
-/*                                 Inline Markup                              */
-/******************************************************************************/
-
-/** Terminology Markup ********************************************************/
-	dfn   { /* Defining instance */
-		font-weight: bolder;
-	}
-	a > i { /* Instance of term */
-		font-style: normal;
-	}
-	dt dfn code, code.idl {
-		font-size: medium;
-	}
-	dfn var {
-		font-style: normal;
-	}
-
-/** Change Marking ************************************************************/
-
-	del {
-		color: red;
-		color: var(--del-text);
-		background: transparent;
-		background: var(--del-bg);
-		text-decoration: line-through;
-	}
-	ins {
-		color: #080;
-		color: var(--ins-text);
-		background: transparent;
-		background: var(--ins-bg);
-		text-decoration: underline;
-	}
-
-/** Miscellaneous improvements to inline formatting ***************************/
-
-	sup {
-		vertical-align: super;
-		font-size: 80%
-	}
-
-/******************************************************************************/
-/*                                    Code                                    */
-/******************************************************************************/
-
-/** General monospace/pre rules ***********************************************/
-
-	pre, code, samp {
-		font-family: Menlo, Consolas, "DejaVu Sans Mono", Monaco, monospace;
-		font-size: .9em;
-		hyphens: none;
-		text-transform: none;
-		text-align: left;
-		text-align: start;
-		font-variant: normal;
-		orphans: 3;
-		widows: 3;
-		page-break-before: avoid;
-	}
-	pre code,
-	code code {
-		font-size: 100%;
-	}
-
-	pre {
-		margin-top: 1em;
-		margin-bottom: 1em;
-		overflow: auto;
-	}
-
-/** Inline Code fragments *****************************************************/
-
-  /* Do something nice. */
-
-/******************************************************************************/
-/*                                    Links                                   */
-/******************************************************************************/
-
-/** General Hyperlinks ********************************************************/
-
-	/* We hyperlink a lot, so make it less intrusive */
-	a[href] {
-		color: #034575;
-		color: var(--a-normal-text);
-		text-decoration: none;
-		border-bottom: 1px solid #707070;
-		border-bottom: 1px solid var(--a-normal-underline);
-		/* Need a bit of extending for it to look okay */
-		padding: 0 1px 0;
-		margin: 0 -1px 0;
-	}
-	a:visited {
-		color: #034575;
-		color: var(--a-visited-text);
-		border-bottom-color: #bbb;
-		border-bottom-color: var(--a-visited-underline);
-	}
-
-	/* Use distinguishing colors when user is interacting with the link */
-	a[href]:focus,
-	a[href]:hover {
-		background: #f8f8f8;
-		background: rgba(75%, 75%, 75%, .25);
-		background: var(--a-hover-bg);
-		border-bottom-width: 3px;
-		margin-bottom: -2px;
-	}
-	a[href]:active {
-		color: #c00;
-		color: var(--a-active-text);
-		border-color: #c00;
-		border-color: var(--a-active-underline);
-	}
-
-	/* Backout above styling for W3C logo */
-	.head .logo,
-	.head .logo a {
-		border: none;
-		text-decoration: none;
-		background: transparent;
-	}
-
-/******************************************************************************/
-/*                                    Images                                  */
-/******************************************************************************/
-
-	img {
-		border-style: none;
-	}
-
-	img, svg {
-		/* Intentionally not color-scheme aware. */
-		background: white;
-	}
-
-	/* For autogen numbers, add
-	   .caption::before, figcaption::before { content: "Figure " counter(figure) ". "; }
-	*/
-
-	figure, .figure, .sidefigure {
-		page-break-inside: avoid;
-		text-align: center;
-		margin: 2.5em 0;
-	}
-	.figure img,    .sidefigure img,    figure img,
-	.figure object, .sidefigure object, figure object {
-		max-width: 100%;
-		margin: auto;
-		height: auto;
-	}
-	.figure pre, .sidefigure pre, figure pre {
-		text-align: left;
-		display: table;
-		margin: 1em auto;
-	}
-	.figure table, figure table {
-		margin: auto;
-	}
-	@media screen and (min-width: 20em) {
-		.sidefigure {
-			float: right;
-			width: 50%;
-			margin: 0 0 0.5em 0.5em
-		}
-	}
-	.caption, figcaption, caption {
-		font-style: italic;
-		font-size: 90%;
-	}
-	.caption::before, figcaption::before, figcaption > .marker {
-		font-weight: bold;
-	}
-	.caption, figcaption {
-		counter-increment: figure;
-	}
-
-	/* DL list is indented 2em, but figure inside it is not */
-	dd > .figure, dd > figure { margin-left: -2em }
-
-/******************************************************************************/
-/*                             Colored Boxes                                  */
-/******************************************************************************/
-
-	.issue, .note, .example, .assertion, .advisement, blockquote {
-		padding: .5em;
-		border: .5em;
-		border-left-style: solid;
-		page-break-inside: avoid;
-	}
-	span.issue, span.note {
-		padding: .1em .5em .15em;
-		border-right-style: solid;
-	}
-
-	.issue,
-	.note,
-	.example,
-	.advisement,
-	.assertion,
-	blockquote {
-		margin: 1em auto;
-	}
-	.note  > p:first-child,
-	.issue > p:first-child,
-	blockquote > :first-child {
-		margin-top: 0;
-	}
-	blockquote > :last-child {
-		margin-bottom: 0;
-	}
-
-
-	.issue::before, .issue > .marker,
-	.example::before, .example > .marker,
-	.note::before, .note > .marker,
-	details.note > summary > .marker {
-		text-transform: uppercase;
-		padding-right: 1em;
-	}
-
-	.example::before, .example > .marker {
-		display: block;
-		padding-right: 0em;
-	}
-
-/** Blockquotes ***************************************************************/
-
-	blockquote {
-		border-color: silver;
-		border-color: var(--blockquote-border);
-		background: transparent;
-		background: var(--blockquote-bg);
-		color: currentcolor;
-		color: var(--blockquote-text);
-	}
-
-/** Open issue ****************************************************************/
-
-	.issue {
-		border-color: #e05252;
-		border-color: var(--issue-border);
-		background: #fbe9e9;
-		background: var(--issue-bg);
-		color: black;
-		color: var(--issue-text);
-		counter-increment: issue;
-		overflow: auto;
-	}
-	.issue::before, .issue > .marker {
-		color: #831616;
-		color: var(--issueheading-text);
-	}
-	/* Add .issue::before { content: "Issue " counter(issue) " "; } for autogen numbers,
-	   or use class="marker" to mark up the issue number in source. */
-
-/** Example *******************************************************************/
-
-	.example {
-		border-color: #e0cb52;
-		border-color: var(--example-border);
-		background: #fcfaee;
-		background: var(--example-bg);
-		color: black;
-		color: var(--example-text);
-		counter-increment: example;
-		overflow: auto;
-		clear: both;
-	}
-	.example::before, .example > .marker {
-		color: #574b0f;
-		color: var(--exampleheading-text);
-	}
-	/* Add .example::before { content: "Example " counter(example) " "; } for autogen numbers,
-	   or use class="marker" to mark up the example number in source. */
-
-/** Non-normative Note ********************************************************/
-
-	.note {
-		border-color: #52e052;
-		border-color: var(--note-border);
-		background: #e9fbe9;
-		background: var(--note-bg);
-		color: black;
-		color: var(--note-text);
-		overflow: auto;
-	}
-
-	.note::before, .note > .marker,
-	details.note > summary {
-		color: hsl(120, 70%, 30%);
-		color: var(--noteheading-text);
-	}
-	/* Add .note::before { content: "Note "; } for autogen label,
-	   or use class="marker" to mark up the label in source. */
-
-	details.note[open] > summary {
-		border-bottom: 1px silver solid;
-		border-bottom: 1px var(--notesummary-underline) solid;
-	}
-
-/** Assertion Box *************************************************************/
-	/*  for assertions in algorithms */
-
-	.assertion {
-		border-color: #AAA;
-		border-color: var(--assertion-border);
-		background: #EEE;
-		background: var(--assertion-bg);
-		color: black;
-		color: var(--assertion-text);
-	}
-
-/** Advisement Box ************************************************************/
-	/*  for attention-grabbing normative statements */
-
-	.advisement {
-		border-color: orange;
-		border-color: var(--advisement-border);
-		border-style: none solid;
-		background: #fec;
-		background: var(--advisement-bg);
-		color: black;
-		color: var(--advisement-text);
-	}
-	strong.advisement {
-		display: block;
-		text-align: center;
-	}
-	.advisement::before, .advisement > .marker {
-		color: #b35f00;
-		color: var(--advisementheading-text);
-	}
-
-/** Spec Obsoletion Notice ****************************************************/
-	/* obnoxious obsoletion notice for older/abandoned specs. */
-
-	details {
-		display: block;
-	}
-	summary {
-		font-weight: bolder;
-	}
-
-	.annoying-warning:not(details),
-	details.annoying-warning:not([open]) > summary,
-	details.annoying-warning[open] {
-		background: hsla(40,100%,50%,0.95);
-		background: var(--warning-bg);
-		color: black;
-		color: var(--warning-text);
-		padding: .75em 1em;
-		border: red;
-		border: var(--warning-border);
-		border-style: solid none;
-		box-shadow: 0 2px 8px black;
-		text-align: center;
-	}
-	.annoying-warning :last-child {
-		margin-bottom: 0;
-	}
-
-	@media not print {
-		details.annoying-warning[open] {
-			position: fixed;
-			left: 0;
-			right: 0;
-			bottom: 2em;
-			z-index: 1000;
-		}
-	}
-
-	details.annoying-warning:not([open]) > summary {
-		text-align: center;
-	}
-
-/** Entity Definition Boxes ***************************************************/
-
-	.def {
-		padding: .5em 1em;
-		background: #def;
-		background: var(--def-bg);
-		margin: 1.2em 0;
-		border-left: 0.5em solid #8ccbf2;
-		border-left: 0.5em solid var(--def-border);
-		color: black;
-		color: var(--def-text);
-	}
-
-/******************************************************************************/
-/*                                    Tables                                  */
-/******************************************************************************/
-
-	th, td {
-		text-align: left;
-		text-align: start;
-	}
-
-/** Property/Descriptor Definition Tables *************************************/
-
-	table.def {
-		/* inherits .def box styling, see above */
-		width: 100%;
-		border-spacing: 0;
-	}
-
-	table.def td,
-	table.def th {
-		padding: 0.5em;
-		vertical-align: baseline;
-		border-bottom: 1px solid #bbd7e9;
-		border-bottom: 1px solid var(--defrow-border);
-	}
-
-	table.def > tbody > tr:last-child th,
-	table.def > tbody > tr:last-child td {
-		border-bottom: 0;
-	}
-
-	table.def th {
-		font-style: italic;
-		font-weight: normal;
-		padding-left: 1em;
-		width: 3em;
-	}
-
-	/* For when values are extra-complex and need formatting for readability */
-	table td.pre {
-		white-space: pre-wrap;
-	}
-
-	/* A footnote at the bottom of a def table */
-	table.def td.footnote {
-		padding-top: 0.6em;
-	}
-	table.def td.footnote::before {
-		content: " ";
-		display: block;
-		height: 0.6em;
-		width: 4em;
-		border-top: thin solid;
-	}
-
-/** Data tables (and properly marked-up index tables) *************************/
-	/*
-		 <table class="data"> highlights structural relationships in a table
-		 when correct markup is used (e.g. thead/tbody, th vs. td, scope attribute)
-
-		 Use class="complex data" for particularly complicated tables --
-		 (This will draw more lines: busier, but clearer.)
-
-		 Use class="long" on table cells with paragraph-like contents
-		 (This will adjust text alignment accordingly.)
-		 Alternately use class="longlastcol" on tables, to have the last column assume "long".
-	*/
-
-	table {
-		word-wrap: normal;
-		overflow-wrap: normal;
-		hyphens: manual;
-	}
-
-	table.data,
-	table.index {
-		margin: 1em auto;
-		border-collapse: collapse;
-		border: hidden;
-		width: 100%;
-	}
-	table.data caption,
-	table.index caption {
-		max-width: 50em;
-		margin: 0 auto 1em;
-	}
-
-	table.data td,  table.data th,
-	table.index td, table.index th {
-		padding: 0.5em 1em;
-		border-width: 1px;
-		border-color: silver;
-		border-color: var(--datacell-border);
-		border-top-style: solid;
-	}
-
-	table.data thead td:empty {
-		padding: 0;
-		border: 0;
-	}
-
-	table.data  thead,
-	table.index thead,
-	table.data  tbody,
-	table.index tbody {
-		border-bottom: 2px solid;
-	}
-
-	table.data colgroup,
-	table.index colgroup {
-		border-left: 2px solid;
-	}
-
-	table.data  tbody th:first-child,
-	table.index tbody th:first-child  {
-		border-right: 2px solid;
-		border-top: 1px solid silver;
-		border-top: 1px solid var(--datacell-border);
-		padding-right: 1em;
-	}
-
-	table.data th[colspan],
-	table.data td[colspan] {
-		text-align: center;
-	}
-
-	table.complex.data th,
-	table.complex.data td {
-		border: 1px solid silver;
-		border: 1px solid var(--datacell-border);
-		text-align: center;
-	}
-
-	table.data.longlastcol td:last-child,
-	table.data td.long {
-		vertical-align: baseline;
-		text-align: left;
-	}
-
-	table.data img {
-		vertical-align: middle;
-	}
-
-
-/*
-Alternate table alignment rules
-
-	table.data,
-	table.index {
-		text-align: center;
-	}
-
-	table.data  thead th[scope="row"],
-	table.index thead th[scope="row"] {
-		text-align: right;
-	}
-
-	table.data  tbody th:first-child,
-	table.index tbody th:first-child  {
-		text-align: right;
-	}
-
-Possible extra rowspan handling
-
-	table.data  tbody th[rowspan]:not([rowspan='1']),
-	table.index tbody th[rowspan]:not([rowspan='1']),
-	table.data  tbody td[rowspan]:not([rowspan='1']),
-	table.index tbody td[rowspan]:not([rowspan='1']) {
-		border-left: 1px solid silver;
-	}
-
-	table.data  tbody th[rowspan]:first-child,
-	table.index tbody th[rowspan]:first-child,
-	table.data  tbody td[rowspan]:first-child,
-	table.index tbody td[rowspan]:first-child{
-		border-left: 0;
-		border-right: 1px solid silver;
-	}
-*/
-
-/******************************************************************************/
-/*                                  Indices                                   */
-/******************************************************************************/
-
-
-/** Table of Contents *********************************************************/
-
-	.toc a {
-		/* More spacing; use padding to make it part of the click target. */
-		padding-top: 0.1rem;
-		/* Larger, more consistently-sized click target */
-		display: block;
-		/* Reverse color scheme */
-		color: black;
-		color: var(--toclink-text);
-		border-color: #3980b5;
-		border-color: var(--toclink-underline);
-	}
-	.toc a:visited {
-		color: black;
-		color: var(--toclink-visited-text);
-		border-color: #054572;
-		border-color: var(--toclink-visited-underline);
-	}
-	.toc a:not(:focus):not(:hover) {
-		/* Allow colors to cascade through from link styling */
-		border-bottom-color: transparent;
-	}
-
-	.toc, .toc ol, .toc ul, .toc li {
-		list-style: none; /* Numbers must be inlined into source */
-		/* because generated content isn't search/selectable and markers can't do multilevel yet */
-		margin:  0;
-		padding: 0;
-		line-height: 1.1rem; /* consistent spacing */
-	}
-
-	/* ToC not indented until third level, but font style & margins show hierarchy */
-	.toc > li             { font-weight: bold;   }
-	.toc > li li          { font-weight: normal; }
-	.toc > li li li       { font-size:   95%;    }
-	.toc > li li li li    { font-size:   90%;    }
-	.toc > li li li li .secno { font-size: 85%; }
-	.toc > li li li li li { font-size:   85%;    }
-	.toc > li li li li li .secno { font-size: 100%; }
-
-	/* @supports not (display:grid) { */
-		.toc > li             { margin: 1.5rem 0;    }
-		.toc > li li          { margin: 0.3rem 0;    }
-		.toc > li li li       { margin-left: 2rem;   }
-
-		/* Section numbers in a column of their own */
-		.toc .secno {
-			float: left;
-			width: 4rem;
-			white-space: nowrap;
-		}
-
-		.toc li {
-			clear: both;
-		}
-
-		:not(li) > .toc              { margin-left:  5rem; }
-		.toc .secno                  { margin-left: -5rem; }
-		.toc > li li li .secno       { margin-left: -7rem; }
-		.toc > li li li li .secno    { margin-left: -9rem; }
-		.toc > li li li li li .secno { margin-left: -11rem; }
-
-		/* Tighten up indentation in narrow ToCs */
-		@media (max-width: 30em) {
-			:not(li) > .toc              { margin-left:  4rem; }
-			.toc .secno                  { margin-left: -4rem; }
-			.toc > li li li              { margin-left:  1rem; }
-			.toc > li li li .secno       { margin-left: -5rem; }
-			.toc > li li li li .secno    { margin-left: -6rem; }
-			.toc > li li li li li .secno { margin-left: -7rem; }
-		}
-		/* Loosen it on wide screens */
-		@media screen and (min-width: 78em) {
-			body:not(.toc-inline) :not(li) > .toc              { margin-left:  4rem; }
-			body:not(.toc-inline) .toc .secno                  { margin-left: -4rem; }
-			body:not(.toc-inline) .toc > li li li              { margin-left:  1rem; }
-			body:not(.toc-inline) .toc > li li li .secno       { margin-left: -5rem; }
-			body:not(.toc-inline) .toc > li li li li .secno    { margin-left: -6rem; }
-			body:not(.toc-inline) .toc > li li li li li .secno { margin-left: -7rem; }
-	}
-	/* } */
-
-	@supports (display:grid) and (display:contents) {
-		/* Use #toc over .toc to override non-@supports rules. */
-		#toc {
-			display: grid;
-			align-content: start;
-			grid-template-columns: auto 1fr;
-			grid-column-gap: 1rem;
-			column-gap: 1rem;
-			grid-row-gap: .6rem;
-			row-gap: .6rem;
-		}
-		#toc h2 {
-			grid-column: 1 / -1;
-			margin-bottom: 0;
-		}
-		#toc ol,
-		#toc li,
-		#toc a {
-			display: contents;
-			/* Switch <a> to subgrid when supported */
-		}
-		#toc span {
-			margin: 0;
-		}
-		#toc > .toc > li > a > span {
-			/* The spans of the top-level list,
-			   comprising the first items of each top-level section. */
-			margin-top: 1.1rem;
-		}
-		#toc#toc .secno { /* Ugh, need more specificity to override base.css */
-			grid-column: 1;
-			width: auto;
-			margin-left: 0;
-		}
-		#toc .content {
-			grid-column: 2;
-			width: auto;
-			margin-right: 1rem;
-		}
-		#toc .content:hover,
-		#toc .content:focus {
-			background: rgba(75%, 75%, 75%, .25);
-			background: var(--a-hover-bg);
-			border-bottom: 3px solid #054572;
-			border-bottom: 3px solid var(--toclink-underline);
-			margin-bottom: -3px;
-		}
-		#toc li li li .content {
-			margin-left: 1rem;
-		}
-		#toc li li li li .content {
-			margin-left: 2rem;
-		}
-	}
-
-
-/** Index *********************************************************************/
-
-	/* Index Lists: Layout */
-	ul.index       { margin-left: 0; columns: 15em; text-indent: 1em hanging; }
-	ul.index li    { margin-left: 0; list-style: none; break-inside: avoid; }
-	ul.index li li { margin-left: 1em }
-	ul.index dl    { margin-top: 0; }
-	ul.index dt    { margin: .2em 0 .2em 20px;}
-	ul.index dd    { margin: .2em 0 .2em 40px;}
-	/* Index Lists: Typography */
-	ul.index ul,
-	ul.index dl { font-size: smaller; }
-	@media not print {
-		ul.index li span:not(.dfn-paneled) {
-			white-space: nowrap;
-			color: transparent; }
-		ul.index li a:hover + span,
-		ul.index li a:focus + span {
-			color: #707070;
-			color: var(--indexinfo-text);
-		}
-	}
-
-/** Index Tables *****************************************************/
-	/* See also the data table styling section, which this effectively subclasses */
-
-	table.index {
-		font-size: small;
-		border-collapse: collapse;
-		border-spacing: 0;
-		text-align: left;
-		margin: 1em 0;
-	}
-
-	table.index td,
-	table.index th {
-		padding: 0.4em;
-	}
-
-	table.index tr:hover td:not([rowspan]),
-	table.index tr:hover th:not([rowspan]) {
-		color: black;
-		color: var(--indextable-hover-text);
-		background: #f7f8f9;
-		background: var(--indextable-hover-bg);
-	}
-
-	/* The link in the first column in the property table (formerly a TD) */
-	table.index th:first-child a {
-		font-weight: bold;
-	}
-
-/******************************************************************************/
-/*                                    Print                                   */
-/******************************************************************************/
-
-	@media print {
-		/* Pages have their own margins. */
-		html {
-			margin: 0;
-		}
-		/* Serif for print. */
-		body {
-			font-family: serif;
-		}
-	}
-	@page {
-		margin: 1.5cm 1.1cm;
-	}
-
-
-
-/******************************************************************************/
-/*                             Overflow Control                               */
-/******************************************************************************/
-
-	.figure .caption, .sidefigure .caption, figcaption {
-		/* in case figure is overlarge, limit caption to 50em */
-		max-width: 50rem;
-		margin-left: auto;
-		margin-right: auto;
-	}
-	.overlarge {
-		/* Magic to create good table positioning:
-		   "content column" is 50ems wide at max; less on smaller screens.
-		   Extra space (after ToC + content) is empty on the right.
-
-		   1. When table < content column, centers table in column.
-		   2. When content < table < available, left-aligns.
-		   3. When table > available, fills available + scroll bar.
-		*/
-		display: grid;
-		grid-template-columns: minmax(0, 50em);
-	}
-	.overlarge > table {
-		/* limit preferred width of table */
-		max-width: 50em;
-		margin-left: auto;
-		margin-right: auto;
-	}
-
-	@media (min-width: 55em) {
-		.overlarge {
-			margin-right: calc(13px + 26.5rem - 50vw);
-			max-width: none;
-		}
-	}
-	@media screen and (min-width: 78em) {
-		body:not(.toc-inline) .overlarge {
-			/* 30.5em body padding 50em content area */
-			margin-right: calc(40em - 50vw) !important;
-		}
-	}
-	@media screen and (min-width: 90em) {
-		body:not(.toc-inline) .overlarge {
-			/* 4em html margin 30.5em body padding 50em content area */
-			margin-right: calc(84.5em - 100vw) !important;
-		}
-	}
-
-	@media not print {
-		.overlarge {
-			overflow-x: auto;
-			/* See Lea Verou's explanation background-attachment:
-			 * http://lea.verou.me/2012/04/background-attachment-local/
-			 *
-			background: top left  / 4em 100% linear-gradient(to right,  #ffffff, rgba(255, 255, 255, 0)) local,
-			            top right / 4em 100% linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0)) local,
-			            top left  / 1em 100% linear-gradient(to right,  #c3c3c5, rgba(195, 195, 197, 0)) scroll,
-			            top right / 1em 100% linear-gradient(to left, #c3c3c5, rgba(195, 195, 197, 0)) scroll,
-			            white;
-			background-repeat: no-repeat;
-			*/
-		}
-	}
-</style>
-  <meta content="Bikeshed version 89ebb6ab, updated Fri Oct 9 15:32:07 2020 -0700" name="generator">
-  <meta content="79685616ee6502d5abf2230e67c479e1c910cb34" name="document-revision">
+  <title>Use Cases and Requirements for the Mellon Project</title>
+  <meta content="w3c/ED" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
+  <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
+  <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
+  <meta content="2b967d85537a5fed9ac3256328875e5d3a8e7a2f" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -1357,6 +42,25 @@ Possible extra rowspan handling
       color: #FFFFFF;
     }
   }
+  
+  table {
+    border-collapse: collapse;
+  }
+
+  th {
+    vertical-align:top;
+    border: 1px solid black;
+    padding: 2px;
+  }
+
+  td {
+    vertical-align:top;
+    border: 1px solid black;
+    padding: 5px;
+  }
+  
+  li { margin-top: 5px; margin-bottom: 5px;}
+  li { margin-top: 2px; margin-bottom: 3px;}
 
 }
 
@@ -1426,17 +130,13 @@ pre .property::before, pre .property::after {
 <style>/* style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
-html {
-    color: black;
-    color: var(--text);
-    background-color: white;
-    background-color: var(--bg);
-}
 :root {
     color-scheme: light dark;
 
     --text: black;
     --bg: white;
+
+    --unofficial-watermark: url(https://www.w3.org/StyleSheets/TR/2016/logos/UD-watermark);
 
     --logo-bg: #1a5e9a;
     --logo-active-bg: #c00;
@@ -1510,6 +210,11 @@ html {
     --warning-border: red;
     --warning-bg: hsla(40,100%,50%,0.95);
     --warning-text: var(--text);
+
+    --amendment-border: #330099;
+    --amendment-bg: #F5F0FF;
+    --amendment-text: var(--text);
+    --amendmentheading-text: #220066;
 
     --def-border: #8ccbf2;
     --def-bg: #def;
@@ -1629,6 +334,8 @@ dfn > a.self-link::before      { content: "#"; }
         --text: #ddd;
         --bg: black;
 
+        --unofficial-watermark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg fill='%23100808' transform='translate(200 200) rotate(-45) translate(-200 -200)' stroke='%23100808' stroke-width='3'%3E%3Ctext x='50%25' y='220' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EUNOFFICIAL%3C/text%3E%3Ctext x='50%25' y='305' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EDRAFT%3C/text%3E%3C/g%3E%3C/svg%3E");
+
         --logo-bg: #1a5e9a;
         --logo-active-bg: #c00;
         --logo-text: white;
@@ -1704,6 +411,11 @@ dfn > a.self-link::before      { content: "#"; }
         --warning-bg: hsla(40,100%,20%,0.95);
         --warning-text: var(--text);
 
+        --amendment-border: #330099;
+        --amendment-bg: #080010;
+        --amendment-text: var(--text);
+        --amendmentheading-text: #cc00ff;
+
         --def-border: #8ccbf2;
         --def-bg: #080818;
         --def-text: var(--text);
@@ -1738,9 +450,9 @@ dfn > a.self-link::before      { content: "#"; }
 </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"></p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Use Cases and Requirements for the Mellon Project</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-01-11">11 January 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-01-24">24 January 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -1756,6 +468,10 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
    <p>Use Cases and Requirements for the Mellon Project.</p>
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status">
+   <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
   <nav data-fill-with="table-of-contents" id="toc">
@@ -1773,7 +489,12 @@ dfn > a.self-link::before      { content: "#"; }
      <a href="#architecture"><span class="secno">3</span> <span class="content">Architecture of a Decentralized Network for Scholarly Communication</span></a>
      <ol class="toc">
       <li><a href="#researcher-pod"><span class="secno">3.1</span> <span class="content">Researcher pod</span></a>
-      <li><a href="#orchestrator"><span class="secno">3.2</span> <span class="content">Orchestrator (managed by Institutions)</span></a>
+      <li>
+       <a href="#orchestrator"><span class="secno">3.2</span> <span class="content">Orchestrator (managed by Institutions)</span></a>
+       <ol class="toc">
+        <li><a href="#orchestrator-functions"><span class="secno">3.2.1</span> <span class="content">Orchestrator functions</span></a>
+        <li><a href="#orchetrator-design"><span class="secno">3.2.2</span> <span class="content">Orchestrator design</span></a>
+       </ol>
       <li><a href="#service-hub"><span class="secno">3.3</span> <span class="content">Service hubs</span></a>
       <li><a href="#collector"><span class="secno">3.4</span> <span class="content">Collector</span></a>
       <li><a href="#scholarly-dashboard"><span class="secno">3.5</span> <span class="content">Scholarly Dashboard</span></a>
@@ -1794,86 +515,120 @@ dfn > a.self-link::before      { content: "#"; }
     <li>
      <a href="#policies"><span class="secno">5</span> <span class="content">Policies</span></a>
      <ol class="toc">
-      <li><a href="#researcher-pod-policies"><span class="secno">5.1</span> <span class="content">Researcher pod policies</span></a>
-      <li><a href="#orchestrator-policies"><span class="secno">5.2</span> <span class="content">Orchestrator policies</span></a>
-      <li><a href="#scholarly-dashboard-policies"><span class="secno">5.3</span> <span class="content">Scholarly Dashboard policies</span></a>
-      <li><a href="#service-hub-policies"><span class="secno">5.4</span> <span class="content">Service hub policies</span></a>
+      <li>
+       <a href="#policy-format"><span class="secno">5.1</span> <span class="content">Policy Format</span></a>
+       <ol class="toc">
+        <li><a href="#policy-triggers"><span class="secno">5.1.1</span> <span class="content">Triggers</span></a>
+       </ol>
+      <li>
+       <a href="#policy-enforcement"><span class="secno">5.2</span> <span class="content">Policy enforcement</span></a>
+       <ol class="toc">
+        <li><a href="#policy-enforcement-proof"><span class="secno">5.2.1</span> <span class="content">Proof of policy enforcement</span></a>
+        <li><a href="#policy-enforcement-pod"><span class="secno">5.2.2</span> <span class="content">Client device</span></a>
+        <li><a href="#policy-enforcement-orchestrator"><span class="secno">5.2.3</span> <span class="content">Orchestrator</span></a>
+       </ol>
+      <li><a href="#researcher-pod-policies"><span class="secno">5.3</span> <span class="content">Researcher pod policies</span></a>
+      <li><a href="#orchestrator-policies"><span class="secno">5.4</span> <span class="content">Institution policies</span></a>
+      <li><a href="#service-hub-policies"><span class="secno">5.5</span> <span class="content">Service hub policies</span></a>
      </ol>
     <li>
-     <a href="#usecases"><span class="secno">6</span> <span class="content">Use Cases</span></a>
+     <a href="#usecases"><span class="secno">6</span> <span class="content">Scholarly Communication context</span></a>
      <ol class="toc">
-      <li>
-       <a href="#joining-scholarly-communication-network"><span class="secno">6.1</span> <span class="content">Joining a scholarly communication network</span></a>
-       <ol class="toc">
-        <li><a href="#uc-create-pod"><span class="secno">6.1.1</span> <span class="content">Creating a data pod</span></a>
-        <li><a href="#uc-participate-network"><span class="secno">6.1.2</span> <span class="content">Participating in the network with an existing data pod</span></a>
-       </ol>
-      <li>
-       <a href="#uc-profile"><span class="secno">6.2</span> <span class="content">The researcher profile</span></a>
-       <ol class="toc">
-        <li><a href="#uc-create-researcher-profile"><span class="secno">6.2.1</span> <span class="content">Creating a researcher profile</span></a>
-        <li><a href="#view-profile"><span class="secno">6.2.2</span> <span class="content">Updating a researcher profile</span></a>
-       </ol>
-      <li>
-       <a href="#uc-upload-artefact"><span class="secno">6.3</span> <span class="content">Uploading artefacts</span></a>
-       <ol class="toc">
-        <li><a href="#uc-add-artefact"><span class="secno">6.3.1</span> <span class="content">Adding artefacts to the network</span></a>
-        <li><a href="#uc-link-artefact"><span class="secno">6.3.2</span> <span class="content">Linking new artefacts to existing artefacts in the network</span></a>
-       </ol>
-      <li>
-       <a href="#uc-interact-artefact"><span class="secno">6.4</span> <span class="content">Interacting with artefacts in the network</span></a>
-       <ol class="toc">
-        <li><a href="#uc-create-interaction-comment"><span class="secno">6.4.1</span> <span class="content">Commenting on an existing artefact in the network</span></a>
-       </ol>
-      <li><a href="#uc-subscribing"><span class="secno">6.5</span> <span class="content">Subscribing to entities in the network</span></a>
-      <li><a href="#uc-subscribe-artefact"><span class="secno">6.6</span> <span class="content">Subscribing to artefacts of a specific author in the network</span></a>
-      <li><a href="#uc-unsubscribe-artefact"><span class="secno">6.7</span> <span class="content">Undo a specific subscription</span></a>
+      <li><a href="#context-actors"><span class="secno">6.1</span> <span class="content">Actors in the network</span></a>
+      <li><a href="#context-actors①"><span class="secno">6.2</span> <span class="content">Objects in the network</span></a>
+      <li><a href="#context-actors②"><span class="secno">6.3</span> <span class="content">Roles in the network</span></a>
      </ol>
     <li>
-     <a href="#requirements"><span class="secno">7</span> <span class="content">Requirements</span></a>
+     <a href="#usecases①"><span class="secno">7</span> <span class="content">Use Cases</span></a>
      <ol class="toc">
       <li>
-       <a href="#rq-solid-storage"><span class="secno">7.1</span> <span class="content">Data Storage</span></a>
+       <a href="#joining-scholarly-communication-network"><span class="secno">7.1</span> <span class="content">Joining a scholarly communication network</span></a>
        <ol class="toc">
-        <li><a href="#rq-artefact-storage"><span class="secno">7.1.1</span> <span class="content">Research Artefact Storage</span></a>
-        <li><a href="#rq-interaction-artefact-storage"><span class="secno">7.1.2</span> <span class="content">Interaction artefacts storage</span></a>
-        <li><a href="#rq-metadata-storage"><span class="secno">7.1.3</span> <span class="content">Metadata Storage</span></a>
-        <li><a href="#rq-data-discovery"><span class="secno">7.1.4</span> <span class="content">Data Discovery</span></a>
-        <li><a href="#rq-location-aware-storage"><span class="secno">7.1.5</span> <span class="content">Location aware data storage</span></a>
-        <li><a href="#rq-artefact-versioning"><span class="secno">7.1.6</span> <span class="content">Artefact versioning</span></a>
-        <li><a href="#rq-permissions"><span class="secno">7.1.7</span> <span class="content">Permissions</span></a>
+        <li><a href="#uc-create-pod"><span class="secno">7.1.1</span> <span class="content">Creating a data pod</span></a>
+        <li><a href="#uc-participate-network"><span class="secno">7.1.2</span> <span class="content">Participating in the network with an existing data pod</span></a>
        </ol>
       <li>
-       <a href="#rq-events"><span class="secno">7.2</span> <span class="content">Events</span></a>
+       <a href="#uc-profile"><span class="secno">7.2</span> <span class="content">The researcher profile</span></a>
        <ol class="toc">
-        <li><a href="#rq-notifications"><span class="secno">7.2.1</span> <span class="content">Notifications</span></a>
+        <li><a href="#uc-create-researcher-profile"><span class="secno">7.2.1</span> <span class="content">Creating a researcher profile</span></a>
+        <li><a href="#view-profile"><span class="secno">7.2.2</span> <span class="content">Updating a researcher profile</span></a>
        </ol>
       <li>
-       <a href="#rq-policy"><span class="secno">7.3</span> <span class="content">Policies</span></a>
+       <a href="#uc-upload-artefact"><span class="secno">7.3</span> <span class="content">Uploading artefacts</span></a>
        <ol class="toc">
-        <li><a href="#rq-policy-shapes"><span class="secno">7.3.1</span> <span class="content">Shape matching</span></a>
+        <li><a href="#uc-add-artefact"><span class="secno">7.3.1</span> <span class="content">Adding artefacts to the network scholarly record</span></a>
+        <li><a href="#uc-link-artefact"><span class="secno">7.3.2</span> <span class="content">Linking new artefacts to existing artefacts in the network</span></a>
        </ol>
       <li>
-       <a href="#rq-service-hubs"><span class="secno">7.4</span> <span class="content">Service hubs</span></a>
+       <a href="#uc-interact-artefact"><span class="secno">7.4</span> <span class="content">Interacting with artefacts in the network</span></a>
        <ol class="toc">
-        <li><a href="#rq-service-discovery"><span class="secno">7.4.1</span> <span class="content">Service hub discovery</span></a>
-        <li><a href="#rq-service-interactions"><span class="secno">7.4.2</span> <span class="content">Service hub interactions</span></a>
-        <li><a href="#rq-service-functions"><span class="secno">7.4.3</span> <span class="content">Service hub functions</span></a>
-        <li><a href="#rq-registration-service"><span class="secno">7.4.4</span> <span class="content">Registration service</span></a>
-        <li><a href="#rq-certification-service"><span class="secno">7.4.5</span> <span class="content">Certification service</span></a>
-        <li><a href="#rq-awareness-service"><span class="secno">7.4.6</span> <span class="content">Awareness service</span></a>
-        <li><a href="#rq-archiving-service"><span class="secno">7.4.7</span> <span class="content">Archiving service</span></a>
+        <li><a href="#uc-create-interaction-comment"><span class="secno">7.4.1</span> <span class="content">Commenting on an existing artefact in the network</span></a>
+        <li><a href="#uc-subscribing"><span class="secno">7.4.2</span> <span class="content">Subscribing to entities in the network</span></a>
+        <li><a href="#uc-subscribe-artefact"><span class="secno">7.4.3</span> <span class="content">Subscribing to artefacts of a specific author in the network</span></a>
+        <li><a href="#uc-unsubscribe-artefact"><span class="secno">7.4.4</span> <span class="content">Undo a specific subscription</span></a>
        </ol>
-      <li>
-       <a href="#rq-verification"><span class="secno">7.5</span> <span class="content">Verification mechanics</span></a>
-       <ol class="toc">
-        <li><a href="#rq-profile-verification"><span class="secno">7.5.1</span> <span class="content">Researcher profile verification</span></a>
-        <li><a href="#rq-publication-verification"><span class="secno">7.5.2</span> <span class="content">Artefact data verification</span></a>
-       </ol>
-      <li><a href="#ontology"><span class="secno">7.6</span> <span class="content">Ontologies</span></a>
      </ol>
-    <li><a href="#definitions"><span class="secno">8</span> <span class="content">Definitions</span></a>
-    <li><a href="#conformance"><span class="secno"></span> <span class="content"> Conformance</span></a>
+    <li>
+     <a href="#requirements"><span class="secno">8</span> <span class="content">Requirements</span></a>
+     <ol class="toc">
+      <li>
+       <a href="#rq-solid-storage"><span class="secno">8.1</span> <span class="content">Pod based data storage{#rq-solid-storage}</span></a>
+       <ol class="toc">
+        <li><a href="#rq-artefact-storage"><span class="secno">8.1.1</span> <span class="content">Research Artefact Storage</span></a>
+        <li><a href="#rq-interaction-artefact-storage"><span class="secno">8.1.2</span> <span class="content">Artefact Linking</span></a>
+        <li><a href="#rq-metadata-storage"><span class="secno">8.1.3</span> <span class="content">Metadata Storage</span></a>
+        <li><a href="#rq-data-discovery"><span class="secno">8.1.4</span> <span class="content">Data Discovery</span></a>
+        <li><a href="#rq-location-aware-storage"><span class="secno">8.1.5</span> <span class="content">Location aware data storage</span></a>
+        <li><a href="#rq-artefact-versioning"><span class="secno">8.1.6</span> <span class="content">Artefact versioning</span></a>
+        <li><a href="#rq-permissions"><span class="secno">8.1.7</span> <span class="content">Permissions</span></a>
+       </ol>
+      <li>
+       <a href="#rq-events"><span class="secno">8.2</span> <span class="content">Events</span></a>
+       <ol class="toc">
+        <li><a href="#rq-notifications"><span class="secno">8.2.1</span> <span class="content">Notifications</span></a>
+       </ol>
+      <li>
+       <a href="#rq-orchestrator"><span class="secno">8.3</span> <span class="content">Orchestrator</span></a>
+       <ol class="toc">
+        <li><a href="#rq-"><span class="secno">8.3.1</span> <span class="content">### {#rq-}</span></a>
+        <li><a href="#rq-①"><span class="secno">8.3.2</span> <span class="content">### {#rq-}</span></a>
+        <li><a href="#rq-②"><span class="secno">8.3.3</span> <span class="content">### {#rq-}</span></a>
+        <li><a href="#rq-③"><span class="secno">8.3.4</span> <span class="content">### {#rq-}</span></a>
+       </ol>
+      <li>
+       <a href="#rq-policy"><span class="secno">8.4</span> <span class="content">Policies</span></a>
+       <ol class="toc">
+        <li><a href="#rq-policy-shapes"><span class="secno">8.4.1</span> <span class="content">Shape matching</span></a>
+       </ol>
+      <li>
+       <a href="#rq-service-hubs"><span class="secno">8.5</span> <span class="content">Service hubs</span></a>
+       <ol class="toc">
+        <li><a href="#rq-service-discovery"><span class="secno">8.5.1</span> <span class="content">Service hub discovery</span></a>
+        <li><a href="#rq-service-interactions"><span class="secno">8.5.2</span> <span class="content">Service hub interactions</span></a>
+        <li><a href="#rq-service-functions"><span class="secno">8.5.3</span> <span class="content">Service hub functions</span></a>
+       </ol>
+      <li>
+       <a href="#rq-verification"><span class="secno">8.6</span> <span class="content">Verification mechanics</span></a>
+       <ol class="toc">
+        <li><a href="#rq-profile-verification"><span class="secno">8.6.1</span> <span class="content">Researcher profile verification</span></a>
+        <li><a href="#rq-publication-verification"><span class="secno">8.6.2</span> <span class="content">Artefact data verification</span></a>
+        <li><a href="#rq-publication-verification①"><span class="secno">8.6.3</span> <span class="content">Service hub verification</span></a>
+       </ol>
+      <li>
+       <a href="#rq-collector"><span class="secno">8.7</span> <span class="content">Collector</span></a>
+       <ol class="toc">
+        <li><a href="#rq-collector-archiving-service"><span class="secno">8.7.1</span> <span class="content">Archiving service providing querying capabilities</span></a>
+        <li><a href="#separate-collector-instance"><span class="secno">8.7.2</span> <span class="content">Separate collector instance</span></a>
+       </ol>
+      <li><a href="#ontology"><span class="secno">8.8</span> <span class="content">Ontologies</span></a>
+     </ol>
+    <li><a href="#definitions"><span class="secno">9</span> <span class="content">Definitions</span></a>
+    <li>
+     <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
+     <ol class="toc">
+      <li><a href="#w3c-conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
+      <li><a href="#w3c-conformant-algorithms"><span class="secno"></span> <span class="content">Conformant Algorithms</span></a>
+     </ol>
     <li>
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
@@ -1888,8 +643,8 @@ In order to design this framework, different approaches to distributed networks 
    <p>In <a href="#scholarly-communication">§ 2 Scholarly communication</a>, the requirements and vision for scholarly communication are explained.
 In <a href="#architecture">§ 3 Architecture of a Decentralized Network for Scholarly Communication</a>, an architecture is proposed for scholarly communication over decentralized networks based on pod based data storage.
 The artefacts required for scholarly communication are listed in [[$artefacts]].
-For the proposed architecture, concrete use-cases are worked out in <a href="#usecases">§ 6 Use Cases</a>.
-From these use-cases, requirements are derived in <a href="#requirements">§ 7 Requirements</a>.</p>
+For the proposed architecture, concrete use-cases are worked out in <a href="#usecases">§ 6 Scholarly Communication context</a>.
+From these use-cases, requirements are derived in <a href="#requirements">§ 8 Requirements</a>.</p>
    <h2 class="heading settled" data-level="2" id="scholarly-communication"><span class="secno">2. </span><span class="content">Scholarly communication</span><a class="self-link" href="#scholarly-communication"></a></h2>
    <h3 class="heading settled" data-level="2.1" id="functions-scholarly-communication"><span class="secno">2.1. </span><span class="content">Core functions of scholarly communication</span><a class="self-link" href="#functions-scholarly-communication"></a></h3>
     For scholarly communication to be successful, <a href="http://www.dlib.org/dlib/september04/vandesompel/09vandesompel.html">four core functions</a> have to be fulfilled. 
@@ -1953,6 +708,8 @@ In the case of problems, the institution can change from / advertise multiple di
     Institutions participate in the decentralized scholarly communication network by providing orchestrator services to the network. In this way, an institution can manages their affiliated researchers using these orchestrators. 
 The orchestrators connect researcher pods with a relevant set of service hubs that enable the researcher pod to fulfill all the <a href="#functions-scholarly-communication">functions of scholarly communication</a> In its role as an orchestrator, it can set policies that are enforced in the communication between the research pods and the service hubs. 
    <p>Orchestrators should be linked to institutions to allow for <a href="#institutions-decentralized-network-trust">trust based operating of the network</a>.</p>
+   <h4 class="heading settled" data-level="3.2.1" id="orchestrator-functions"><span class="secno">3.2.1. </span><span class="content">Orchestrator functions</span><a class="self-link" href="#orchestrator-functions"></a></h4>
+   <h4 class="heading settled" data-level="3.2.2" id="orchetrator-design"><span class="secno">3.2.2. </span><span class="content">Orchestrator design</span><a class="self-link" href="#orchetrator-design"></a></h4>
    <h3 class="heading settled" data-level="3.3" id="service-hub"><span class="secno">3.3. </span><span class="content">Service hubs</span><a class="self-link" href="#service-hub"></a></h3>
     Service hubs provide services to the network.
 These services are necessary to enable the execution of the <a href="#functions-scholarly-communication">functions of scholarly communication</a> by the network.
@@ -1971,6 +728,14 @@ A scholarly dashboard can be managed by an institution, requiring users to provi
    <h3 class="heading settled" data-level="3.6" id="scholarly-browser"><span class="secno">3.6. </span><span class="content">Scholarly Browser</span><a class="self-link" href="#scholarly-browser"></a></h3>
     The scholarly browser is the interface that can be used by anyone to query the distributed network for information on scholarly artefacts.
 It provides information about the artefact, as well as lifecycle events and the available interactions with the artefact. 
+   <figure>
+     <img src="images/registration.svg"> 
+    <figcaption>An example control flow graph for creating and registring an artefact.</figcaption>
+   </figure>
+   <figure>
+     <img src="images/certification_peer.svg"> 
+    <figcaption>An example control flow graph for the orchestrator triggering the peer review certification process after registration of the artefact has completed.</figcaption>
+   </figure>
    <h2 class="heading settled" data-level="4" id="artefacts-scholarly-communication"><span class="secno">4. </span><span class="content">Artefacts of scholarly communication</span><a class="self-link" href="#artefacts-scholarly-communication"></a></h2>
     The functions of scholarly communication produce artefacts.
 These artefacts need to be stored on the relevant locations, and should be retrievable by the appropriate actors to fulfil the functions of scholarly communication. 
@@ -2057,59 +822,397 @@ These <a href="#service-hub">Service Hubs for awareness</a> should be equipped t
 E.g. an actor should be able to subscribe to creation lifecycle events of artefacts tagged with "Scholarly Communication".
 The service hub should be able to advertise the available options for filtering research, and the lifecycle information which can be subscribed to. 
    <h2 class="heading settled" data-level="5" id="policies"><span class="secno">5. </span><span class="content">Policies</span><a class="self-link" href="#policies"></a></h2>
-    Policies must be enforcable in the network to enforce the policies present in the research institutions. There are different actors in the network that can enforce different kinds of policies. 
-   <h3 class="heading settled" data-level="5.1" id="researcher-pod-policies"><span class="secno">5.1. </span><span class="content">Researcher pod policies</span><a class="self-link" href="#researcher-pod-policies"></a></h3>
+    A policy is the way on which rules can be enforced in the network.
+Policies can come from the researcher (e.g. my data should certainly also be archived by service X). It can be used by institution to set rules for the submissions made by affiliated researchers (e.g. registration must at least happen by service Y. Submitted artefacts of type paper should contain metadata indicated the affiliated institution, ...).
+Policies must be enforcable in the network. 
+   <h3 class="heading settled" data-level="5.1" id="policy-format"><span class="secno">5.1. </span><span class="content">Policy Format</span><a class="self-link" href="#policy-format"></a></h3>
+    In order for multiple actors in the networks to enforce policies, there is a requirement for a unified policy format.
+This format should enable the orchestration services in a network to enforce the policies, and MUST be able to provide <strong>proof</strong> of the enforcement of the policy. 
+   <h4 class="heading settled" data-level="5.1.1" id="policy-triggers"><span class="secno">5.1.1. </span><span class="content">Triggers</span><a class="self-link" href="#policy-triggers"></a></h4>
+    A policy can be seen as a set of triggers.
+(e.g. the policy of institution X on artefacts of type dataset is defined by the triggers that are activated when receiving an artefact of type dataset.)
+A trigger should contain:
+1- A data shape - this is required to match the received artefact, and only execute the triggers for relevant artefacts.
+2- A trigger function. 
+   <p>This trigger function could be many things:</p>
+   <ul>
+    <li data-md>
+     <p>A data shape - this is a shape that should be matched by the received artefact (this enables the setting of required fields)</p>
+    <li data-md>
+     <p>a service call - this is the service that should be called with the artifact as argument.</p>
+   </ul>
+   <p>As can be seen from above, an ordering is required for the different received triggers (data verification has to happen first, before calling services).
+Precedence in called services can be achieved by receiving the result of previously called services as a notification in the inbox (this is one solution). This way, the notification can be processed, and triggers can be executed on this notification.</p>
+   <h3 class="heading settled" data-level="5.2" id="policy-enforcement"><span class="secno">5.2. </span><span class="content">Policy enforcement</span><a class="self-link" href="#policy-enforcement"></a></h3>
+    Policies in the network should be enforced.
+Institutions / research groups / ... should have some control over the submitted research / way research is submitted. 
+   <h4 class="heading settled" data-level="5.2.1" id="policy-enforcement-proof"><span class="secno">5.2.1. </span><span class="content">Proof of policy enforcement</span><a class="self-link" href="#policy-enforcement-proof"></a></h4>
+    Proof of the enforcement of a policy can be given by the orchestration service (if this is a trusted service), through a token that can be validated for each required policy. 
+   <h4 class="heading settled" data-level="5.2.2" id="policy-enforcement-pod"><span class="secno">5.2.2. </span><span class="content">Client device</span><a class="self-link" href="#policy-enforcement-pod"></a></h4>
+    The client device (e.g. through a scholarly dashboard), can be used to enforce the policies of the client user. These policies can be evaluated on the client device, or can be passed to the orchestrator service. 
+   <h4 class="heading settled" data-level="5.2.3" id="policy-enforcement-orchestrator"><span class="secno">5.2.3. </span><span class="content">Orchestrator</span><a class="self-link" href="#policy-enforcement-orchestrator"></a></h4>
+    The orchestrator is responsible for the enforcement of all institution policies, for the institution managing the orchestrator, and the function of the orchestrator.
+This requires the orchestrator to be a separate service, in the case the client cannot be trusted with enforcing policies.
+In the case this is not an issue, the orchestrator service can be run on the client device (e.g. through the scholarly dashboard in this case.) 
+   <h3 class="heading settled" data-level="5.3" id="researcher-pod-policies"><span class="secno">5.3. </span><span class="content">Researcher pod policies</span><a class="self-link" href="#researcher-pod-policies"></a></h3>
     The researcher has full control over his researcher pod.
 Because of this, the researcher can set policies that must be adhered to for their own data pod.
 An example of this is providing shape trees that enforce where certain data must be stored on the pod (interaction artefacts, lifecycle information, ...).
 Because of these policies, it is important that all information submitted from a researcher pod is also stored and archived by the service hubs, as the policies set by a data pod may reject certain data from being stored on the pod. 
-   <h3 class="heading settled" data-level="5.2" id="orchestrator-policies"><span class="secno">5.2. </span><span class="content">Orchestrator policies</span><a class="self-link" href="#orchestrator-policies"></a></h3>
-    The orchestrators in the network serve as the mediators between the researcher pods and the service hubs in the network.
-Because of this position, the orchestrator can enforce policies on the data being submitted from the researcher pods to the service hubs.
-Examples of enforceable policies are requiring artefacts to be peer reviewed before certification, requiring all artefact metadata to be present before submitting to services,  advertising / enforcing certain service hubs, ...)
-The orchestrator policies are set by the institution managing the orchestrator. 
-   <h3 class="heading settled" data-level="5.3" id="scholarly-dashboard-policies"><span class="secno">5.3. </span><span class="content">Scholarly Dashboard policies</span><a class="self-link" href="#scholarly-dashboard-policies"></a></h3>
-    The scholarly dashboard can enforce it’s own set of policies.
-It can enforce the orchestrators that are used, decide on data formats, ...
-These policies can be essential to the correct working of the dashboard (e.g. require specific data formats to show statistics, edit artefacts, ...). 
-The scholarly dashboard policies are set by the institution managing the scholarly dashboard. 
-   <h3 class="heading settled" data-level="5.4" id="service-hub-policies"><span class="secno">5.4. </span><span class="content">Service hub policies</span><a class="self-link" href="#service-hub-policies"></a></h3>
+   <h3 class="heading settled" data-level="5.4" id="orchestrator-policies"><span class="secno">5.4. </span><span class="content">Institution policies</span><a class="self-link" href="#orchestrator-policies"></a></h3>
+    The managing institutions in the network may wish to enforce their own policies on their own affiliated researchers. For this, the institution may provide sets of policies (these could be different sets for different purposes / research groups / ...).
+These policies can be retrieved and enforced by an orchestration service, with proof of the enforcement of the policies.
+Examples of enforceable policies are requiring all artefact metadata to be present before submitting to services. Advertising / enforcing certain service hubs, ...). 
+   <h3 class="heading settled" data-level="5.5" id="service-hub-policies"><span class="secno">5.5. </span><span class="content">Service hub policies</span><a class="self-link" href="#service-hub-policies"></a></h3>
     Service hubs may also enforce policies on the received submission.
 E.g. they may require all metadata to be filled out for a submitted artefact, or require a specific file format for submissions.
-Ideally these policies should be also enforced by the scholarly dashboard / orchestrator making use of the service.
-The service hub policies are set by the institution or third party managing the service hub. 
-   <h2 class="heading settled" data-level="6" id="usecases"><span class="secno">6. </span><span class="content">Use Cases</span><a class="self-link" href="#usecases"></a></h2>
-   <h3 class="heading settled" data-level="6.1" id="joining-scholarly-communication-network"><span class="secno">6.1. </span><span class="content">Joining a scholarly communication network</span><a class="self-link" href="#joining-scholarly-communication-network"></a></h3>
+Ideally these policies should be also enforced by the orchestrator making use of the service (as if this is not the case, an error will happen, that has to be back-propagated through the network). 
+   <h2 class="heading settled" data-level="6" id="usecases"><span class="secno">6. </span><span class="content">Scholarly Communication context</span><a class="self-link" href="#usecases"></a></h2>
+   <h3 class="heading settled" data-level="6.1" id="context-actors"><span class="secno">6.1. </span><span class="content">Actors in the network</span><a class="self-link" href="#context-actors"></a></h3>
+   <table style="width:100%">
+    <caption>Actors in the network</caption>
+    <tbody>
+     <tr>
+      <th style="width: 5%; padding-top: 10px; padding-bottom: 15px;">
+      <th style="padding-top: 10px; padding-bottom: 15px;">Term
+      <th style="padding-top: 10px; padding-bottom: 15px;">Description
+     <tr>
+      <td>U
+      <td>User
+      <td>A user querying information over the scholarly communication network
+     <tr>
+      <td>R
+      <td>Researcher
+      <td>A user adding / interacting with information to the scholarly communication network
+     <tr>
+      <td>I
+      <td>Institution
+      <td>Organisation that enforces policies on managed actors.
+     <tr>
+      <td>S
+      <td>Service Provider
+      <td>Provider of services in the network.
+   </table>
+   <h3 class="heading settled" data-level="6.2" id="context-actors①"><span class="secno">6.2. </span><span class="content">Objects in the network</span><a class="self-link" href="#context-actors①"></a></h3>
+   <table style="width:100%">
+    <caption>Actors in the network</caption>
+    <tbody>
+     <tr>
+      <th style="width: 5%; padding-top: 10px; padding-bottom: 15px;">
+      <th style="padding-top: 10px; padding-bottom: 15px;">Term
+      <th style="padding-top: 10px; padding-bottom: 15px;">Description
+     <tr>
+      <td>O
+      <td>Object
+      <td>Generic representation of an entity
+     <tr>
+      <td>A
+      <td>Artefact
+      <td>Object that is the result of scholarly communication and can be recorded.
+     <tr>
+      <td>M
+      <td>Metadata
+      <td>Metadata about an artefact.
+     <tr>
+      <td>IA
+      <td>Interaction Artefact
+      <td>Object that is the result of an interaction with an Artefact.
+     <tr>
+      <td>LE
+      <td>Lifecycle Event
+      <td>Object that is an event in the lifecycle of an Artefact.
+     <tr>
+      <td>R
+      <td>Record
+      <td>Record of the scholarly communication in the network.
+     <tr>
+      <td>P
+      <td>Policy
+      <td>Policy providing a set of regulations that must be enforced.
+   </table>
+   <h3 class="heading settled" data-level="6.3" id="context-actors②"><span class="secno">6.3. </span><span class="content">Roles in the network</span><a class="self-link" href="#context-actors②"></a></h3>
+   <table style="width:100%">
+    <caption>Actors in the network</caption>
+    <tbody>
+     <tr>
+      <th style="width: 5%; padding-top: 10px; padding-bottom: 15px;">
+      <th style="padding-top: 10px; padding-bottom: 15px;">Term
+      <th style="padding-top: 10px; padding-bottom: 15px;">Description
+     <tr>
+      <td>C
+      <td>Consumer
+      <td>Entity that queries the network for scholarly communication information.
+     <tr>
+      <td>P
+      <td>Publisher
+      <td>Entity that publishes new artefacts to the network.
+     <tr>
+      <td>O
+      <td>Orchestrator
+      <td>Entity that provides a Service hub to the network.
+     <tr>
+      <td>SHP
+      <td>Service Hub Provider
+      <td>Entity that provides a Service hub to the network.
+     <tr>
+      <td>B
+      <td>Collector (Browser)
+      <td>Entity that collects the scholarly communication data present in the network.
+     <tr>
+      <td>REC
+      <td>Scholarly Record
+      <td>Record of scholarly communication happening in the network. Can be queried for information on the scholarly record of the network.
+   </table>
+   <h2 class="heading settled" data-level="7" id="usecases①"><span class="secno">7. </span><span class="content">Use Cases</span><a class="self-link" href="#usecases①"></a></h2>
+   <p>The following scenarios aim at capturing what an architecture based on Decentralized Web should enable for users.
+In this context, the users are the different stakeholders that are active in the network:</p>
+   <ul>
+    <li data-md>
+     <p>The research Institutions, providing dashboard and orchestration services while enforcing institution policies.</p>
+    <li data-md>
+     <p>The affiliated researcher, they create artefacts in the network.</p>
+    <li data-md>
+     <p>Organizations that provide functions of scholarly communication through service hubs.</p>
+    <li data-md>
+     <p>Organizations providing collection and browsing services for the network.</p>
+   </ul>
+   <p>We use the following template:</p>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>Actors can be people (roles), other systems, or time directly interacting with the process.
+     <tr>
+      <td>Goal
+      <td>The final successful outcome that completes the process.
+     <tr>
+      <td>Stakeholders
+      <td>Anybody with an interest or investment in how the system performs.
+     <tr>
+      <td>Preconditions
+      <td>The elements that must be true before a use case can occur.
+     <tr>
+      <td>Triggers
+      <td>The events that cause the use case to begin
+     <tr>
+      <td>Postconditions
+      <td>What the system should have completed by the end of the steps
+     <tr>
+      <td>Procedure
+      <td>The process and steps taken to reach the end goal, including the necessary functional requirements and their anticipated behaviors.
+     <tr>
+      <td>Requirements
+      <td>Requirements for the use-case to be achievable.
+   </table>
+   <h3 class="heading settled" data-level="7.1" id="joining-scholarly-communication-network"><span class="secno">7.1. </span><span class="content">Joining a scholarly communication network</span><a class="self-link" href="#joining-scholarly-communication-network"></a></h3>
     In order to create or interact with artefacts in a scholarly communication network, a user must have a valid data pod environment to store these (interaction) artefacts.
 In order for these artefacts to be taken into the scholarly record, they have to be passed to the respective service hubs that fulfil these functions.
 For this to be possible, the data pod must have access to an orchestrator in the network, that will ensure that the created artefacts can follow the correct steps to be included in the scholarly record. 
-   <h4 class="heading settled" data-level="6.1.1" id="uc-create-pod"><span class="secno">6.1.1. </span><span class="content">Creating a data pod</span><a class="self-link" href="#uc-create-pod"></a></h4>
+   <h4 class="heading settled" data-level="7.1.1" id="uc-create-pod"><span class="secno">7.1.1. </span><span class="content">Creating a data pod</span><a class="self-link" href="#uc-create-pod"></a></h4>
     Bob wants to interact with published artefacts in the network, but does not have a data pod available to store these interactions.
 Any <a href="#scholarly-dashboard">scholarly dashboard</a> used to interact with artefacts in the network SHOULD provide an option to login to an existing pod, register an existing data pod or to create a new data pod.
 Bob chooses the option to create a new pod, and is redirected to an environment where he can create a new data Pod (The available environments can be selected by the scholarly dashboard, as the use of specific platforms can be advertised / enforced). 
-   <h4 class="heading settled" data-level="6.1.2" id="uc-participate-network"><span class="secno">6.1.2. </span><span class="content">Participating in the network with an existing data pod</span><a class="self-link" href="#uc-participate-network"></a></h4>
+   <h4 class="heading settled" data-level="7.1.2" id="uc-participate-network"><span class="secno">7.1.2. </span><span class="content">Participating in the network with an existing data pod</span><a class="self-link" href="#uc-participate-network"></a></h4>
     Bob wants to interact with published artefacts in the network, and has a data pod available.
 Bob chooses the option of the <a href="#scholarly-dashboard">scholarly dashboard</a> to login with an existing data pod.
 The institution managing the scholarly dashboard MAY require Bob to authenticate himself to the institution before allowing use of the dashboard.
 On authentication, Bob is given access to the functionality available in the scholarly dashboard, and interactions in with artefacts may be handled by an orchestrator already linked in the Bob’s pod, or by an orchestrator advertised / enforced by the scholarly dashboard. 
-   <h3 class="heading settled" data-level="6.2" id="uc-profile"><span class="secno">6.2. </span><span class="content">The researcher profile</span><a class="self-link" href="#uc-profile"></a></h3>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+         <p>Researcher</p>
+        <li data-md>
+         <p>Institution</p>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+         <p>Dashboard               I</p>
+        <li data-md>
+         <p>Orchestrator            I</p>
+        <li data-md>
+         <p>Researcher pod          R</p>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher pod has access to an orchestration service in the network.</p>
+        <li data-md>
+         <p>The managing institution of the orchestrator is aware of the researcher pod, and can link an affiliated person to the pod.</p>
+        <li data-md>
+         <p>The researcher can now interact with artefacts on the network.</p>
+        <li data-md>
+         <p>The researcher can now create new artefacts in the network an use the scholarly communication functions for the created artefact.</p>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+         <p>Institution</p>
+        <li data-md>
+         <p>Researcher (pod-owner)</p>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher has a pod available.</p>
+        <li data-md>
+         <p>The researcher has access to a scholarly dashboard (optional).</p>
+        <li data-md>
+         <p>The researcher can authenticate himself to the dashboard if required (is affiliated to the managing institution, ....).</p>
+        <li data-md>
+         <p>Or the user can authenticate himself on another way and gain access to the orchestrator that way (without using dashboard).</p>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+         <p>A Researcher wants to join the network.</p>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher can make use of the orchestrator, and has access to all required functions for scholarly communication.</p>
+        <li data-md>
+         <p>The orchestrator in question can authenticate the user as an affiliated person. (It can assure to the network to trust this user?)</p>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+         <p>The researcher logs in to the scholarly dashboards OR the researcher connects to an interface that enables them to retrieve information about available orchestrators in the network.</p>
+        <li data-md>
+         <p>The user retrieves the orchestrator information (via the dashboard).</p>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+       <ul>
+        <li data-md>
+         <p>Pod environment</p>
+        <li data-md>
+         <p>Scholarly dashboard</p>
+        <li data-md>
+         <p>Authentication mechanism for pod owner wishing to join the network (= make use of orchestrator)</p>
+       </ul>
+   </table>
+   <h3 class="heading settled" data-level="7.2" id="uc-profile"><span class="secno">7.2. </span><span class="content">The researcher profile</span><a class="self-link" href="#uc-profile"></a></h3>
     On initial participation in a scholarly communication network, actors in the network MAY enforce that connecting data pods require a researcher profile to be complete, in order to validate affiliations to certain institutions.
 Any <a href="#scholarly-dashboard">scholarly dashboard</a> used to interact with the scholarly communication network SHOULD provide functionality / redirect to services for researchers to create their profile.
 Institutions SHOULD provide functionality for researchers to receive a token of sorts proving their affiliation to the institution, that can be used by actors in the network to verify the researcher’s affiliations. 
-   <h4 class="heading settled" data-level="6.2.1" id="uc-create-researcher-profile"><span class="secno">6.2.1. </span><span class="content">Creating a researcher profile</span><a class="self-link" href="#uc-create-researcher-profile"></a></h4>
+   <h4 class="heading settled" data-level="7.2.1" id="uc-create-researcher-profile"><span class="secno">7.2.1. </span><span class="content">Creating a researcher profile</span><a class="self-link" href="#uc-create-researcher-profile"></a></h4>
     Bob logs on to a <a href="#scholarly-dashboard">scholarly dashboard</a> with a newly created data pod by authenticating himself to the dashboard.
 The dashboard analyses Bob’s data pod, and cannot discover a researcher profile.
 The dashboard SHOULD provide a way for Bob to create a researcher profile / the dashboard can create a researcher profile automatically if it has the available information using Bob’s authentication to the dashboard.
 Bob’s researcher profile is now added to Bob’s data pod, and is passed to one or more orchestrators in the network (connected to Bob’s data pod or to the scholarly browser).
 The orchestrators make sure that the information is passed to the relevant services, so that Bob’s updated information is now available in the network. 
-   <h4 class="heading settled" data-level="6.2.2" id="view-profile"><span class="secno">6.2.2. </span><span class="content">Updating a researcher profile</span><a class="self-link" href="#view-profile"></a></h4>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+         <p>Researcher</p>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+         <p>Researcher pod          R</p>
+        <li data-md>
+         <p>Dashboard               I</p>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher pod has a researcher profile set.</p>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+         <p>Researcher (pod-owner)</p>
+        <li data-md>
+         <p>OPTIONAL: Institution</p>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher has a pod available.</p>
+        <li data-md>
+         <p>The researcher can authenticate himself and his pod to the scholarly dashboard.</p>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher navigates to the "Edit Profile" tab of the scholarly dashboard.</p>
+        <li data-md>
+         <p>The researcher tries an action that requires the researcher profile to be completed, and is redirected to the "Edit Profile" tab in the dashboard.</p>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher profile is set in the researcher pod.</p>
+        <li data-md>
+         <p>OPTIONAL: The researcher profile matches the institution profile of the researcher.)</p>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+         <p>The researcher navigates / is redirected to the "Edit Profile" tab of the scholarly dashboard.</p>
+        <li data-md>
+         <p>OPTIONAL: If the dashboard can retrieve information on the researcher through the authentication process, this information can be automatically filled in.</p>
+        <li data-md>
+         <p>The researcher completes all required fields of the form, and submits.</p>
+        <li data-md>
+         <p>The completed profile is posted to the researcher pod.</p>
+        <li data-md>
+         <p>The browser shows a success / failure message for the update, and redirects to the "View Profile" tab in the dashboard, or the tab the researcher was redirected from.</p>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+       <ul>
+        <li data-md>
+         <p>Pod environment</p>
+        <li data-md>
+         <p>scholarly dashboard</p>
+       </ul>
+   </table>
+   <h4 class="heading settled" data-level="7.2.2" id="view-profile"><span class="secno">7.2.2. </span><span class="content">Updating a researcher profile</span><a class="self-link" href="#view-profile"></a></h4>
     Bob has changed jobs and now works at a new research institution.
 The Scholarly Dashboard of the new institution SHOULD provide functionality for Bob to update his researcher profile. 
 On submission of the new information, it is passed to one or more orchestrators in the network (connected to Bob’s data pod or to the scholarly browser).
 The orchestrators make sure that the information is passed to the relevant services, so that Bob’s updated information is now available in the network. 
-   <h3 class="heading settled" data-level="6.3" id="uc-upload-artefact"><span class="secno">6.3. </span><span class="content">Uploading artefacts</span><a class="self-link" href="#uc-upload-artefact"></a></h3>
+   <h3 class="heading settled" data-level="7.3" id="uc-upload-artefact"><span class="secno">7.3. </span><span class="content">Uploading artefacts</span><a class="self-link" href="#uc-upload-artefact"></a></h3>
     Here we present some use-cases for adding artefacts to the network. 
-   <h4 class="heading settled" data-level="6.3.1" id="uc-add-artefact"><span class="secno">6.3.1. </span><span class="content">Adding artefacts to the network</span><a class="self-link" href="#uc-add-artefact"></a></h4>
+   <h4 class="heading settled" data-level="7.3.1" id="uc-add-artefact"><span class="secno">7.3.1. </span><span class="content">Adding artefacts to the network scholarly record</span><a class="self-link" href="#uc-add-artefact"></a></h4>
     Bob has created a new research paper.
 Bob wishes to add the artefact to the network.
 Bob opens the scholarly dashboard, and navigates to the upload section.
@@ -2118,7 +1221,162 @@ On submission, the scholarly dashboard stores the artefact in the data pod of Bo
 The scholarly dashboard receives the information for all relevant service hubs from the orchestrator.
 The artefact data is sent to all relevant service hubs (At least the registration service hub for claims of precedence).
 The created lifecycle events are stored on Bob’s data pod, and are distributed to all subscribed actors in the network via the awareness service hub. 
-   <h4 class="heading settled" data-level="6.3.2" id="uc-link-artefact"><span class="secno">6.3.2. </span><span class="content">Linking new artefacts to existing artefacts in the network</span><a class="self-link" href="#uc-link-artefact"></a></h4>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+         <p>Researcher</p>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+         <p>Researcher pod          R</p>
+        <li data-md>
+         <p>Dashboard               I</p>
+        <li data-md>
+         <p>Orchestrator            I</p>
+        <li data-md>
+         <p>Service Hubs            S</p>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher artefact goes through all steps of the scholarly communication cycle appropariate for the artefact in question, and is added to the scholarly record.</p>
+         <ul>
+          <li data-md>
+           <p>The artefact is registered and timestamped by one or more Registration Services if applicable.</p>
+          <li data-md>
+           <p>The artefact review process is started (if applicable) by  one or more Certification services if applicable.</p>
+          <li data-md>
+           <p>The network is made aware of the new artefact by one or multiple awareness services if applicable.</p>
+          <li data-md>
+           <p>The artefact is archived by one or more archiving services if applicable.</p>
+         </ul>
+        <li data-md>
+         <p>The researcher pod receives the appropriate artefact metadata for the called services.</p>
+        <li data-md>
+         <p>The artefact is available for actors in the network to query / interact with, given the correct permissions.</p>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+         <p>Researcher (pod-owner)</p>
+        <li data-md>
+         <p>Institution</p>
+        <li data-md>
+         <p>Service providers</p>
+        <li data-md>
+         <p>Publisher (other reserachers in the network, ...)</p>
+        <li data-md>
+         <p>Consumers (users browsing the scholarly record, ...)</p>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher has a pod available.</p>
+        <li data-md>
+         <p>The researcher is authenticated to the scholarly dashboard.</p>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher indicates that a created artefact should be added to the scholarly record.</p>
+        <li data-md>
+         <p>The scholarly dashboard can add specific artefacts or interactions to the scholarly record.</p>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The artefact is added to the scholarly record of the network.</p>
+        <li data-md>
+         <p>The necessary functions of scholarly communication have been called for the artefacts.</p>
+        <li data-md>
+         <p>The artefact is available for other actors in the network.</p>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+         <p>The artefact publisher obtains a reference to a network orchestrator</p>
+        <li data-md>
+         <p>The publisher retrieves all policies in the orchestrator</p>
+        <li data-md>
+         <p>These policies are evaluated over the artefact, in the case of relevant policies (By client / orchestrator / institution service).</p>
+        <li data-md>
+         <p>The artefact receives a token of approval from the orchestrator / institution that all policies have been evaluated.</p>
+        <li data-md>
+         <p>The artefact sends the artefact to the required services according to the set policies / according to the advertised services?</p>
+        <li data-md>
+         <p>The called services notify the publisher of the result of the service call.</p>
+        <li data-md>
+         <p>The called services post the resulting metadata to the researcher pod / The researcher retrieves the resulting metadata from the service.</p>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+       <ul>
+        <li data-md>
+         <p>Researcher pod</p>
+         <ul>
+          <li data-md>
+           <p>artefact storage</p>
+          <li data-md>
+           <p>notification processing</p>
+          <li data-md>
+           <p>metadata storage</p>
+          <li data-md>
+           <p>metadata posting</p>
+         </ul>
+        <li data-md>
+         <p>Scholarly dashboard</p>
+        <li data-md>
+         <p>Orchestrator</p>
+         <ul>
+          <li data-md>
+           <p>discovery</p>
+          <li data-md>
+           <p>interface</p>
+          <li data-md>
+           <p>pass policies (personal / institutional / ...)</p>
+          <li data-md>
+           <p>advertise available / trusted services in the network (through policies?)</p>
+         </ul>
+        <li data-md>
+         <p>Policies</p>
+         <ul>
+          <li data-md>
+           <p>syntax</p>
+          <li data-md>
+           <p>interoperability</p>
+          <li data-md>
+           <p>enforcement</p>
+         </ul>
+        <li data-md>
+         <p>Service Hubs</p>
+         <ul>
+          <li data-md>
+           <p>discovery</p>
+          <li data-md>
+           <p>interface</p>
+         </ul>
+       </ul>
+   </table>
+   <h4 class="heading settled" data-level="7.3.2" id="uc-link-artefact"><span class="secno">7.3.2. </span><span class="content">Linking new artefacts to existing artefacts in the network</span><a class="self-link" href="#uc-link-artefact"></a></h4>
     Bob wishes to add relevant datasets for a previous published paper (by him) in the network.
 In the case the published paper is not his, an approach is needed that allows the original creator of the linked artefact to accept the new link.
 Bob opens the scholarly dashboard, and navigates to the upload view.
@@ -2127,9 +1385,197 @@ Bob selects the artefact that the new artefact is linked to in a "Link" section 
 On submission, the scholarly dashboard stores the artefact in the data pod of Bob on the designated location (designated by Bob, or designated by the shape tree present in the pod).
 The scholarly dashboard receives the information for all relevant service hubs from the orchestrator.
 The artefact data is sent to all relevant service hubs. 
-   <h3 class="heading settled" data-level="6.4" id="uc-interact-artefact"><span class="secno">6.4. </span><span class="content">Interacting with artefacts in the network</span><a class="self-link" href="#uc-interact-artefact"></a></h3>
+   <ul>
+    <li data-md>
+     <p>Institution</p>
+   </ul>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+         <p>Researcher</p>
+        <li data-md>
+         <p>Institution</p>
+        <li data-md>
+         <p>Service Hub Providers</p>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+         <p>Researcher pod          R</p>
+        <li data-md>
+         <p>Dashboard               I</p>
+        <li data-md>
+         <p>Orchestrator            I</p>
+        <li data-md>
+         <p>Service Hubs            S</p>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+         <p>Create, store and distribute the interaction artefact.</p>
+        <li data-md>
+         <p>Link the artefact to a target artefact.</p>
+        <li data-md>
+         <p>Notify the relevant actors of the interaction.</p>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+         <p>Researcher</p>
+        <li data-md>
+         <p>Publishers (other researchers in the network)</p>
+        <li data-md>
+         <p>Consumers (people browsing the network for scholarly information)</p>
+        <li data-md>
+         <p>Service Hub Providers (provide services requiring information over the data linking)</p>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The target artefact exists on the network and was created by the same researcher (If not the case, a mechanism is required to request target to accept link).</p>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher navigates to the view of an artefact, and selects the "Link" option.</p>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The artefact has been linked to the target artefact.</p>
+        <li data-md>
+         <p>The network is made aware of the created link.</p>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+         <p>TODO</p>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+       <ul>
+        <li data-md>
+         <p>TODO</p>
+       </ul>
+   </table>
+   <h3 class="heading settled" data-level="7.4" id="uc-interact-artefact"><span class="secno">7.4. </span><span class="content">Interacting with artefacts in the network</span><a class="self-link" href="#uc-interact-artefact"></a></h3>
     Here we present some use-cases for interacting with artefacts in the network. 
-   <h4 class="heading settled" data-level="6.4.1" id="uc-create-interaction-comment"><span class="secno">6.4.1. </span><span class="content">Commenting on an existing artefact in the network</span><a class="self-link" href="#uc-create-interaction-comment"></a></h4>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+         <p>Researcher</p>
+        <li data-md>
+         <p>Institution</p>
+        <li data-md>
+         <p>Service Hub Providers</p>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+         <p>Researcher pod          R</p>
+        <li data-md>
+         <p>Dashboard               I</p>
+        <li data-md>
+         <p>Orchestrator            I</p>
+        <li data-md>
+         <p>Service Hubs            S</p>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+         <p>Create, store and distribute the interaction artefact.</p>
+        <li data-md>
+         <p>Link the interaction artefact to the interacted with artefact..</p>
+        <li data-md>
+         <p>Make the interaction artefact discoverable from the interacted with artefact.</p>
+        <li data-md>
+         <p>Notify the relevant actors of the interaction.</p>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+         <p>Researcher</p>
+        <li data-md>
+         <p>Institution</p>
+        <li data-md>
+         <p>Service Hub Providers</p>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The interacted with artefact is present in the network.</p>
+        <li data-md>
+         <p>The interacting user is a researcher (is connected to the network)</p>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+         <p>The interacting user creates an interaction on an artefact in the network using the scholarly dashboard.</p>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+         <p>The interaction artefact is stored in the interacting user’s data pod.</p>
+        <li data-md>
+         <p>The interaction artefact is added to the scholarly record.</p>
+        <li data-md>
+         <p>The interacted with artefact (can / must) link back to the interaction artefact.</p>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+         <p>An interaction is created by a user using the scholarly dashboard.</p>
+        <li data-md>
+         <p>The interaction is stored on the user’s data pod.</p>
+        <li data-md>
+         <p>The interaction is submitted to the orchestrator.</p>
+        <li data-md>
+         <p>The orchestrator calls the necessary services to register the interaction into the scholarly record (maybe with a timeout if reactions are to be deleted?)</p>
+        <li data-md>
+         <p>The necessary services are executed.
+5.1 The interaction artefact is archived.
+5.2 The network is made aware of the new interaction.</p>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+   </table>
+   <h4 class="heading settled" data-level="7.4.1" id="uc-create-interaction-comment"><span class="secno">7.4.1. </span><span class="content">Commenting on an existing artefact in the network</span><a class="self-link" href="#uc-create-interaction-comment"></a></h4>
     Bob has some questions over an artefact created in the network.
 Bob opens the scholarly dashboard, and navigates to the artefact view.
 Bob selects the option to add a new comment.
@@ -2139,11 +1585,127 @@ The scholarly dashboard retrieves the awareness and archiving service hub inform
 The archiving service stores the comment and indexes it to be retrievable with the data for the original (multiple?) referenced artefact(s).
 The awareness hub extracts the artefact(s) that are referenced by (in) the comment, and notifies all actors subscribed to these artefacts of a new interaction lifecycle event.
 Here we present some use-cases for interacting with artefacts in the network. 
-   <h3 class="heading settled" data-level="6.5" id="uc-subscribing"><span class="secno">6.5. </span><span class="content">Subscribing to entities in the network</span><a class="self-link" href="#uc-subscribing"></a></h3>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+   </table>
+   <h4 class="heading settled" data-level="7.4.2" id="uc-subscribing"><span class="secno">7.4.2. </span><span class="content">Subscribing to entities in the network</span><a class="self-link" href="#uc-subscribing"></a></h4>
     Actors in the network SHOULD be able to subscribe to artefact lifecycle events for artefacts in the network.
 Additionally, actors MAY be able to subscribe to the events of new actors being added to the network.
 Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts (or actors), that can be filtered by the actor on the available dimensions of artefacts in the network. 
-   <h3 class="heading settled" data-level="6.6" id="uc-subscribe-artefact"><span class="secno">6.6. </span><span class="content">Subscribing to artefacts of a specific author in the network</span><a class="self-link" href="#uc-subscribe-artefact"></a></h3>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+         <p>Researcher</p>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+         <p>Scholarly dashboard (Optional?)</p>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+         <p>The researcher now receives notifications of the (chosen) life cycle events of artefacts relevant to the subscription target.</p>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+   </table>
+   <h4 class="heading settled" data-level="7.4.3" id="uc-subscribe-artefact"><span class="secno">7.4.3. </span><span class="content">Subscribing to artefacts of a specific author in the network</span><a class="self-link" href="#uc-subscribe-artefact"></a></h4>
     Bob wishes to subscribe to all artefacts created by Alice in the network, to receive updates of all new lifecycle information of her artefacts.
 Bob uses the scholarly dashboard and navigates to the subscription page.
 The scholarly dashboard retrieves the awareness subscription hub information from the used orchestrator.
@@ -2153,259 +1715,291 @@ Bob decides to filter the artefacts based on their author, and enters the webId 
 Bob decides to subscribe to the "create" and "publish" lifecycle events.
 On submission, the availability service hub saves the subscription, and on subsequent relevant lifecycle events of artefacts with Alice as the author, Bob receives a notification of these events.
 The subscription is also stored with the necessary metadata on Bob’s pod, allowing Bob to easily list and undo created subscriptions. 
-   <h3 class="heading settled" data-level="6.7" id="uc-unsubscribe-artefact"><span class="secno">6.7. </span><span class="content">Undo a specific subscription</span><a class="self-link" href="#uc-unsubscribe-artefact"></a></h3>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+   </table>
+   <h4 class="heading settled" data-level="7.4.4" id="uc-unsubscribe-artefact"><span class="secno">7.4.4. </span><span class="content">Undo a specific subscription</span><a class="self-link" href="#uc-unsubscribe-artefact"></a></h4>
     Bob wishes to undo a specific subscription because of too much events.
 Bob navigates to the subscription page of the scholarly dashboard.
 All previous subscriptions are listed on the page.
 Bob selects a subscription, and chooses the remove option.
 The awareness service hub is notified that the specific subscription should be removed.
 On success from the service hub, the scholarly dashboard removes the subscription from Bob’s pod. 
-   <h2 class="heading settled" data-level="7" id="requirements"><span class="secno">7. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
-    In this section the requirements are listed based on the proposed architecture <a href="#architecture">§ 3 Architecture of a Decentralized Network for Scholarly Communication</a> and use cases <a href="#usecases">§ 6 Use Cases</a>. 
-   <h3 class="heading settled" data-level="7.1" id="rq-solid-storage"><span class="secno">7.1. </span><span class="content">Data Storage</span><a class="self-link" href="#rq-solid-storage"></a></h3>
+   <table>
+    <tbody>
+     <tr>
+      <td>Actors/Roles
+      <td>
+        Actors: 
+       <ul>
+        <li data-md>
+       </ul>
+       <p>Components:</p>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Goal
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Stakeholders
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Preconditions
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Triggers
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Postconditions
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+     <tr>
+      <td>Procedure
+      <td>
+       <ol>
+        <li data-md>
+       </ol>
+     <tr>
+      <td>Requirements
+      <td>
+       <ul>
+        <li data-md>
+       </ul>
+   </table>
+   <h2 class="heading settled" data-level="8" id="requirements"><span class="secno">8. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
+    In this section the requirements are listed based on the proposed architecture <a href="#architecture">§ 3 Architecture of a Decentralized Network for Scholarly Communication</a> and use cases <a href="#usecases">§ 6 Scholarly Communication context</a>. 
+   <h3 class="heading settled" data-level="8.1" id="rq-solid-storage"><span class="secno">8.1. </span><span class="content">Pod based data storage{#rq-solid-storage}</span><a class="self-link" href="#rq-solid-storage"></a></h3>
     To provide researchers with the possibility to store their own research artefacts and interactions, while keeping control of the data in the process, pod environments such as Solid can be used.
 These can be hosted by the research institutions themselves, or by recommended third party services. 
-   <h4 class="heading settled" data-level="7.1.1" id="rq-artefact-storage"><span class="secno">7.1.1. </span><span class="content">Research Artefact Storage</span><a class="self-link" href="#rq-artefact-storage"></a></h4>
-    Research artefacts (Papers, images, datasets, ...) can be stored as (non-)rdf documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in <a href="#rq-data-discovery">§ 7.1.4 Data Discovery</a>. 
-   <h4 class="heading settled" data-level="7.1.2" id="rq-interaction-artefact-storage"><span class="secno">7.1.2. </span><span class="content">Interaction artefacts storage</span><a class="self-link" href="#rq-interaction-artefact-storage"></a></h4>
-    Research artefacts (Papers, images, datasets, ...) 
-Publications can be stored as documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in <a href="#rq-data-discovery">§ 7.1.4 Data Discovery</a>. 
-   <h4 class="heading settled" data-level="7.1.3" id="rq-metadata-storage"><span class="secno">7.1.3. </span><span class="content">Metadata Storage</span><a class="self-link" href="#rq-metadata-storage"></a></h4>
-    There are multiple solutions to store metadata for (non-)rdf data on a Linked Data Platform. However, it may benefit applications to support multiple approaches to metadata storage, and fall back on less ideal approaches in case the required metadata cannot be discovered. 
-   <h5 class="heading settled" data-level="7.1.3.1" id="meta-file"><span class="secno">7.1.3.1. </span><span class="content">.meta file</span><a class="self-link" href="#meta-file"></a></h5>
+   <h4 class="heading settled" data-level="8.1.1" id="rq-artefact-storage"><span class="secno">8.1.1. </span><span class="content">Research Artefact Storage</span><a class="self-link" href="#rq-artefact-storage"></a></h4>
+    Research artefacts (Papers, images, datasets, ...) can be stored as (non-)rdf documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in <a href="#rq-data-discovery">§ 8.1.4 Data Discovery</a>. 
+   <h4 class="heading settled" data-level="8.1.2" id="rq-interaction-artefact-storage"><span class="secno">8.1.2. </span><span class="content">Artefact Linking</span><a class="self-link" href="#rq-interaction-artefact-storage"></a></h4>
+    Research artefacts (Papers, images, datasets, ...) can be interacted with in the network.
+These interactions MUST link to the artefacts they interact with.
+Artefacts may also contain links to artefacts they cite, to their used datasets, ...
+In case two way coupeling is required for these interactions, a mechanism is required to notify the pod storing the other artefact to return a link / provide the option to link back. This can be handled automatically, or require manual interaction to veryify. 
+   <h4 class="heading settled" data-level="8.1.3" id="rq-metadata-storage"><span class="secno">8.1.3. </span><span class="content">Metadata Storage</span><a class="self-link" href="#rq-metadata-storage"></a></h4>
+    Artefacts in the network have metadata, and will require this metadata to be stored and linked to the original artefacts.
+There are multiple solutions to store metadata for (non-)rdf data on a Linked Data Platform. However, it may benefit applications to support multiple approaches to metadata storage, and fall back on less ideal approaches in case the required metadata cannot be discovered. 
+   <h5 class="heading settled" data-level="8.1.3.1" id="meta-file"><span class="secno">8.1.3.1. </span><span class="content">.meta file</span><a class="self-link" href="#meta-file"></a></h5>
     A straightforward way to store file metadata on a Linked Data Platform is making use of a .meta file. As the .meta is a naming convention, for every file the .meta file can be automatically retrieved.
 However, lately this seems to have been getting less and less traction in the community? 
-   <h5 class="heading settled" data-level="7.1.3.2" id="describedby"><span class="secno">7.1.3.2. </span><span class="content">describedby / seeAlso metadata</span><a class="self-link" href="#describedby"></a></h5>
+   <h5 class="heading settled" data-level="8.1.3.2" id="describedby"><span class="secno">8.1.3.2. </span><span class="content">describedby / seeAlso metadata</span><a class="self-link" href="#describedby"></a></h5>
     Metadata can be provided in a more semantic way using predicates as <code>rdf:seeAlso</code>.
 This metadata can be stored in the location where the relevant resource is stored. 
 A downside to this however is that if a resource is directly retrieved, this information will not be retrieved, and the metadata reference will be lost to the application retrieving the resource. 
-   <h5 class="heading settled" data-level="7.1.3.3" id="link-seeAlso"><span class="secno">7.1.3.3. </span><span class="content">Link header</span><a class="self-link" href="#link-seeAlso"></a></h5>
+   <h5 class="heading settled" data-level="8.1.3.3" id="link-seeAlso"><span class="secno">8.1.3.3. </span><span class="content">Link header</span><a class="self-link" href="#link-seeAlso"></a></h5>
     A third solution is to provide <a href="https://www.w3.org/TR/ldp/#link-relation-describedby">Link Relations</a> This solution returns the link to the metadata file in the response header of the HTTP request.
 Using this solution in combination with the previous solution of providing the link to the metadata file in the RDF data where the resource is stored, provides the most complete approach to storing metadata for a resource. 
-   <h4 class="heading settled" data-level="7.1.4" id="rq-data-discovery"><span class="secno">7.1.4. </span><span class="content">Data Discovery</span><a class="self-link" href="#rq-data-discovery"></a></h4>
+   <h4 class="heading settled" data-level="8.1.4" id="rq-data-discovery"><span class="secno">8.1.4. </span><span class="content">Data Discovery</span><a class="self-link" href="#rq-data-discovery"></a></h4>
     Data discovery is required for external services to retrieve artefacts from a researcher pod, on being notified of new data.
 There should be a semantic way for external applications and services to discover the locations of certain types of artefacts and their metadata, and retrieve this data, given the correct permissions.
 Currently, <strong>shape trees</strong> are considered as the go-to approach to enable data discovery on linked data platforms. 
-   <h4 class="heading settled" data-level="7.1.5" id="rq-location-aware-storage"><span class="secno">7.1.5. </span><span class="content">Location aware data storage</span><a class="self-link" href="#rq-location-aware-storage"></a></h4>
+   <h4 class="heading settled" data-level="8.1.5" id="rq-location-aware-storage"><span class="secno">8.1.5. </span><span class="content">Location aware data storage</span><a class="self-link" href="#rq-location-aware-storage"></a></h4>
     External services that need to post data to the researcher pod (e.g. registration service hub returning a certificate of registration) need to be aware of the location where they can post this data.
 The <strong>shape tree</strong> approach used for data discovery can also be used to make the actor posting data aware of the location where data matching a given shape should be posted. 
-   <h4 class="heading settled" data-level="7.1.6" id="rq-artefact-versioning"><span class="secno">7.1.6. </span><span class="content">Artefact versioning</span><a class="self-link" href="#rq-artefact-versioning"></a></h4>
+   <h4 class="heading settled" data-level="8.1.6" id="rq-artefact-versioning"><span class="secno">8.1.6. </span><span class="content">Artefact versioning</span><a class="self-link" href="#rq-artefact-versioning"></a></h4>
     Versioning is a concept that is very relevant for scholarly communication, as certain artefacts (datasets, papers, ...) can be iterated upon (incorporating reviews, ...).
 In order to support this behavior, a versioning system must be in place that allows for actors in the network to retrieve different versions of the same research publication.
 This versioning system also should take into account the available lifecycle event information for the artefacts in question (Using the avialable lifecycle information, an actor in the network SHOULD be able construct the whole timeline of an artefact: creation, updates, publication, interactions, ...).
 This concept could also be applied for interaction artefacts (e.g. see comments on proposed edits, see updates of made comments, ...) 
-   <h4 class="heading settled" data-level="7.1.7" id="rq-permissions"><span class="secno">7.1.7. </span><span class="content">Permissions</span><a class="self-link" href="#rq-permissions"></a></h4>
+   <h4 class="heading settled" data-level="8.1.7" id="rq-permissions"><span class="secno">8.1.7. </span><span class="content">Permissions</span><a class="self-link" href="#rq-permissions"></a></h4>
     Permissions are an important tool for data pods to protect private information.
 Only actors with the correct permissions set have access to resources in a pod environment.
-In pod environments, permissions are handled using ACL files. 
-   <h5 class="heading settled" data-level="7.1.7.1" id="rq-set-permissions"><span class="secno">7.1.7.1. </span><span class="content">Setting permissions</span><a class="self-link" href="#rq-set-permissions"></a></h5>
+In pod environments, permissions are handled using ACL files.
+Permissions are required in case certain parts of the research are sensitive (e.g. datasets with sensitive information), or should not yet be public (e.g. in-progress work to share with colleagues). 
+   <h5 class="heading settled" data-level="8.1.7.1" id="rq-set-permissions"><span class="secno">8.1.7.1. </span><span class="content">Setting permissions</span><a class="self-link" href="#rq-set-permissions"></a></h5>
     Functionality must be in place for all allowed to set permissions in a data pod.
 This requires that researchers are able to allow e.g. a scholarly dashboard to edit the permissions of their data pod (for specific locations). 
-   <h5 class="heading settled" data-level="7.1.7.2" id="req-group-permissions"><span class="secno">7.1.7.2. </span><span class="content">Group permissions</span><a class="self-link" href="#req-group-permissions"></a></h5>
+   <h5 class="heading settled" data-level="8.1.7.2" id="req-group-permissions"><span class="secno">8.1.7.2. </span><span class="content">Group permissions</span><a class="self-link" href="#req-group-permissions"></a></h5>
     Setting permissions for individual actors can be insufficient at times.
 Applications built on the Mellon framework SHOULD enable actors to to create, edit, and delete permissions for groups of actors.
 Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group.
 This can be useful for e.g. creating a permissions group for your research group, so that permissions for created research can be automatically granted for the whole research group, instead of needing to set all permissions individually. 
-   <h3 class="heading settled" data-level="7.2" id="rq-events"><span class="secno">7.2. </span><span class="content">Events</span><a class="self-link" href="#rq-events"></a></h3>
-   <h4 class="heading settled" data-level="7.2.1" id="rq-notifications"><span class="secno">7.2.1. </span><span class="content">Notifications</span><a class="self-link" href="#rq-notifications"></a></h4>
+   <h3 class="heading settled" data-level="8.2" id="rq-events"><span class="secno">8.2. </span><span class="content">Events</span><a class="self-link" href="#rq-events"></a></h3>
+   <h4 class="heading settled" data-level="8.2.1" id="rq-notifications"><span class="secno">8.2.1. </span><span class="content">Notifications</span><a class="self-link" href="#rq-notifications"></a></h4>
     Notifications are required for the scholarly dashboard to notify the user of new information (received from e.g. the awareness service). 
-   <h5 class="heading settled" data-level="7.2.1.1" id="rq-notification-filtering"><span class="secno">7.2.1.1. </span><span class="content">Notification filtering</span><a class="self-link" href="#rq-notification-filtering"></a></h5>
+   <h5 class="heading settled" data-level="8.2.1.1" id="rq-notification-filtering"><span class="secno">8.2.1.1. </span><span class="content">Notification filtering</span><a class="self-link" href="#rq-notification-filtering"></a></h5>
     A scholarly dashboard application SHOULD be able to filter notifications based on preset shapes.
 This enables the scholarly dashboard to filter the notifiactions for relevant lifecycle information of searched artefacts. 
-   <h5 class="heading settled" data-level="7.2.1.2" id="rq-notification-based-actions"><span class="secno">7.2.1.2. </span><span class="content">Notification based actions</span><a class="self-link" href="#rq-notification-based-actions"></a></h5>
+   <h5 class="heading settled" data-level="8.2.1.2" id="rq-notification-based-actions"><span class="secno">8.2.1.2. </span><span class="content">Notification based actions</span><a class="self-link" href="#rq-notification-based-actions"></a></h5>
     In the case that notifications are used to notify of important artefact lifecycle information (in the case this is not directly posted to the researcher pod because of design reasons?), fucntionality is required that can evaluated the received notifications and execute automatic actions.
 This can be avoided by making notifications non-essentialy by posting the important life cycle events directly to the data pod, and making the notifications secondary to this and only point out the locations of the newly added data. 
-   <h3 class="heading settled" data-level="7.3" id="rq-policy"><span class="secno">7.3. </span><span class="content">Policies</span><a class="self-link" href="#rq-policy"></a></h3>
+   <h3 class="heading settled" data-level="8.3" id="rq-orchestrator"><span class="secno">8.3. </span><span class="content">Orchestrator</span><a class="self-link" href="#rq-orchestrator"></a></h3>
+   <h4 class="heading settled" data-level="8.3.1" id="rq-"><span class="secno">8.3.1. </span><span class="content">### {#rq-}</span><a class="self-link" href="#rq-"></a></h4>
+   <h4 class="heading settled" data-level="8.3.2" id="rq-①"><span class="secno">8.3.2. </span><span class="content">### {#rq-}</span><a class="self-link" href="#rq-①"></a></h4>
+   <h4 class="heading settled" data-level="8.3.3" id="rq-②"><span class="secno">8.3.3. </span><span class="content">### {#rq-}</span><a class="self-link" href="#rq-②"></a></h4>
+   <h4 class="heading settled" data-level="8.3.4" id="rq-③"><span class="secno">8.3.4. </span><span class="content">### {#rq-}</span><a class="self-link" href="#rq-③"></a></h4>
+   <h3 class="heading settled" data-level="8.4" id="rq-policy"><span class="secno">8.4. </span><span class="content">Policies</span><a class="self-link" href="#rq-policy"></a></h3>
     Functionality is required for actors to enforce policies on data being generated / submitted / ... in the network. 
-   <h4 class="heading settled" data-level="7.3.1" id="rq-policy-shapes"><span class="secno">7.3.1. </span><span class="content">Shape matching</span><a class="self-link" href="#rq-policy-shapes"></a></h4>
-    Shape matching functionality is a vital part of enforcing policies for actors to match the shape of artefacts and their metadata in case of RDF data. 
+   <h4 class="heading settled" data-level="8.4.1" id="rq-policy-shapes"><span class="secno">8.4.1. </span><span class="content">Shape matching</span><a class="self-link" href="#rq-policy-shapes"></a></h4>
+    Shape matching functionality can be a vital part of enforcing certain policies for actors to match the shape of artefacts and their metadata in case of RDF data. 
 Shape matching makes use of a shape ontology, for which both <a href="https://www.w3.org/TR/shacl/">shacl</a> and <a href="https://shex.io/">shex</a> are currently the most relevant shape ontologies.
-In case of non-rdf data, other solutions may be required. 
-   <h3 class="heading settled" data-level="7.4" id="rq-service-hubs"><span class="secno">7.4. </span><span class="content">Service hubs</span><a class="self-link" href="#rq-service-hubs"></a></h3>
+In case of non-rdf data, other solutions can be explored?. 
+   <h3 class="heading settled" data-level="8.5" id="rq-service-hubs"><span class="secno">8.5. </span><span class="content">Service hubs</span><a class="self-link" href="#rq-service-hubs"></a></h3>
     In this sections the requirements for the different service hubs are listed. 
-   <h4 class="heading settled" data-level="7.4.1" id="rq-service-discovery"><span class="secno">7.4.1. </span><span class="content">Service hub discovery</span><a class="self-link" href="#rq-service-discovery"></a></h4>
+   <h4 class="heading settled" data-level="8.5.1" id="rq-service-discovery"><span class="secno">8.5.1. </span><span class="content">Service hub discovery</span><a class="self-link" href="#rq-service-discovery"></a></h4>
     Service hubs in the network MUST be discoverable via advertisement of a service hub by orchestrators in the network. 
-   <h4 class="heading settled" data-level="7.4.2" id="rq-service-interactions"><span class="secno">7.4.2. </span><span class="content">Service hub interactions</span><a class="self-link" href="#rq-service-interactions"></a></h4>
+   <h4 class="heading settled" data-level="8.5.2" id="rq-service-interactions"><span class="secno">8.5.2. </span><span class="content">Service hub interactions</span><a class="self-link" href="#rq-service-interactions"></a></h4>
     Service hubs MUST advertise the specific services they provide.
 Multiple service hubs may be used simultaneously to fulfil the same service (e.g. a researcher may register his created artefacts at multiple service hubs). 
-   <h4 class="heading settled" data-level="7.4.3" id="rq-service-functions"><span class="secno">7.4.3. </span><span class="content">Service hub functions</span><a class="self-link" href="#rq-service-functions"></a></h4>
+   <h4 class="heading settled" data-level="8.5.3" id="rq-service-functions"><span class="secno">8.5.3. </span><span class="content">Service hub functions</span><a class="self-link" href="#rq-service-functions"></a></h4>
     Here the different available services in the network are listed.
-The proposed registration tokens are not bindingm and could be replaced by other verification mechanisms (see <a href="#rq-verification">§ 7.5 Verification mechanics</a>). 
-   <h4 class="heading settled" data-level="7.4.4" id="rq-registration-service"><span class="secno">7.4.4. </span><span class="content">Registration service</span><a class="self-link" href="#rq-registration-service"></a></h4>
+The proposed registration tokens are not bindingm and could be replaced by other verification mechanisms (see <a href="#rq-verification">§ 8.6 Verification mechanics</a>). 
+   <h5 class="heading settled" data-level="8.5.3.1" id="rq-registration-service"><span class="secno">8.5.3.1. </span><span class="content">Registration service</span><a class="self-link" href="#rq-registration-service"></a></h5>
     A registration service MUST provide a token of registration to the pod where the submitted artefact is stored. This token MUST be timestamped to allow actors in the network to verify claims of precedence.
 A copy of this token (and the submitted artefact) MUST be stored locally, to allow for verification by actors in the network, and should be provided to an archiving service. 
-   <h4 class="heading settled" data-level="7.4.5" id="rq-certification-service"><span class="secno">7.4.5. </span><span class="content">Certification service</span><a class="self-link" href="#rq-certification-service"></a></h4>
+   <h5 class="heading settled" data-level="8.5.3.2" id="rq-certification-service"><span class="secno">8.5.3.2. </span><span class="content">Certification service</span><a class="self-link" href="#rq-certification-service"></a></h5>
     A certification service MUST compare a submitted artefact with the current <em>state-of-the-art</em> in the respective field.
 If the submitted artefact is novel, the service MUST provide a certification token to the pod where the submitted artefact is stored.
 A copy of this token (and the submitted artefact) MUST be stored locally, to allow for verification by actors in the network, and should be provided to an archiving service. 
-   <h5 class="heading settled" data-level="7.4.5.1" id="rq-peer-review-service"><span class="secno">7.4.5.1. </span><span class="content">Peer review service</span><a class="self-link" href="#rq-peer-review-service"></a></h5>
+   <h6 class="heading settled" data-level="8.5.3.2.1" id="rq-peer-review-service"><span class="secno">8.5.3.2.1. </span><span class="content">Peer review service</span><a class="self-link" href="#rq-peer-review-service"></a></h6>
     In the case of peer reviews, the a service may be setup that forwards a submitted artefact to a set of peers the network for review.
 The reviews of these MUST be returned to the service (before a set deadline), where the service will return a token with the attached reviews. 
-   <h4 class="heading settled" data-level="7.4.6" id="rq-awareness-service"><span class="secno">7.4.6. </span><span class="content">Awareness service</span><a class="self-link" href="#rq-awareness-service"></a></h4>
+   <h5 class="heading settled" data-level="8.5.3.3" id="rq-awareness-service"><span class="secno">8.5.3.3. </span><span class="content">Awareness service</span><a class="self-link" href="#rq-awareness-service"></a></h5>
     The service MUST advertise the available dimensions of the artefacts on the network for which an actor can subscribe (e.g. title, tags, creator, ...).
 Next to artefacts, an awareness service MAY also advertise new actors (researchers / service hubs / ...) connected to the network.
 The service MUST provide an interface for actors in the network to subscribe to specific lifecycle events of artefacts that can be filtered on all advertised dimensions.
 The awareness service MUST update all relevant subscribers of new information in the network.
 The service MUST provide an interface to undo specific subscriptions. 
-   <h4 class="heading settled" data-level="7.4.7" id="rq-archiving-service"><span class="secno">7.4.7. </span><span class="content">Archiving service</span><a class="self-link" href="#rq-archiving-service"></a></h4>
+   <h5 class="heading settled" data-level="8.5.3.4" id="rq-archiving-service"><span class="secno">8.5.3.4. </span><span class="content">Archiving service</span><a class="self-link" href="#rq-archiving-service"></a></h5>
     An archiving service MUST store all submitted artefact data it receives.
 The service MUST provide an interface to retrieve specific data from the service. 
-   <h3 class="heading settled" data-level="7.5" id="rq-verification"><span class="secno">7.5. </span><span class="content">Verification mechanics</span><a class="self-link" href="#rq-verification"></a></h3>
+   <h3 class="heading settled" data-level="8.6" id="rq-verification"><span class="secno">8.6. </span><span class="content">Verification mechanics</span><a class="self-link" href="#rq-verification"></a></h3>
     A scholarly communication network requires a way for actors in the network to verify data and entities in the network. 
-   <h4 class="heading settled" data-level="7.5.1" id="rq-profile-verification"><span class="secno">7.5.1. </span><span class="content">Researcher profile verification</span><a class="self-link" href="#rq-profile-verification"></a></h4>
-    A method MUST be in place for actors to have their profile information verified by actors in the network. This requires an authority (in this case probably a research institution) to provide a token to the researcher pod that can be verified by a verification service provided by the institution. 
-   <h4 class="heading settled" data-level="7.5.2" id="rq-publication-verification"><span class="secno">7.5.2. </span><span class="content">Artefact data verification</span><a class="self-link" href="#rq-publication-verification"></a></h4>
+   <h4 class="heading settled" data-level="8.6.1" id="rq-profile-verification"><span class="secno">8.6.1. </span><span class="content">Researcher profile verification</span><a class="self-link" href="#rq-profile-verification"></a></h4>
+    A method MUST be in place for actors in the network to check the profile information of researchers in the network.
+This authentication requires the institution the researcher is affiliated with to provide an interface or a digital token to the researcher using which the verification can be done. 
+   <h4 class="heading settled" data-level="8.6.2" id="rq-publication-verification"><span class="secno">8.6.2. </span><span class="content">Artefact data verification</span><a class="self-link" href="#rq-publication-verification"></a></h4>
     An actor in the network MUST be able to verify an artefact in the network at the service hubs specified in the artefact metadata. E.g. An actor can verify the registration of the artefact by for example verifying a registration token available for the artefact at the registration service hub specified in the artefact metadata or lifecycle events. 
-   <h3 class="heading settled" data-level="7.6" id="ontology"><span class="secno">7.6. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h3>
+   <h4 class="heading settled" data-level="8.6.3" id="rq-publication-verification①"><span class="secno">8.6.3. </span><span class="content">Service hub verification</span><a class="self-link" href="#rq-publication-verification①"></a></h4>
+    An actor in the network MUST be able to verify a called service in the network. This can prevent malicious actors from re-routing actors to malicious services.
+This can be resolved using simple public / private key-based solutions 
+   <h3 class="heading settled" data-level="8.7" id="rq-collector"><span class="secno">8.7. </span><span class="content">Collector</span><a class="self-link" href="#rq-collector"></a></h3>
+    The Collector services in a network collect the generated knowledge, and make it available for clients querying the network.
+In the case of scholarly communication, there are multiple approaches. 
+   <h4 class="heading settled" data-level="8.7.1" id="rq-collector-archiving-service"><span class="secno">8.7.1. </span><span class="content">Archiving service providing querying capabilities</span><a class="self-link" href="#rq-collector-archiving-service"></a></h4>
+    As an archiving service collects and archives the scholarly record of the network, this information could be queried by clients.
+This however brings the risk of the archiving service having a monopoly on both the archiving and making public of the scholarly record in the network,
+where these services can provide their own browser for their own archived data. 
+   <h4 class="heading settled" data-level="8.7.2" id="separate-collector-instance"><span class="secno">8.7.2. </span><span class="content">Separate collector instance</span><a class="self-link" href="#separate-collector-instance"></a></h4>
+    Separate collector services may be added to the network.
+These services can subscribe to the available awareness service hubs on the network to be notified of new information in the network.
+The initial state of the collector service will have to be synchronized by requesting the scholarly record from the available archiving services that should be indexed. 
+   <h3 class="heading settled" data-level="8.8" id="ontology"><span class="secno">8.8. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h3>
     Thought should be given to what ontologies are to be used to semantically describe the artefacts and events. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network. 
-   <h2 class="heading settled" data-level="8" id="definitions"><span class="secno">8. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
+   <h2 class="heading settled" data-level="9" id="definitions"><span class="secno">9. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
   </main>
   <div data-fill-with="conformance">
-   <h2 class="no-ref no-num heading settled" id="conformance"><span class="content"> Conformance</span><a class="self-link" href="#conformance"></a></h2>
-   <p> Conformance requirements are expressed with a combination of descriptive assertions and RFC 2119 terminology.
-            The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
-            in the normative parts of this document
-            are to be interpreted as described in RFC 2119.
-            However, for readability,
-            these words do not appear in all uppercase letters in this specification. </p>
-   <p> All of the text of this specification is normative
-            except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p>
-   <p> Examples in this specification are introduced with the words “for example”
-            or are set apart from the normative text with <code>class="example"</code>, like this: </p>
-   <div class="example" id="example-example"><a class="self-link" href="#example-example"></a> This is an example of an informative example. </div>
-   <p> Informative notes begin with the word “Note”
-            and are set apart from the normative text with <code>class="note"</code>, like this: </p>
-   <p class="note" role="note"> Note, this is an informative note. </p>
+   <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2>
+   <h3 class="no-ref no-num heading settled" id="w3c-conventions"><span class="content">Document conventions</span><a class="self-link" href="#w3c-conventions"></a></h3>
+   <p>Conformance requirements are expressed
+    with a combination of descriptive assertions
+    and RFC 2119 terminology.
+    The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”, “MAY”, and “OPTIONAL”
+    in the normative parts of this document
+    are to be interpreted as described in RFC 2119.
+    However, for readability,
+    these words do not appear in all uppercase letters in this specification. </p>
+   <p>All of the text of this specification is normative
+    except sections explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a> </p>
+   <p>Examples in this specification are introduced with the words “for example”
+    or are set apart from the normative text
+    with <code>class="example"</code>,
+    like this: </p>
+   <div class="example" id="w3c-example">
+    <a class="self-link" href="#w3c-example"></a> 
+    <p>This is an example of an informative example. </p>
+   </div>
+   <p>Informative notes begin with the word “Note”
+    and are set apart from the normative text
+    with <code>class="note"</code>,
+    like this: </p>
+   <p class="note" role="note">Note, this is an informative note. </p>
+   <h3 class="no-ref no-num heading settled" id="w3c-conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#w3c-conformant-algorithms"></a></h3>
+   <p>Requirements phrased in the imperative as part of algorithms
+    (such as "strip any leading space characters"
+    or "return false and abort these steps")
+    are to be interpreted with the meaning of the key word
+    ("must", "should", "may", etc)
+    used in introducing the algorithm. </p>
+   <p>Conformance requirements phrased as algorithms or specific steps
+    can be implemented in any manner,
+    so long as the end result is equivalent.
+    In particular, the algorithms defined in this specification
+    are intended to be easy to understand
+    and are not intended to be performant.
+    Implementers are encouraged to optimize. </p>
   </div>
-<script>
-(function() {
-  "use strict";
-  var collapseSidebarText = '<span aria-hidden="true">←</span> '
-                          + '<span>Collapse Sidebar</span>';
-  var expandSidebarText   = '<span aria-hidden="true">→</span> '
-                          + '<span>Pop Out Sidebar</span>';
-  var tocJumpText         = '<span aria-hidden="true">↑</span> '
-                          + '<span>Jump to Table of Contents</span>';
-
-  var sidebarMedia = window.matchMedia('screen and (min-width: 78em)');
-  var autoToggle   = function(e){ toggleSidebar(e.matches) };
-  if(sidebarMedia.addListener) {
-    sidebarMedia.addListener(autoToggle);
-  }
-
-  function toggleSidebar(on) {
-    if (on == undefined) {
-      on = !document.body.classList.contains('toc-sidebar');
-    }
-
-    /* Don’t scroll to compensate for the ToC if we’re above it already. */
-    var headY = 0;
-    var head = document.querySelector('.head');
-    if (head) {
-      // terrible approx of "top of ToC"
-      headY += head.offsetTop + head.offsetHeight;
-    }
-    var skipScroll = window.scrollY < headY;
-
-    var toggle = document.getElementById('toc-toggle');
-    var tocNav = document.getElementById('toc');
-    if (on) {
-      var tocHeight = tocNav.offsetHeight;
-      document.body.classList.add('toc-sidebar');
-      document.body.classList.remove('toc-inline');
-      toggle.innerHTML = collapseSidebarText;
-      if (!skipScroll) {
-        window.scrollBy(0, 0 - tocHeight);
-      }
-      tocNav.focus();
-      sidebarMedia.addListener(autoToggle); // auto-collapse when out of room
-    }
-    else {
-      document.body.classList.add('toc-inline');
-      document.body.classList.remove('toc-sidebar');
-      toggle.innerHTML = expandSidebarText;
-      if (!skipScroll) {
-        window.scrollBy(0, tocNav.offsetHeight);
-      }
-      if (toggle.matches(':hover')) {
-        /* Unfocus button when not using keyboard navigation,
-           because I don’t know where else to send the focus. */
-        toggle.blur();
-      }
-    }
-  }
-
-  function createSidebarToggle() {
-    /* Create the sidebar toggle in JS; it shouldn’t exist when JS is off. */
-    var toggle = document.createElement('a');
-      /* This should probably be a button, but appearance isn’t standards-track.*/
-    toggle.id = 'toc-toggle';
-    toggle.class = 'toc-toggle';
-    toggle.href = '#toc';
-    toggle.innerHTML = collapseSidebarText;
-
-    sidebarMedia.addListener(autoToggle);
-    var toggler = function(e) {
-      e.preventDefault();
-      sidebarMedia.removeListener(autoToggle); // persist explicit off states
-      toggleSidebar();
-      return false;
-    }
-    toggle.addEventListener('click', toggler, false);
-
-
-    /* Get <nav id=toc-nav>, or make it if we don’t have one. */
-    var tocNav = document.getElementById('toc-nav');
-    if (!tocNav) {
-      tocNav = document.createElement('p');
-      tocNav.id = 'toc-nav';
-      /* Prepend for better keyboard navigation */
-      document.body.insertBefore(tocNav, document.body.firstChild);
-    }
-    /* While we’re at it, make sure we have a Jump to Toc link. */
-    var tocJump = document.getElementById('toc-jump');
-    if (!tocJump) {
-      tocJump = document.createElement('a');
-      tocJump.id = 'toc-jump';
-      tocJump.href = '#toc';
-      tocJump.innerHTML = tocJumpText;
-      tocNav.appendChild(tocJump);
-    }
-
-    tocNav.appendChild(toggle);
-  }
-
-  var toc = document.getElementById('toc');
-  if (toc) {
-    createSidebarToggle();
-    toggleSidebar(sidebarMedia.matches);
-
-    /* If the sidebar has been manually opened and is currently overlaying the text
-       (window too small for the MQ to add the margin to body),
-       then auto-close the sidebar once you click on something in there. */
-    toc.addEventListener('click', function(e) {
-      if(e.target.tagName.toLowerCase() == "a" && document.body.classList.contains('toc-sidebar') && !sidebarMedia.matches) {
-        toggleSidebar(false);
-      }
-    }, false);
-  }
-  else {
-    console.warn("Can’t find Table of Contents. Please use <nav id='toc'> around the ToC.");
-  }
-
-  /* Wrap tables in case they overflow */
-  var tables = document.querySelectorAll(':not(.overlarge) > table.data, :not(.overlarge) > table.index');
-  var numTables = tables.length;
-  for (var i = 0; i < numTables; i++) {
-    var table = tables[i];
-    var wrapper = document.createElement('div');
-    wrapper.className = 'overlarge';
-    table.parentNode.insertBefore(wrapper, table);
-    wrapper.appendChild(table);
-  }
-
-})();
-</script>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>

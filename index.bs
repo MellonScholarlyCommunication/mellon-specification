@@ -47,6 +47,25 @@ Abstract:
       color: #FFFFFF;
     }
   }
+  
+  table {
+    border-collapse: collapse;
+  }
+
+  th {
+    vertical-align:top;
+    border: 1px solid black;
+    padding: 2px;
+  }
+
+  td {
+    vertical-align:top;
+    border: 1px solid black;
+    padding: 5px;
+  }
+  
+  li { margin-top: 5px; margin-bottom: 5px;}
+  li { margin-top: 2px; margin-bottom: 3px;}
 
 }
 
@@ -160,6 +179,11 @@ In its role as an orchestrator, it can set policies that are enforced in the com
 
 Orchestrators should be linked to institutions to allow for [trust based operating of the network](#institutions-decentralized-network-trust).
 
+### Orchestrator functions ### {#orchestrator-functions}
+
+
+### Orchestrator design ### {#orchetrator-design}
+
 ## Service hubs ## {#service-hub}
 Service hubs provide services to the network.
 These services are necessary to enable the execution of the [functions of scholarly communication](#functions-scholarly-communication) by the network.
@@ -181,6 +205,21 @@ A scholarly dashboard can be managed by an institution, requiring users to provi
 ## Scholarly Browser ## {#scholarly-browser}
 The scholarly browser is the interface that can be used by anyone to query the distributed network for information on scholarly artefacts.
 It provides information about the artefact, as well as lifecycle events and the available interactions with the artefact.
+
+
+<figure>
+	<img src="images/registration.svg" />
+	<figcaption>An example control flow graph for creating and registring an artefact.</figcaption>
+</figure>
+
+
+
+<figure>
+	<img src="images/certification_peer.svg" />
+	<figcaption>An example control flow graph for the orchestrator triggering the peer review certification process after registration of the artefact has completed.</figcaption>
+</figure>
+
+
 
 
 Artefacts of scholarly communication {#artefacts-scholarly-communication}
@@ -303,7 +342,44 @@ The service hub should be able to advertise the available options for filtering 
 
 Policies {#policies}
 ================================================================================
-Policies must be enforcable in the network to enforce the policies present in the research institutions. There are different actors in the network that can enforce different kinds of policies.
+A policy is the way on which rules can be enforced in the network.
+Policies can come from the researcher (e.g. my data should certainly also be archived by service X). It can be used by institution to set rules for the submissions made by affiliated researchers (e.g. registration must at least happen by service Y. Submitted artefacts of type paper should contain metadata indicated the affiliated institution, ...).
+Policies must be enforcable in the network.
+
+
+## Policy Format ## {#policy-format}
+In order for multiple actors in the networks to enforce policies, there is a requirement for a unified policy format.
+This format should enable the orchestration services in a network to enforce the policies, and MUST be able to provide **proof** of the enforcement of the policy.
+
+### Triggers ### {#policy-triggers}
+A policy can be seen as a set of triggers.
+(e.g. the policy of institution X on artefacts of type dataset is defined by the triggers that are activated when receiving an artefact of type dataset.)
+A trigger should contain:
+1- A data shape - this is required to match the received artefact, and only execute the triggers for relevant artefacts.
+2- A trigger function.
+
+This trigger function could be many things:
+- A data shape - this is a shape that should be matched by the received artefact (this enables the setting of required fields)
+- a service call - this is the service that should be called with the artifact as argument.
+
+
+As can be seen from above, an ordering is required for the different received triggers (data verification has to happen first, before calling services).
+Precedence in called services can be achieved by receiving the result of previously called services as a notification in the inbox (this is one solution). This way, the notification can be processed, and triggers can be executed on this notification.
+
+## Policy enforcement ## {#policy-enforcement}
+Policies in the network should be enforced.
+Institutions / research groups / ... should have some control over the submitted research / way research is submitted.
+
+### Proof of policy enforcement ### {#policy-enforcement-proof}
+Proof of the enforcement of a policy can be given by the orchestration service (if this is a trusted service), through a token that can be validated for each required policy. 
+
+### Client device ### {#policy-enforcement-pod}
+The client device (e.g. through a scholarly dashboard), can be used to enforce the policies of the client user. These policies can be evaluated on the client device, or can be passed to the orchestrator service.
+
+### Orchestrator ### {#policy-enforcement-orchestrator}
+The orchestrator is responsible for the enforcement of all institution policies, for the institution managing the orchestrator, and the function of the orchestrator.
+This requires the orchestrator to be a separate service, in the case the client cannot be trusted with enforcing policies.
+In the case this is not an issue, the orchestrator service can be run on the client device (e.g. through the scholarly dashboard in this case.)
 
 
 ## Researcher pod policies ## {#researcher-pod-policies}
@@ -312,29 +388,186 @@ Because of this, the researcher can set policies that must be adhered to for the
 An example of this is providing shape trees that enforce where certain data must be stored on the pod (interaction artefacts, lifecycle information, ...).
 Because of these policies, it is important that all information submitted from a researcher pod is also stored and archived by the service hubs, as the policies set by a data pod may reject certain data from being stored on the pod.
 
-## Orchestrator policies ## {#orchestrator-policies}
-The orchestrators in the network serve as the mediators between the researcher pods and the service hubs in the network.
-Because of this position, the orchestrator can enforce policies on the data being submitted from the researcher pods to the service hubs.
-Examples of enforceable policies are requiring artefacts to be peer reviewed before certification, requiring all artefact metadata to be present before submitting to services,  advertising / enforcing certain service hubs, ...)
-The orchestrator policies are set by the institution managing the orchestrator.
-
-## Scholarly Dashboard policies ## {#scholarly-dashboard-policies}
-The scholarly dashboard can enforce it's own set of policies.
-It can enforce the orchestrators that are used, decide on data formats, ...
-These policies can be essential to the correct working of the dashboard (e.g. require specific data formats to show statistics, edit artefacts, ...). 
-The scholarly dashboard policies are set by the institution managing the scholarly dashboard.
-
+## Institution policies ## {#orchestrator-policies}
+The managing institutions in the network may wish to enforce their own policies on their own affiliated researchers. For this, the institution may provide sets of policies (these could be different sets for different purposes / research groups / ...).
+These policies can be retrieved and enforced by an orchestration service, with proof of the enforcement of the policies.
+Examples of enforceable policies are requiring all artefact metadata to be present before submitting to services. Advertising / enforcing certain service hubs, ...).
 
 ## Service hub policies ## {#service-hub-policies}
 Service hubs may also enforce policies on the received submission.
 E.g. they may require all metadata to be filled out for a submitted artefact, or require a specific file format for submissions.
-Ideally these policies should be also enforced by the scholarly dashboard / orchestrator making use of the service.
-The service hub policies are set by the institution or third party managing the service hub.
+Ideally these policies should be also enforced by the orchestrator making use of the service (as if this is not the case, an error will happen, that has to be back-propagated through the network).
+
+Scholarly Communication context {#usecases}
+================================================================================
+
+## Actors in the network ## {#context-actors} 
+<table style="width:100%">
+  <caption>Actors in the network</caption>
+  <tr>
+    <th style="width: 5%; padding-top: 10px; padding-bottom: 15px;"></th> 
+    <th style="padding-top: 10px; padding-bottom: 15px;">Term</th>
+    <th style="padding-top: 10px; padding-bottom: 15px;">Description</th>
+  </tr>
+  <tr>
+    <td>U</td> 
+    <td>User</td> 
+    <td>A user querying information over the scholarly communication network</td> 
+  </tr>
+  <tr>
+    <td>R</td> 
+    <td>Researcher</td> 
+    <td>A user adding / interacting with information to the scholarly communication network</td> 
+  </tr>
+  <tr>
+    <td>I</td> 
+    <td>Institution</td> 
+    <td>Organisation that enforces policies on managed actors.</td> 
+  </tr>
+  <tr>
+    <td>S</td> 
+    <td>Service Provider</td> 
+    <td>Provider of services in the network.</td> 
+  </tr>
+</table>
 
 
+## Objects in the network ## {#context-actors} 
+<table style="width:100%">
+  <caption>Actors in the network</caption>
+  <tr>
+    <th style="width: 5%; padding-top: 10px; padding-bottom: 15px;"></th> 
+    <th style="padding-top: 10px; padding-bottom: 15px;">Term</th>
+    <th style="padding-top: 10px; padding-bottom: 15px;">Description</th>
+  </tr>
+  <tr>
+    <td>O</td> 
+    <td>Object</td> 
+    <td>Generic representation of an entity</td> 
+  </tr>
+  <tr>
+    <td>A</td> 
+    <td>Artefact</td> 
+    <td>Object that is the result of scholarly communication and can be recorded.</td> 
+  </tr>
+  <tr>
+    <td>M</td> 
+    <td>Metadata</td> 
+    <td>Metadata about an artefact.</td> 
+  </tr>
+  <tr>
+    <td>IA</td> 
+    <td>Interaction Artefact</td> 
+    <td>Object that is the result of an interaction with an Artefact.</td> 
+  </tr>
+  <tr>
+    <td>LE</td> 
+    <td>Lifecycle Event</td> 
+    <td>Object that is an event in the lifecycle of an Artefact.</td> 
+  </tr>
+  <tr>
+    <td>R</td> 
+    <td>Record</td> 
+    <td>Record of the scholarly communication in the network.</td> 
+  </tr>
+  <tr>
+    <td>P</td> 
+    <td>Policy</td> 
+    <td>Policy providing a set of regulations that must be enforced.</td> 
+  </tr>
+</table>
+
+
+## Roles in the network ## {#context-actors} 
+<table style="width:100%">
+  <caption>Actors in the network</caption>
+  <tr>
+    <th style="width: 5%; padding-top: 10px; padding-bottom: 15px;"></th> 
+    <th style="padding-top: 10px; padding-bottom: 15px;">Term</th>
+    <th style="padding-top: 10px; padding-bottom: 15px;">Description</th>
+  </tr>
+  <tr>
+    <td>C</td> 
+    <td>Consumer</td> 
+    <td>Entity that queries the network for scholarly communication information.</td> 
+  </tr>
+  <tr>
+    <td>P</td> 
+    <td>Publisher</td> 
+    <td>Entity that publishes new artefacts to the network.</td> 
+  </tr>
+  <tr>
+    <td>O</td> 
+    <td>Orchestrator</td> 
+    <td>Entity that provides a Service hub to the network.</td> 
+  </tr>
+  <tr>
+    <td>SHP</td> 
+    <td>Service Hub Provider</td> 
+    <td>Entity that provides a Service hub to the network.</td> 
+  </tr>
+  <tr>
+    <td>B</td> 
+    <td>Collector (Browser)</td> 
+    <td>Entity that collects the scholarly communication data present in the network.</td> 
+  </tr>
+  <tr>
+    <td>REC</td> 
+    <td>Scholarly Record</td> 
+    <td>Record of scholarly communication happening in the network. Can be queried for information on the scholarly record of the network.</td> 
+  </tr>
+</table>
 
 Use Cases {#usecases}
 ================================================================================
+
+The following scenarios aim at capturing what an architecture based on Decentralized Web should enable for users. 
+In this context, the users are the different stakeholders that are active in the network: 
+- The research Institutions, providing dashboard and orchestration services while enforcing institution policies.
+- The affiliated researcher, they create artefacts in the network.
+- Organizations that provide functions of scholarly communication through service hubs.
+- Organizations providing collection and browsing services for the network.
+
+
+We use the following template:
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>Actors can be people (roles), other systems, or time directly interacting with the process.</td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>The final successful outcome that completes the process.</td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>Anybody with an interest or investment in how the system performs.</td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>The elements that must be true before a use case can occur.</td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>The events that cause the use case to begin</td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>What the system should have completed by the end of the steps</td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>The process and steps taken to reach the end goal, including the necessary functional requirements and their anticipated behaviors.</td> 
+  </tr>
+  <tr>
+    <td>Requirements</td> 
+    <td>Requirements for the use-case to be achievable.</td> 
+  </tr>
+</table>
+
+
+
+
 
 ## Joining a scholarly communication network ## {#joining-scholarly-communication-network}
 In order to create or interact with artefacts in a scholarly communication network, a user must have a valid data pod environment to store these (interaction) artefacts.
@@ -346,11 +579,81 @@ Bob wants to interact with published artefacts in the network, but does not have
 Any [scholarly dashboard](#scholarly-dashboard) used to interact with artefacts in the network SHOULD provide an option to login to an existing pod, register an existing data pod or to create a new data pod.
 Bob chooses the option to create a new pod, and is redirected to an environment where he can create a new data Pod (The available environments can be selected by the scholarly dashboard, as the use of specific platforms can be advertised / enforced).
 
+
 ### Participating in the network with an existing data pod ### {#uc-participate-network}
 Bob wants to interact with published artefacts in the network, and has a data pod available.
 Bob chooses the option of the [scholarly dashboard](#scholarly-dashboard) to login with an existing data pod.
 The institution managing the scholarly dashboard MAY require Bob to authenticate himself to the institution before allowing use of the dashboard.
 On authentication, Bob is given access to the functionality available in the scholarly dashboard, and interactions in with artefacts may be handled by an orchestrator already linked in the Bob's pod, or by an orchestrator advertised / enforced by the scholarly dashboard.
+
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+      Actors:
+      - Researcher
+      - Institution
+
+      Components: 
+      - Dashboard               I
+      - Orchestrator            I
+      - Researcher pod          R
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - The researcher pod has access to an orchestration service in the network.
+      - The managing institution of the orchestrator is aware of the researcher pod, and can link an affiliated person to the pod.
+      - The researcher can now interact with artefacts on the network.
+      - The researcher can now create new artefacts in the network an use the scholarly communication functions for the created artefact.
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - Institution
+      - Researcher (pod-owner)
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - The researcher has a pod available.
+      - The researcher has access to a scholarly dashboard (optional).
+      - The researcher can authenticate himself to the dashboard if required (is affiliated to the managing institution, ....). 
+      - Or the user can authenticate himself on another way and gain access to the orchestrator that way (without using dashboard).
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - A Researcher wants to join the network.
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - The researcher can make use of the orchestrator, and has access to all required functions for scholarly communication.
+      - The orchestrator in question can authenticate the user as an affiliated person. (It can assure to the network to trust this user?)
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. The researcher logs in to the scholarly dashboards OR the researcher connects to an interface that enables them to retrieve information about available orchestrators in the network.
+      2. The user retrieves the orchestrator information (via the dashboard).
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td> 
+    <td>
+      - Pod environment
+      - Scholarly dashboard
+      - Authentication mechanism for pod owner wishing to join the network (= make use of orchestrator)
+    </td> 
+  </tr>
+</table>
 
 
 ## The researcher profile ## {#uc-profile}
@@ -365,6 +668,73 @@ The dashboard SHOULD provide a way for Bob to create a researcher profile / the 
 Bob's researcher profile is now added to Bob's data pod, and is passed to one or more orchestrators in the network (connected to Bob's data pod or to the scholarly browser).
 The orchestrators make sure that the information is passed to the relevant services, so that Bob's updated information is now available in the network.
 
+
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+    Actors:
+    - Researcher
+
+    Components: 
+    - Researcher pod          R
+    - Dashboard               I
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - The researcher pod has a researcher profile set.
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - Researcher (pod-owner)
+      - OPTIONAL: Institution
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - The researcher has a pod available.
+      - The researcher can authenticate himself and his pod to the scholarly dashboard.
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - The researcher navigates to the "Edit Profile" tab of the scholarly dashboard.
+      - The researcher tries an action that requires the researcher profile to be completed, and is redirected to the "Edit Profile" tab in the dashboard.
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - The researcher profile is set in the researcher pod.
+      - OPTIONAL: The researcher profile matches the institution profile of the researcher.) 
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. The researcher navigates / is redirected to the "Edit Profile" tab of the scholarly dashboard.
+      2. OPTIONAL: If the dashboard can retrieve information on the researcher through the authentication process, this information can be automatically filled in.
+      3. The researcher completes all required fields of the form, and submits.
+      4. The completed profile is posted to the researcher pod.
+      5. The browser shows a success / failure message for the update, and redirects to the "View Profile" tab in the dashboard, or the tab the researcher was redirected from.
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td> 
+    <td>
+      - Pod environment
+      - scholarly dashboard
+    </td> 
+  </tr>
+</table>
+
+
 ### Updating a researcher profile ### {#view-profile}
 Bob has changed jobs and now works at a new research institution.
 The Scholarly Dashboard of the new institution SHOULD provide functionality for Bob to update his researcher profile. 
@@ -377,7 +747,7 @@ The orchestrators make sure that the information is passed to the relevant servi
 ## Uploading artefacts ## {#uc-upload-artefact}
 Here we present some use-cases for adding artefacts to the network.
 
-### Adding artefacts to the network ### {#uc-add-artefact}
+### Adding artefacts to the network scholarly record ### {#uc-add-artefact}
 Bob has created a new research paper.
 Bob wishes to add the artefact to the network.
 Bob opens the scholarly dashboard, and navigates to the upload section.
@@ -386,6 +756,102 @@ On submission, the scholarly dashboard stores the artefact in the data pod of Bo
 The scholarly dashboard receives the information for all relevant service hubs from the orchestrator.
 The artefact data is sent to all relevant service hubs (At least the registration service hub for claims of precedence).
 The created lifecycle events are stored on Bob's data pod, and are distributed to all subscribed actors in the network via the awareness service hub.
+
+
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+    Actors:
+    - Researcher
+
+    Components: 
+    - Researcher pod          R
+    - Dashboard               I
+    - Orchestrator            I
+    - Service Hubs            S
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - The researcher artefact goes through all steps of the scholarly communication cycle appropariate for the artefact in question, and is added to the scholarly record.
+        - The artefact is registered and timestamped by one or more Registration Services if applicable.
+        - The artefact review process is started (if applicable) by  one or more Certification services if applicable.
+        - The network is made aware of the new artefact by one or multiple awareness services if applicable.
+        - The artefact is archived by one or more archiving services if applicable.
+      - The researcher pod receives the appropriate artefact metadata for the called services.
+      - The artefact is available for actors in the network to query / interact with, given the correct permissions.
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - Researcher (pod-owner)
+      - Institution
+      - Service providers
+      - Publisher (other reserachers in the network, ...)
+      - Consumers (users browsing the scholarly record, ...)
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - The researcher has a pod available.
+      - The researcher is authenticated to the scholarly dashboard.
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - The researcher indicates that a created artefact should be added to the scholarly record.
+      - The scholarly dashboard can add specific artefacts or interactions to the scholarly record.
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - The artefact is added to the scholarly record of the network.
+      - The necessary functions of scholarly communication have been called for the artefacts.
+      - The artefact is available for other actors in the network.
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. The artefact publisher obtains a reference to a network orchestrator
+      2. The publisher retrieves all policies in the orchestrator
+      3. These policies are evaluated over the artefact, in the case of relevant policies (By client / orchestrator / institution service).
+      4. The artefact receives a token of approval from the orchestrator / institution that all policies have been evaluated.
+      5. The artefact sends the artefact to the required services according to the set policies / according to the advertised services?
+      6. The called services notify the publisher of the result of the service call.
+      7. The called services post the resulting metadata to the researcher pod / The researcher retrieves the resulting metadata from the service.
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td>  
+    <td>
+      - Researcher pod
+        - artefact storage
+        - notification processing
+        - metadata storage
+        - metadata posting
+      - Scholarly dashboard
+      - Orchestrator
+        - discovery
+        - interface
+        - pass policies (personal / institutional / ...)
+        - advertise available / trusted services in the network (through policies?)
+      - Policies
+        - syntax
+        - interoperability
+        - enforcement
+      - Service Hubs
+        - discovery
+        - interface
+    </td> 
+  </tr>
+</table>
 
 ### Linking new artefacts to existing artefacts in the network ### {#uc-link-artefact}
 Bob wishes to add relevant datasets for a previous published paper (by him) in the network.
@@ -398,8 +864,149 @@ The scholarly dashboard receives the information for all relevant service hubs f
 The artefact data is sent to all relevant service hubs.
 
 
+      - Institution
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+    Actors:
+    - Researcher
+    - Institution
+    - Service Hub Providers
+
+    Components: 
+    - Researcher pod          R
+    - Dashboard               I
+    - Orchestrator            I
+    - Service Hubs            S
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - Create, store and distribute the interaction artefact.
+      - Link the artefact to a target artefact.
+      - Notify the relevant actors of the interaction.
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - Researcher
+      - Publishers (other researchers in the network)
+      - Consumers (people browsing the network for scholarly information)
+      - Service Hub Providers (provide services requiring information over the data linking)
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - The target artefact exists on the network and was created by the same researcher (If not the case, a mechanism is required to request target to accept link).
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - The researcher navigates to the view of an artefact, and selects the "Link" option.
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - The artefact has been linked to the target artefact.
+      - The network is made aware of the created link.
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. TODO 
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td>  
+    <td>
+      -  TODO
+    </td> 
+  </tr>
+</table>
+
 ## Interacting with artefacts in the network ## {#uc-interact-artefact}
 Here we present some use-cases for interacting with artefacts in the network.
+
+
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+    Actors:
+    - Researcher
+    - Institution
+    - Service Hub Providers
+
+    Components: 
+    - Researcher pod          R
+    - Dashboard               I
+    - Orchestrator            I
+    - Service Hubs            S
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - Create, store and distribute the interaction artefact.
+      - Link the interaction artefact to the interacted with artefact..
+      - Make the interaction artefact discoverable from the interacted with artefact.
+      - Notify the relevant actors of the interaction.
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - Researcher
+      - Institution
+      - Service Hub Providers
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - The interacted with artefact is present in the network.
+      - The interacting user is a researcher (is connected to the network)
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - The interacting user creates an interaction on an artefact in the network using the scholarly dashboard.
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - The interaction artefact is stored in the interacting user's data pod.
+      - The interaction artefact is added to the scholarly record.
+      - The interacted with artefact (can / must) link back to the interaction artefact.
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. An interaction is created by a user using the scholarly dashboard.
+      2. The interaction is stored on the user's data pod.
+      3. The interaction is submitted to the orchestrator.
+      4. The orchestrator calls the necessary services to register the interaction into the scholarly record (maybe with a timeout if reactions are to be deleted?)
+      5. The necessary services are executed.
+        5.1 The interaction artefact is archived.
+        5.2 The network is made aware of the new interaction.
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td>  
+    <td>
+    </td> 
+  </tr>
+</table>
 
 ### Commenting on an existing artefact in the network ### {#uc-create-interaction-comment}
 Bob has some questions over an artefact created in the network.
@@ -413,13 +1020,126 @@ The awareness hub extracts the artefact(s) that are referenced by (in) the comme
 Here we present some use-cases for interacting with artefacts in the network.
 
 
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+    Actors:
+    - 
 
-## Subscribing to entities in the network ## {#uc-subscribing}
+    Components: 
+    - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. 
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td>  
+    <td>
+      - 
+    </td> 
+  </tr>
+</table>
+
+
+
+### Subscribing to entities in the network ### {#uc-subscribing}
 Actors in the network SHOULD be able to subscribe to artefact lifecycle events for artefacts in the network.
 Additionally, actors MAY be able to subscribe to the events of new actors being added to the network.
 Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts (or actors), that can be filtered by the actor on the available dimensions of artefacts in the network.
 
-## Subscribing to artefacts of a specific author in the network ## {#uc-subscribe-artefact}
+
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+    Actors:
+    - Researcher
+
+    Components: 
+    - Scholarly dashboard (Optional?)
+    - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - The researcher now receives notifications of the (chosen) life cycle events of artefacts relevant to the subscription target.
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. 
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td>  
+    <td>
+      - 
+    </td> 
+  </tr>
+</table>
+
+### Subscribing to artefacts of a specific author in the network ### {#uc-subscribe-artefact}
 Bob wishes to subscribe to all artefacts created by Alice in the network, to receive updates of all new lifecycle information of her artefacts.
 Bob uses the scholarly dashboard and navigates to the subscription page.
 The scholarly dashboard retrieves the awareness subscription hub information from the used orchestrator.
@@ -430,7 +1150,63 @@ Bob decides to subscribe to the "create" and "publish" lifecycle events.
 On submission, the availability service hub saves the subscription, and on subsequent relevant lifecycle events of artefacts with Alice as the author, Bob receives a notification of these events.
 The subscription is also stored with the necessary metadata on Bob's pod, allowing Bob to easily list and undo created subscriptions.
 
-## Undo a specific subscription ## {#uc-unsubscribe-artefact}
+
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+    Actors:
+    - 
+
+    Components: 
+    - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. 
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td>  
+    <td>
+      - 
+    </td> 
+  </tr>
+</table>
+
+### Undo a specific subscription ### {#uc-unsubscribe-artefact}
 Bob wishes to undo a specific subscription because of too much events.
 Bob navigates to the subscription page of the scholarly dashboard.
 All previous subscriptions are listed on the page.
@@ -439,25 +1215,81 @@ The awareness service hub is notified that the specific subscription should be r
 On success from the service hub, the scholarly dashboard removes the subscription from Bob's pod.
 
 
+<table>
+  <tr>
+    <td>Actors/Roles</td> 
+    <td>
+    Actors:
+    - 
+
+    Components: 
+    - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Goal</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Stakeholders</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Preconditions</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Triggers</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Postconditions</td> 
+    <td>
+      - 
+    </td> 
+  </tr>
+  <tr>
+    <td>Procedure</td> 
+    <td>
+      1. 
+    </td> 
+  </tr>
+  <tr>
+    <td>Requirements</td>  
+    <td>
+      - 
+    </td> 
+  </tr>
+</table>
+
+
 Requirements {#requirements}
 ================================================================================
 In this section the requirements are listed based on the proposed architecture [[#architecture]] and use cases [[#usecases]].
 
-
-
-## Data Storage ## {#rq-solid-storage}
+## Pod based data storage{#rq-solid-storage}
 To provide researchers with the possibility to store their own research artefacts and interactions, while keeping control of the data in the process, pod environments such as Solid can be used.
 These can be hosted by the research institutions themselves, or by recommended third party services.
 
 ### Research Artefact Storage ### {#rq-artefact-storage}
 Research artefacts (Papers, images, datasets, ...) can be stored as (non-)rdf documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in [[#rq-data-discovery]].
 
-### Interaction artefacts storage ### {#rq-interaction-artefact-storage}
-Research artefacts (Papers, images, datasets, ...) 
-Publications can be stored as documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in [[#rq-data-discovery]].
-
+### Artefact Linking ### {#rq-interaction-artefact-storage}
+Research artefacts (Papers, images, datasets, ...) can be interacted with in the network.
+These interactions MUST link to the artefacts they interact with.
+Artefacts may also contain links to artefacts they cite, to their used datasets, ...
+In case two way coupeling is required for these interactions, a mechanism is required to notify the pod storing the other artefact to return a link / provide the option to link back. This can be handled automatically, or require manual interaction to veryify.
 
 ### Metadata Storage ### {#rq-metadata-storage}
+Artefacts in the network have metadata, and will require this metadata to be stored and linked to the original artefacts.
 There are multiple solutions to store metadata for (non-)rdf data on a Linked Data Platform. However, it may benefit applications to support multiple approaches to metadata storage, and fall back on less ideal approaches in case the required metadata cannot be discovered.
 
 #### .meta file #### {#meta-file}
@@ -494,6 +1326,7 @@ This concept could also be applied for interaction artefacts (e.g. see comments 
 Permissions are an important tool for data pods to protect private information.
 Only actors with the correct permissions set have access to resources in a pod environment.
 In pod environments, permissions are handled using ACL files.
+Permissions are required in case certain parts of the research are sensitive (e.g. datasets with sensitive information), or should not yet be public (e.g. in-progress work to share with colleagues).
 
 #### Setting permissions #### {#rq-set-permissions}
 Functionality must be in place for all allowed to set permissions in a data pod.
@@ -521,13 +1354,24 @@ In the case that notifications are used to notify of important artefact lifecycl
 This can be avoided by making notifications non-essentialy by posting the important life cycle events directly to the data pod, and making the notifications secondary to this and only point out the locations of the newly added data.
 
 
+## Orchestrator ## {#rq-orchestrator}
+
+### ### {#rq-}
+
+### ### {#rq-}
+
+### ### {#rq-}
+
+### ### {#rq-}
+
+
 ## Policies ## {#rq-policy}
 Functionality is required for actors to enforce policies on data being generated / submitted / ... in the network.
 
 ### Shape matching ### {#rq-policy-shapes}
-Shape matching functionality is a vital part of enforcing policies for actors to match the shape of artefacts and their metadata in case of RDF data. 
+Shape matching functionality can be a vital part of enforcing certain policies for actors to match the shape of artefacts and their metadata in case of RDF data. 
 Shape matching makes use of a shape ontology, for which both [shacl](https://www.w3.org/TR/shacl/) and [shex](https://shex.io/) are currently the most relevant shape ontologies.
-In case of non-rdf data, other solutions may be required.
+In case of non-rdf data, other solutions can be explored?.
 
 
 ## Service hubs ## {#rq-service-hubs}
@@ -545,28 +1389,28 @@ Multiple service hubs may be used simultaneously to fulfil the same service (e.g
 Here the different available services in the network are listed.
 The proposed registration tokens are not bindingm and could be replaced by other verification mechanisms (see [[#rq-verification]]).
 
-### Registration service ### {#rq-registration-service}
+#### Registration service #### {#rq-registration-service}
 A registration service MUST provide a token of registration to the pod where the submitted artefact is stored. This token MUST be timestamped to allow actors in the network to verify claims of precedence.
 A copy of this token (and the submitted artefact) MUST be stored locally, to allow for verification by actors in the network, and should be provided to an archiving service.
 
-### Certification service ### {#rq-certification-service}
+#### Certification service #### {#rq-certification-service}
 A certification service MUST compare a submitted artefact with the current *state-of-the-art* in the respective field.
 If the submitted artefact is novel, the service MUST provide a certification token to the pod where the submitted artefact is stored.
 A copy of this token (and the submitted artefact) MUST be stored locally, to allow for verification by actors in the network, and should be provided to an archiving service.
 
 
-#### Peer review service #### {#rq-peer-review-service}
+##### Peer review service ##### {#rq-peer-review-service}
 In the case of peer reviews, the a service may be setup that forwards a submitted artefact to a set of peers the network for review.
 The reviews of these MUST be returned to the service (before a set deadline), where the service will return a token with the attached reviews.
 
-### Awareness service ### {#rq-awareness-service}
+#### Awareness service #### {#rq-awareness-service}
 The service MUST advertise the available dimensions of the artefacts on the network for which an actor can subscribe (e.g. title, tags, creator, ...).
 Next to artefacts, an awareness service MAY also advertise new actors (researchers / service hubs / ...) connected to the network.
 The service MUST provide an interface for actors in the network to subscribe to specific lifecycle events of artefacts that can be filtered on all advertised dimensions.
 The awareness service MUST update all relevant subscribers of new information in the network.
 The service MUST provide an interface to undo specific subscriptions.
 
-### Archiving service ### {#rq-archiving-service}
+#### Archiving service #### {#rq-archiving-service}
 An archiving service MUST store all submitted artefact data it receives.
 The service MUST provide an interface to retrieve specific data from the service.
 
@@ -574,14 +1418,39 @@ The service MUST provide an interface to retrieve specific data from the service
 A scholarly communication network requires a way for actors in the network to verify data and entities in the network.
 
 ### Researcher profile verification ### {#rq-profile-verification}
-A method MUST be in place for actors to have their profile information verified by actors in the network. This requires an authority (in this case probably a research institution) to provide a token to the researcher pod that can be verified by a verification service provided by the institution.
+A method MUST be in place for actors in the network to check the profile information of researchers in the network.
+This authentication requires the institution the researcher is affiliated with to provide an interface or a digital token to the researcher using which the verification can be done.
 
 ### Artefact data verification ### {#rq-publication-verification}
 An actor in the network MUST be able to verify an artefact in the network at the service hubs specified in the artefact metadata. E.g. An actor can verify the registration of the artefact by for example verifying a registration token available for the artefact at the registration service hub specified in the artefact metadata or lifecycle events.
 
+### Service hub verification ### {#rq-publication-verification}
+An actor in the network MUST be able to verify a called service in the network. This can prevent malicious actors from re-routing actors to malicious services.
+This can be resolved using simple public / private key-based solutions
+
+
+## Collector ## {#rq-collector}
+The Collector services in a network collect the generated knowledge, and make it available for clients querying the network.
+In the case of scholarly communication, there are multiple approaches.
+
+### Archiving service providing querying capabilities ### {#rq-collector-archiving-service}
+As an archiving service collects and archives the scholarly record of the network, this information could be queried by clients.
+This however brings the risk of the archiving service having a monopoly on both the archiving and making public of the scholarly record in the network,
+where these services can provide their own browser for their own archived data.
+
+
+### Separate collector instance
+Separate collector services may be added to the network.
+These services can subscribe to the available awareness service hubs on the network to be notified of new information in the network.
+The initial state of the collector service will have to be synchronized by requesting the scholarly record from the available archiving services that should be indexed.
+
+
 
 ## Ontologies ## {#ontology}
 Thought should be given to what ontologies are to be used to semantically describe the artefacts and events. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network.
+
+
+
 
 Definitions {#definitions}
 ================================================================================
