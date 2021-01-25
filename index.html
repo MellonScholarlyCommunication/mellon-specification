@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
-  <meta content="2b967d85537a5fed9ac3256328875e5d3a8e7a2f" name="document-revision">
+  <meta content="7cd1fe8e6f2641097caeade705347e885d68bf63" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -452,7 +452,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Use Cases and Requirements for the Mellon Project</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-01-24">24 January 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-01-25">25 January 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -590,10 +590,9 @@ dfn > a.self-link::before      { content: "#"; }
       <li>
        <a href="#rq-orchestrator"><span class="secno">8.3</span> <span class="content">Orchestrator</span></a>
        <ol class="toc">
-        <li><a href="#rq-"><span class="secno">8.3.1</span> <span class="content">### {#rq-}</span></a>
-        <li><a href="#rq-①"><span class="secno">8.3.2</span> <span class="content">### {#rq-}</span></a>
-        <li><a href="#rq-②"><span class="secno">8.3.3</span> <span class="content">### {#rq-}</span></a>
-        <li><a href="#rq-③"><span class="secno">8.3.4</span> <span class="content">### {#rq-}</span></a>
+        <li><a href="#rq-orchestrator-interface"><span class="secno">8.3.1</span> <span class="content">Orchestration interface</span></a>
+        <li><a href="#rq-orchestrator-policies"><span class="secno">8.3.2</span> <span class="content">Orchestrator policy retrieval</span></a>
+        <li><a href="#rq-"><span class="secno">8.3.3</span> <span class="content">Orchestrator policy enforcement</span></a>
        </ol>
       <li>
        <a href="#rq-policy"><span class="secno">8.4</span> <span class="content">Policies</span></a>
@@ -1521,7 +1520,7 @@ The artefact data is sent to all relevant service hubs.
       <td>
        <ul>
         <li data-md>
-         <p>Researcher</p>
+         <p>Researchers</p>
         <li data-md>
          <p>Institution</p>
         <li data-md>
@@ -1574,6 +1573,10 @@ The artefact data is sent to all relevant service hubs.
      <tr>
       <td>Requirements
       <td>
+       <ul>
+        <li data-md>
+         <p>TODO</p>
+       </ul>
    </table>
    <h4 class="heading settled" data-level="7.4.1" id="uc-create-interaction-comment"><span class="secno">7.4.1. </span><span class="content">Commenting on an existing artefact in the network</span><a class="self-link" href="#uc-create-interaction-comment"></a></h4>
     Bob has some questions over an artefact created in the network.
@@ -1585,66 +1588,13 @@ The scholarly dashboard retrieves the awareness and archiving service hub inform
 The archiving service stores the comment and indexes it to be retrievable with the data for the original (multiple?) referenced artefact(s).
 The awareness hub extracts the artefact(s) that are referenced by (in) the comment, and notifies all actors subscribed to these artefacts of a new interaction lifecycle event.
 Here we present some use-cases for interacting with artefacts in the network. 
-   <table>
-    <tbody>
-     <tr>
-      <td>Actors/Roles
-      <td>
-        Actors: 
-       <ul>
-        <li data-md>
-       </ul>
-       <p>Components:</p>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Goal
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Stakeholders
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Preconditions
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Triggers
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Postconditions
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Procedure
-      <td>
-       <ol>
-        <li data-md>
-       </ol>
-     <tr>
-      <td>Requirements
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-   </table>
    <h4 class="heading settled" data-level="7.4.2" id="uc-subscribing"><span class="secno">7.4.2. </span><span class="content">Subscribing to entities in the network</span><a class="self-link" href="#uc-subscribing"></a></h4>
     Actors in the network SHOULD be able to subscribe to artefact lifecycle events for artefacts in the network.
 Additionally, actors MAY be able to subscribe to the events of new actors being added to the network.
-Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts (or actors), that can be filtered by the actor on the available dimensions of artefacts in the network. 
+Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts, that can be filtered by the actor on the available dimensions of artefacts in the network.
+These filters on the dimensions of the artefacts can be achieved using shape matching.
+E.g. an actor in the network should be able to subscribe for notifications of specific lifecycle events of artefacts where the artefact has a tag of "Scholarly Communication".
+(This should be indexed in a way that not all filters have to be evaluated with shape matching for each lifecycle event, as this is not scalable.) 
    <table>
     <tbody>
      <tr>
@@ -1660,49 +1610,78 @@ Actors SHOULD be able to subscribe to only specific event types linked to specif
         <li data-md>
          <p>Scholarly dashboard (Optional?)</p>
         <li data-md>
+         <p>orchestrator</p>
+        <li data-md>
+         <p>awareness service hub</p>
        </ul>
      <tr>
       <td>Goal
       <td>
        <ul>
         <li data-md>
-         <p>The researcher now receives notifications of the (chosen) life cycle events of artefacts relevant to the subscription target.</p>
+         <p>The researcher is now subscribed to target type of artefacts.</p>
+        <li data-md>
+         <p>The researcher receives notifications of the (chosen) life cycle events of the target artefacts.</p>
        </ul>
      <tr>
       <td>Stakeholders
       <td>
        <ul>
         <li data-md>
+         <p>Researchers</p>
+        <li data-md>
+         <p>Service hubs</p>
        </ul>
      <tr>
       <td>Preconditions
       <td>
        <ul>
         <li data-md>
+         <p>An awareness service hub is available in the network.</p>
        </ul>
      <tr>
       <td>Triggers
       <td>
        <ul>
         <li data-md>
+         <p>The researcher navigates to the "Subscriptions" view of the scholarly dashboard.</p>
        </ul>
      <tr>
       <td>Postconditions
       <td>
        <ul>
         <li data-md>
+         <p>The researcher is subscribed to certain lifecycle events of artefacts in the network matching selected filters.</p>
+        <li data-md>
+         <p>The researcher receives notifications for these lifecycle events if they occur in the network (and are passed to the subscribed to awareness services).</p>
        </ul>
      <tr>
       <td>Procedure
       <td>
        <ol>
         <li data-md>
+         <p>A filter is created in the "Subcriptions" view of the scholarly browser.</p>
+        <li data-md>
+         <p>The filter is submitted to the orchestrator as a "Subscription" event.</p>
+        <li data-md>
+         <p>The orchestrator executes the available triggers for a "Subscription" event.</p>
+        <li data-md>
+         <p>The awareness service hub is called with the subscription event.</p>
+        <li data-md>
+         <p>The awareness service stores the subscription, and adds the filter to its list of subscription filters.</p>
+        <li data-md>
+         <p>On a new artefact lifecycle event in the network, the filter is evaluated, and the researcher is notified for matching lifecycle events.</p>
        </ol>
      <tr>
       <td>Requirements
       <td>
        <ul>
         <li data-md>
+         <p>Awareness service hub</p>
+        <li data-md>
+         <p>Notification processing</p>
+        <li data-md>
+         <p>(Indexed) Shape matching of artefact (lifecycle events).</p>
        </ul>
    </table>
    <h4 class="heading settled" data-level="7.4.3" id="uc-subscribe-artefact"><span class="secno">7.4.3. </span><span class="content">Subscribing to artefacts of a specific author in the network</span><a class="self-link" href="#uc-subscribe-artefact"></a></h4>
@@ -1715,62 +1694,6 @@ Bob decides to filter the artefacts based on their author, and enters the webId 
 Bob decides to subscribe to the "create" and "publish" lifecycle events.
 On submission, the availability service hub saves the subscription, and on subsequent relevant lifecycle events of artefacts with Alice as the author, Bob receives a notification of these events.
 The subscription is also stored with the necessary metadata on Bob’s pod, allowing Bob to easily list and undo created subscriptions. 
-   <table>
-    <tbody>
-     <tr>
-      <td>Actors/Roles
-      <td>
-        Actors: 
-       <ul>
-        <li data-md>
-       </ul>
-       <p>Components:</p>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Goal
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Stakeholders
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Preconditions
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Triggers
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Postconditions
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Procedure
-      <td>
-       <ol>
-        <li data-md>
-       </ol>
-     <tr>
-      <td>Requirements
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-   </table>
    <h4 class="heading settled" data-level="7.4.4" id="uc-unsubscribe-artefact"><span class="secno">7.4.4. </span><span class="content">Undo a specific subscription</span><a class="self-link" href="#uc-unsubscribe-artefact"></a></h4>
     Bob wishes to undo a specific subscription because of too much events.
 Bob navigates to the subscription page of the scholarly dashboard.
@@ -1778,62 +1701,6 @@ All previous subscriptions are listed on the page.
 Bob selects a subscription, and chooses the remove option.
 The awareness service hub is notified that the specific subscription should be removed.
 On success from the service hub, the scholarly dashboard removes the subscription from Bob’s pod. 
-   <table>
-    <tbody>
-     <tr>
-      <td>Actors/Roles
-      <td>
-        Actors: 
-       <ul>
-        <li data-md>
-       </ul>
-       <p>Components:</p>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Goal
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Stakeholders
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Preconditions
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Triggers
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Postconditions
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-     <tr>
-      <td>Procedure
-      <td>
-       <ol>
-        <li data-md>
-       </ol>
-     <tr>
-      <td>Requirements
-      <td>
-       <ul>
-        <li data-md>
-       </ul>
-   </table>
    <h2 class="heading settled" data-level="8" id="requirements"><span class="secno">8. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
     In this section the requirements are listed based on the proposed architecture <a href="#architecture">§ 3 Architecture of a Decentralized Network for Scholarly Communication</a> and use cases <a href="#usecases">§ 6 Scholarly Communication context</a>. 
    <h3 class="heading settled" data-level="8.1" id="rq-solid-storage"><span class="secno">8.1. </span><span class="content">Pod based data storage{#rq-solid-storage}</span><a class="self-link" href="#rq-solid-storage"></a></h3>
@@ -1894,10 +1761,22 @@ This enables the scholarly dashboard to filter the notifiactions for relevant li
     In the case that notifications are used to notify of important artefact lifecycle information (in the case this is not directly posted to the researcher pod because of design reasons?), fucntionality is required that can evaluated the received notifications and execute automatic actions.
 This can be avoided by making notifications non-essentialy by posting the important life cycle events directly to the data pod, and making the notifications secondary to this and only point out the locations of the newly added data. 
    <h3 class="heading settled" data-level="8.3" id="rq-orchestrator"><span class="secno">8.3. </span><span class="content">Orchestrator</span><a class="self-link" href="#rq-orchestrator"></a></h3>
-   <h4 class="heading settled" data-level="8.3.1" id="rq-"><span class="secno">8.3.1. </span><span class="content">### {#rq-}</span><a class="self-link" href="#rq-"></a></h4>
-   <h4 class="heading settled" data-level="8.3.2" id="rq-①"><span class="secno">8.3.2. </span><span class="content">### {#rq-}</span><a class="self-link" href="#rq-①"></a></h4>
-   <h4 class="heading settled" data-level="8.3.3" id="rq-②"><span class="secno">8.3.3. </span><span class="content">### {#rq-}</span><a class="self-link" href="#rq-②"></a></h4>
-   <h4 class="heading settled" data-level="8.3.4" id="rq-③"><span class="secno">8.3.4. </span><span class="content">### {#rq-}</span><a class="self-link" href="#rq-③"></a></h4>
+    The orchestrator is an actor in the network that is responsible for executing policies on received artefacts in the network.
+For all received policies, the orchestrator should filter relevant policies for the current action, and provide a proof of enforcement for each policy.
+Policy filtering can be achieved using <a href="#rq-policy-shapes">shape matching</a> solutions. 
+   <h4 class="heading settled" data-level="8.3.1" id="rq-orchestrator-interface"><span class="secno">8.3.1. </span><span class="content">Orchestration interface</span><a class="self-link" href="#rq-orchestrator-interface"></a></h4>
+    The interface for an orchestration service is an inbox advertised by the orchestrator.
+This inbox serves as an event-queue, from which the orchestrator pulls notifications if available.
+As the inbox is open, it can be posted to by all actors in the network. 
+   <h4 class="heading settled" data-level="8.3.2" id="rq-orchestrator-policies"><span class="secno">8.3.2. </span><span class="content">Orchestrator policy retrieval</span><a class="self-link" href="#rq-orchestrator-policies"></a></h4>
+    The orchestrator matches and enforces policies on received lifecycle events of artefacts in the network.
+But these policies have to first be retrieved / passed to the orchestrator.
+For this, both the client and the institution managing the orchestrator can provide an interface for the orchestrator to retrieve relevant policies. 
+   <h4 class="heading settled" data-level="8.3.3" id="rq-"><span class="secno">8.3.3. </span><span class="content">Orchestrator policy enforcement</span><a class="self-link" href="#rq-"></a></h4>
+    The enforcing of policies is handled by first matching the relevant policies to a received artefact lifecycle event, 
+and subsequently executing the attached triggers.
+Proof of this execution should be possible, to verify the artefact path through the network, and to verify for the institution that the rules have been enforced.
+For this, a proof of execution could also be required by the service hubs, to know that a received submission is approved by (the automated rules of) a certain institution in the network. 
    <h3 class="heading settled" data-level="8.4" id="rq-policy"><span class="secno">8.4. </span><span class="content">Policies</span><a class="self-link" href="#rq-policy"></a></h3>
     Functionality is required for actors to enforce policies on data being generated / submitted / ... in the network. 
    <h4 class="heading settled" data-level="8.4.1" id="rq-policy-shapes"><span class="secno">8.4.1. </span><span class="content">Shape matching</span><a class="self-link" href="#rq-policy-shapes"></a></h4>
