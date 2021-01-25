@@ -1118,8 +1118,6 @@ The awareness service hub is notified that the specific subscription should be r
 On success from the service hub, the scholarly dashboard removes the subscription from Bob's pod.
 
 
-
-
 Requirements {#requirements}
 ================================================================================
 In this section the requirements are listed based on the proposed architecture [[#architecture]] and use cases [[#usecases]].
