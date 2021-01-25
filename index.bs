@@ -963,7 +963,7 @@ Here we present some use-cases for interacting with artefacts in the network.
   <tr>
     <td>Stakeholders</td> 
     <td>
-      - Researcher
+      - Researchers
       - Institution
       - Service Hub Providers
     </td> 
@@ -1004,6 +1004,7 @@ Here we present some use-cases for interacting with artefacts in the network.
   <tr>
     <td>Requirements</td>  
     <td>
+      - TODO
     </td> 
   </tr>
 </table>
@@ -1020,68 +1021,13 @@ The awareness hub extracts the artefact(s) that are referenced by (in) the comme
 Here we present some use-cases for interacting with artefacts in the network.
 
 
-<table>
-  <tr>
-    <td>Actors/Roles</td> 
-    <td>
-    Actors:
-    - 
-
-    Components: 
-    - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Goal</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Stakeholders</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Preconditions</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Triggers</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Postconditions</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Procedure</td> 
-    <td>
-      1. 
-    </td> 
-  </tr>
-  <tr>
-    <td>Requirements</td>  
-    <td>
-      - 
-    </td> 
-  </tr>
-</table>
-
-
-
 ### Subscribing to entities in the network ### {#uc-subscribing}
 Actors in the network SHOULD be able to subscribe to artefact lifecycle events for artefacts in the network.
 Additionally, actors MAY be able to subscribe to the events of new actors being added to the network.
-Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts (or actors), that can be filtered by the actor on the available dimensions of artefacts in the network.
-
+Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts, that can be filtered by the actor on the available dimensions of artefacts in the network.
+These filters on the dimensions of the artefacts can be achieved using shape matching.
+E.g. an actor in the network should be able to subscribe for notifications of specific lifecycle events of artefacts where the artefact has a tag of "Scholarly Communication".
+(This should be indexed in a way that not all filters have to be evaluated with shape matching for each lifecycle event, as this is not scalable.)
 
 <table>
   <tr>
@@ -1092,49 +1038,60 @@ Actors SHOULD be able to subscribe to only specific event types linked to specif
 
     Components: 
     - Scholarly dashboard (Optional?)
-    - 
+    - orchestrator
+    - awareness service hub
     </td> 
   </tr>
   <tr>
     <td>Goal</td> 
     <td>
-      - The researcher now receives notifications of the (chosen) life cycle events of artefacts relevant to the subscription target.
+      - The researcher is now subscribed to target type of artefacts.
+      - The researcher receives notifications of the (chosen) life cycle events of the target artefacts.
     </td> 
   </tr>
   <tr>
     <td>Stakeholders</td> 
     <td>
-      - 
+      - Researchers
+      - Service hubs
     </td> 
   </tr>
   <tr>
     <td>Preconditions</td> 
     <td>
-      - 
+      - An awareness service hub is available in the network.
     </td> 
   </tr>
   <tr>
     <td>Triggers</td> 
     <td>
-      - 
+      - The researcher navigates to the "Subscriptions" view of the scholarly dashboard.
     </td> 
   </tr>
   <tr>
     <td>Postconditions</td> 
     <td>
-      - 
+      - The researcher is subscribed to certain lifecycle events of artefacts in the network matching selected filters.
+      - The researcher receives notifications for these lifecycle events if they occur in the network (and are passed to the subscribed to awareness services).
     </td> 
   </tr>
   <tr>
     <td>Procedure</td> 
     <td>
-      1. 
+      1. A filter is created in the "Subcriptions" view of the scholarly browser.
+      2. The filter is submitted to the orchestrator as a "Subscription" event.
+      3. The orchestrator executes the available triggers for a "Subscription" event.
+      4. The awareness service hub is called with the subscription event.
+      5. The awareness service stores the subscription, and adds the filter to its list of subscription filters.
+      6. On a new artefact lifecycle event in the network, the filter is evaluated, and the researcher is notified for matching lifecycle events.
     </td> 
   </tr>
   <tr>
     <td>Requirements</td>  
     <td>
-      - 
+      - Awareness service hub
+      - Notification processing
+      - (Indexed) Shape matching of artefact (lifecycle events).
     </td> 
   </tr>
 </table>
@@ -1151,60 +1108,6 @@ On submission, the availability service hub saves the subscription, and on subse
 The subscription is also stored with the necessary metadata on Bob's pod, allowing Bob to easily list and undo created subscriptions.
 
 
-<table>
-  <tr>
-    <td>Actors/Roles</td> 
-    <td>
-    Actors:
-    - 
-
-    Components: 
-    - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Goal</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Stakeholders</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Preconditions</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Triggers</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Postconditions</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Procedure</td> 
-    <td>
-      1. 
-    </td> 
-  </tr>
-  <tr>
-    <td>Requirements</td>  
-    <td>
-      - 
-    </td> 
-  </tr>
-</table>
 
 ### Undo a specific subscription ### {#uc-unsubscribe-artefact}
 Bob wishes to undo a specific subscription because of too much events.
@@ -1215,60 +1118,6 @@ The awareness service hub is notified that the specific subscription should be r
 On success from the service hub, the scholarly dashboard removes the subscription from Bob's pod.
 
 
-<table>
-  <tr>
-    <td>Actors/Roles</td> 
-    <td>
-    Actors:
-    - 
-
-    Components: 
-    - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Goal</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Stakeholders</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Preconditions</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Triggers</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Postconditions</td> 
-    <td>
-      - 
-    </td> 
-  </tr>
-  <tr>
-    <td>Procedure</td> 
-    <td>
-      1. 
-    </td> 
-  </tr>
-  <tr>
-    <td>Requirements</td>  
-    <td>
-      - 
-    </td> 
-  </tr>
-</table>
 
 
 Requirements {#requirements}
@@ -1355,14 +1204,26 @@ This can be avoided by making notifications non-essentialy by posting the import
 
 
 ## Orchestrator ## {#rq-orchestrator}
+The orchestrator is an actor in the network that is responsible for executing policies on received artefacts in the network.
+For all received policies, the orchestrator should filter relevant policies for the current action, and provide a proof of enforcement for each policy.
+Policy filtering can be achieved using [shape matching](#rq-policy-shapes) solutions.
 
-### ### {#rq-}
+### Orchestration interface ### {#rq-orchestrator-interface}
+The interface for an orchestration service is an inbox advertised by the orchestrator.
+This inbox serves as an event-queue, from which the orchestrator pulls notifications if available.
+As the inbox is open, it can be posted to by all actors in the network.
 
-### ### {#rq-}
 
-### ### {#rq-}
+### Orchestrator policy retrieval ### {#rq-orchestrator-policies}
+The orchestrator matches and enforces policies on received lifecycle events of artefacts in the network.
+But these policies have to first be retrieved / passed to the orchestrator.
+For this, both the client and the institution managing the orchestrator can provide an interface for the orchestrator to retrieve relevant policies.
 
-### ### {#rq-}
+### Orchestrator policy enforcement ### {#rq-}
+The enforcing of policies is handled by first matching the relevant policies to a received artefact lifecycle event, 
+and subsequently executing the attached triggers.
+Proof of this execution should be possible, to verify the artefact path through the network, and to verify for the institution that the rules have been enforced.
+For this, a proof of execution could also be required by the service hubs, to know that a received submission is approved by (the automated rules of) a certain institution in the network.
 
 
 ## Policies ## {#rq-policy}
