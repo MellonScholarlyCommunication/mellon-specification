@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
-  <meta content="89929070e52ef6516b153676d3e2e1b4bd7757cc" name="document-revision">
+  <meta content="81eb5b1b5793a7e9a1a51b85239c984c940b76a7" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -483,7 +483,8 @@ dfn > a.self-link::before      { content: "#"; }
      <ol class="toc">
       <li><a href="#functions-scholarly-communication"><span class="secno">2.1</span> <span class="content">Core functions of scholarly communication</span></a>
       <li><a href="#research-centric-model"><span class="secno">2.2</span> <span class="content">Researcher-centric scholarly communication model</span></a>
-      <li><a href="#institutions-decentralized-network-trust"><span class="secno">2.3</span> <span class="content">The role of institutions in a decentralized scholarly communication network</span></a>
+      <li><a href="#research-centric-model①"><span class="secno">2.3</span> <span class="content">The role of institutions in the decentralized network</span></a>
+      <li><a href="#institutions-decentralized-network-trust"><span class="secno">2.4</span> <span class="content">Trusting actors in the decentralized network</span></a>
      </ol>
     <li>
      <a href="#architecture"><span class="secno">3</span> <span class="content">Architecture of a Decentralized Network for Scholarly Communication</span></a>
@@ -492,8 +493,7 @@ dfn > a.self-link::before      { content: "#"; }
       <li>
        <a href="#orchestrator"><span class="secno">3.2</span> <span class="content">Orchestrator</span></a>
        <ol class="toc">
-        <li><a href="#orchestrator-functions"><span class="secno">3.2.1</span> <span class="content">Orchestrator functions</span></a>
-        <li><a href="#orchetrator-design"><span class="secno">3.2.2</span> <span class="content">Orchestrator design</span></a>
+        <li><a href="#orchetrator-design"><span class="secno">3.2.1</span> <span class="content">Orchestrator design</span></a>
        </ol>
       <li><a href="#service-hub"><span class="secno">3.3</span> <span class="content">Service hubs</span></a>
       <li><a href="#collector"><span class="secno">3.4</span> <span class="content">Collector</span></a>
@@ -670,14 +670,16 @@ From these use-cases, requirements are derived in <a href="#requirements">§ 8
 In the context of a decentralized network, registration can also be viewed as a way to link researchers to their institutions, allowing for trust in the validity of the researcher and their research.</p>
    <h3 class="heading settled" data-level="2.2" id="research-centric-model"><span class="secno">2.2. </span><span class="content">Researcher-centric scholarly communication model</span><a class="self-link" href="#research-centric-model"></a></h3>
     The goal is that researchers’ pods are hosted by their respective institutions, as part of the infrastructure provided in support of research and education. When a researcher moves on to another institution, the pod moves along and becomes hosted by the new institution. Researchers without institutional affiliation or with multiple affiliations can opt for commercial pod hosting platforms, national/regional academic hosting provisions that can be assumed to emerge, or host the pod themselves. Over time, a researcher’s pod accumulates an overview of scholarly contributions made throughout a career path. 
-   <h3 class="heading settled" data-level="2.3" id="institutions-decentralized-network-trust"><span class="secno">2.3. </span><span class="content">The role of institutions in a decentralized scholarly communication network</span><a class="self-link" href="#institutions-decentralized-network-trust"></a></h3>
-    As decentralized networks do not have a single central service that actors can trust, actors in the network require an approach that allows them to trust other actors present in the network. 
-   <p>In these networks, institutions can take on the role as the orchestrators of a decentralized scholarly communication network.
-These orchestrators connect the registered researcher pods with the available service hubs in the network, and serve as a trusted mediator between the researchers and the service hubs.
-Service hubs can trust all researcher pods registered to / making use of a trusted orchestrator (managed by an institution), as they trust that every researcher pod registered to / using that orchestrator is managed by a person affiliated with the managing institution of that orchestrator.
-In the other direction, researchers registering their pods to / using the orchestrator managed by their institution trust the service hubs advertised by that orchestrator.
-In the case of problems, the institution can change from / advertise multiple different service hubs, by changing the policies.</p>
-   <p>This way, institutions actively participate in the decentralized network of scholarly communication as orchestrators and trusted parties.</p>
+   <h3 class="heading settled" data-level="2.3" id="research-centric-model①"><span class="secno">2.3. </span><span class="content">The role of institutions in the decentralized network</span><a class="self-link" href="#research-centric-model①"></a></h3>
+    The role of institutions in the decentralized network is to enforce <a href="#policies">policies</a> in the network that make sure that all <a href="#functions-scholarly-communication">functions of scholarly communication</a> can be executed for created artefacts in the network.
+Affiliated researchers are required to adopt the institution policies. 
+   <h3 class="heading settled" data-level="2.4" id="institutions-decentralized-network-trust"><span class="secno">2.4. </span><span class="content">Trusting actors in the decentralized network</span><a class="self-link" href="#institutions-decentralized-network-trust"></a></h3>
+    Actors in the network require an approach that allows them to trust other actors present in the network.
+In the case of scholarly communication, we expect the researchers to trust the research institution they are affiliated with.
+As the institution provides policies used by the orchestrator that define the called services for the created scholarly artefacts, 
+the researcher can trust the choices of the institution.
+When submitting to external institutions such as conferences, it is up to the researcher to trust the additional policies set by these conferences.
+The evaluated policies are stored both in the event log of the orchestrator and in the called services, and can always be checked by all actors in the network. 
    <h2 class="heading settled" data-level="3" id="architecture"><span class="secno">3. </span><span class="content">Architecture of a Decentralized Network for Scholarly Communication</span><a class="self-link" href="#architecture"></a></h2>
    <figure>
      <img src="images/ecosystem.png"> 
@@ -706,19 +708,15 @@ In the case of problems, the institution can change from / advertise multiple di
    </table>
    <h3 class="heading settled" data-level="3.2" id="orchestrator"><span class="secno">3.2. </span><span class="content">Orchestrator</span><a class="self-link" href="#orchestrator"></a></h3>
     The orchestrator is a component in the network that is responsible for orchestrating the control flow of the network.
-This control flow is dictated by the policies that are imposed by the network.
-An orchestrator component is initialized with a set of policies.
-These policies are retrieved and indexed by the orchestrator.
-Based on these available policies, a control flow is created. 
-   <p>The orchestrator exposes an inbox to the network.
-For all received notifications in the orchestrator inbox, the relevant policies</p>
-   <p>The orchestrator is responsible for retrieving policies, and evaluating these policies over
-for retrieving and evaluating policies over
-Institutions participate in the decentralized scholarly communication network by providing orchestrator services to the network. In this way, an institution can manages their affiliated researchers using these orchestrators. 
-The orchestrators connect researcher pods with a relevant set of service hubs that enable the researcher pod to fulfill all the <a href="#functions-scholarly-communication">functions of scholarly communication</a> In its role as an orchestrator, it can set policies that are enforced in the communication between the research pods and the service hubs.</p>
-   <p>Orchestrators should be linked to institutions to allow for <a href="#institutions-decentralized-network-trust">trust based operating of the network</a>.</p>
-   <h4 class="heading settled" data-level="3.2.1" id="orchestrator-functions"><span class="secno">3.2.1. </span><span class="content">Orchestrator functions</span><a class="self-link" href="#orchestrator-functions"></a></h4>
-   <h4 class="heading settled" data-level="3.2.2" id="orchetrator-design"><span class="secno">3.2.2. </span><span class="content">Orchestrator design</span><a class="self-link" href="#orchetrator-design"></a></h4>
+The orchestrator itself is a relatively small component.
+It is responsible for the retrieval and the execution of <a href="#policies">policies</a> in the network, and may have some built-in functionality such as creating an event log. 
+   <p>These <a href="#policies">policies</a> are rules that are imposed by actors in the network, such as the research institution and even the researcher.
+This is discussed in <a href="#policy-sources">§ 5.3 Policy sources</a>.
+The policies that are used by an orchestrator define the control flow in the network for artefacts submitted to the orchestrator.</p>
+   <p>The orchestrator component exposes an inbox to the network.
+This enables actors in the network to interacts with the orchestrator using Linked Data Notifications.
+On receiving a Linked Data Notification in the inbox, the orchestrator executes the relevant policies for the received input.</p>
+   <h4 class="heading settled" data-level="3.2.1" id="orchetrator-design"><span class="secno">3.2.1. </span><span class="content">Orchestrator design</span><a class="self-link" href="#orchetrator-design"></a></h4>
    <h3 class="heading settled" data-level="3.3" id="service-hub"><span class="secno">3.3. </span><span class="content">Service hubs</span><a class="self-link" href="#service-hub"></a></h3>
     Service hubs provide services to the network.
 These services are necessary to enable the execution of the <a href="#functions-scholarly-communication">functions of scholarly communication</a> by the network.

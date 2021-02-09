@@ -121,16 +121,17 @@ In the context of a decentralized network, registration can also be viewed as a 
 ## Researcher-centric scholarly communication model ## {#research-centric-model}
 The goal is that researchers’ pods are hosted by their respective institutions, as part of the infrastructure provided in support of research and education. When a researcher moves on to another institution, the pod moves along and becomes hosted by the new institution. Researchers without institutional affiliation or with multiple affiliations can opt for commercial pod hosting platforms, national/regional academic hosting provisions that can be assumed to emerge, or host the pod themselves. Over time, a researcher’s pod accumulates an overview of scholarly contributions made throughout a career path. 
 
-## The role of institutions in a decentralized scholarly communication network ## {#institutions-decentralized-network-trust}
-As decentralized networks do not have a single central service that actors can trust, actors in the network require an approach that allows them to trust other actors present in the network.
+## The role of institutions in the decentralized network ## {#research-centric-model}
+The role of institutions in the decentralized network is to enforce [policies](#policies) in the network that make sure that all [functions of scholarly communication](#functions-scholarly-communication) can be executed for created artefacts in the network.
+Affiliated researchers are required to adopt the institution policies.
 
-In these networks, institutions can take on the role as the orchestrators of a decentralized scholarly communication network.
-These orchestrators connect the registered researcher pods with the available service hubs in the network, and serve as a trusted mediator between the researchers and the service hubs.
-Service hubs can trust all researcher pods registered to / making use of a trusted orchestrator (managed by an institution), as they trust that every researcher pod registered to / using that orchestrator is managed by a person affiliated with the managing institution of that orchestrator.
-In the other direction, researchers registering their pods to / using the orchestrator managed by their institution trust the service hubs advertised by that orchestrator.
-In the case of problems, the institution can change from / advertise multiple different service hubs, by changing the policies.
-
-This way, institutions actively participate in the decentralized network of scholarly communication as orchestrators and trusted parties.
+## Trusting actors in the decentralized network ## {#institutions-decentralized-network-trust}
+Actors in the network require an approach that allows them to trust other actors present in the network.
+In the case of scholarly communication, we expect the researchers to trust the research institution they are affiliated with.
+As the institution provides policies used by the orchestrator that define the called services for the created scholarly artefacts, 
+the researcher can trust the choices of the institution.
+When submitting to external institutions such as conferences, it is up to the researcher to trust the additional policies set by these conferences.
+The evaluated policies are stored both in the event log of the orchestrator and in the called services, and can always be checked by all actors in the network.
 
 
 Architecture of a Decentralized Network for Scholarly Communication {#architecture}
@@ -174,24 +175,24 @@ A researcher pod stores the following information:
 
 ## Orchestrator ## {#orchestrator}
 The orchestrator is a component in the network that is responsible for orchestrating the control flow of the network.
-This control flow is dictated by the policies that are imposed by the network.
-An orchestrator component is initialized with a set of policies.
-These policies are retrieved and indexed by the orchestrator.
-Based on these available policies, a control flow is created.
+The orchestrator itself is a relatively small component.
+It is responsible for the retrieval and the execution of [policies](#policies) in the network, and may have some built-in functionality such as creating an event log.
 
-The orchestrator exposes an inbox to the network.
-For all received notifications in the orchestrator inbox, the relevant policies 
+These [policies](#policies) are rules that are imposed by actors in the network, such as the research institution and even the researcher.
+This is discussed in [](#policy-sources).
+The policies that are used by an orchestrator define the control flow in the network for artefacts submitted to the orchestrator.
 
-The orchestrator is responsible for retrieving policies, and evaluating these policies over 
-for retrieving and evaluating policies over
+The orchestrator component exposes an inbox to the network.
+This enables actors in the network to interacts with the orchestrator using Linked Data Notifications.
+On receiving a Linked Data Notification in the inbox, the orchestrator executes the relevant policies for the received input. 
+
+<!--
 Institutions participate in the decentralized scholarly communication network by providing orchestrator services to the network. In this way, an institution can manages their affiliated researchers using these orchestrators. 
 The orchestrators connect researcher pods with a relevant set of service hubs that enable the researcher pod to fulfill all the [functions of scholarly communication](#functions-scholarly-communication) 
 In its role as an orchestrator, it can set policies that are enforced in the communication between the research pods and the service hubs.
 
 Orchestrators should be linked to institutions to allow for [trust based operating of the network](#institutions-decentralized-network-trust).
-
-### Orchestrator functions ### {#orchestrator-functions}
-
+-->
 
 ### Orchestrator design ### {#orchetrator-design}
 
