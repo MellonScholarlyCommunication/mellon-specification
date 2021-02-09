@@ -172,7 +172,18 @@ A researcher pod stores the following information:
   </tr>
 </table>
 
-## Orchestrator (managed by Institutions) ## {#orchestrator}
+## Orchestrator ## {#orchestrator}
+The orchestrator is a component in the network that is responsible for orchestrating the control flow of the network.
+This control flow is dictated by the policies that are imposed by the network.
+An orchestrator component is initialized with a set of policies.
+These policies are retrieved and indexed by the orchestrator.
+Based on these available policies, a control flow is created.
+
+The orchestrator exposes an inbox to the network.
+For all received notifications in the orchestrator inbox, the relevant policies 
+
+The orchestrator is responsible for retrieving policies, and evaluating these policies over 
+for retrieving and evaluating policies over
 Institutions participate in the decentralized scholarly communication network by providing orchestrator services to the network. In this way, an institution can manages their affiliated researchers using these orchestrators. 
 The orchestrators connect researcher pods with a relevant set of service hubs that enable the researcher pod to fulfill all the [functions of scholarly communication](#functions-scholarly-communication) 
 In its role as an orchestrator, it can set policies that are enforced in the communication between the research pods and the service hubs.
@@ -342,46 +353,61 @@ The service hub should be able to advertise the available options for filtering 
 
 Policies {#policies}
 ================================================================================
-A policy is the way on which rules can be enforced in the network.
-Policies can come from the researcher (e.g. my data should certainly also be archived by service X). It can be used by institution to set rules for the submissions made by affiliated researchers (e.g. registration must at least happen by service Y. Submitted artefacts of type paper should contain metadata indicated the affiliated institution, ...).
-Policies must be enforcable in the network.
+In a decentralized network setting, policies can be used to dictate the control flow of the network in a dynamic way.
+A policy dictates a function that should be executed for an input matching a certain condition.
+In the case of Scholarly Communication, a policy defines a service call that should be done for an input scholarly artefact matching a given form.
+By adapting the policies, the control flow in the network can be changed dynamically.
+Enforcing a set of policies MUST result in an unambiguous control flow.
+
 
 
 ## Policy Format ## {#policy-format}
-In order for multiple actors in the networks to enforce policies, there is a requirement for a unified policy format.
-This format should enable the orchestration services in a network to enforce the policies, and MUST be able to provide **proof** of the enforcement of the policy.
+As multiple actors in the network must create and process policies, there is a requirement for a unified format for these policies.
+The choice of format MUST enable orchestrating entities in the network to enforce the policy, and provide proof of enforcement.
+The format must also help resolve problems if conflicting policies are 
 
 ### Triggers ### {#policy-triggers}
-A policy can be seen as a set of triggers.
-(e.g. the policy of institution X on artefacts of type dataset is defined by the triggers that are activated when receiving an artefact of type dataset.)
-A trigger should contain:
-1- A data shape - this is required to match the received artefact, and only execute the triggers for relevant artefacts.
-2- A trigger function.
+A policy can be seen as a trigger, that executes a function when the trigger condition is fulfilled.
+A trigger contains:
+- A condition - in this case more specifically a data shape. This shape is used to match a received item.
+- A trigger function - in this case a service call. This is used to call the indicated service with the received item. 
 
-This trigger function could be many things:
-- A data shape - this is a shape that should be matched by the received artefact (this enables the setting of required fields)
-- a service call - this is the service that should be called with the artifact as argument.
+On receiving an input, the orchestrating entity will try to match the input with the data shapes of the retrieved policies (triggers).
+In case of multiple matching triggers, all triggers are executed according to the available [policy priority](#policy-priority) information.
+The trigger execution consists of a function call to the indicated service.
 
 
-As can be seen from above, an ordering is required for the different received triggers (data verification has to happen first, before calling services).
-Precedence in called services can be achieved by receiving the result of previously called services as a notification in the inbox (this is one solution). This way, the notification can be processed, and triggers can be executed on this notification.
 
 ## Policy enforcement ## {#policy-enforcement}
-Policies in the network should be enforced.
-Institutions / research groups / ... should have some control over the submitted research / way research is submitted.
+Policies in the network MUST be enforced by the orchestrating entities in the network.
+In this network architecture, the [Orchestrator](#orchestrator) is responsible for enforcing policies in the network.
 
 ### Proof of policy enforcement ### {#policy-enforcement-proof}
-Proof of the enforcement of a policy can be given by the orchestration service (if this is a trusted service), through a token that can be validated for each required policy. 
+In some cases, proof of enforcement may be required.
+E.g. A research institution requires a certain set of policies to be enforced for affiliated researchers, and should be able to verify if the required policies have been enforced on artefact submission.
+For this, the orchestrating instance is required to store an event-log of the processed requests and the enforced policies.
+Through this event log, it MUST be possible to prove that all required policies were enforced for every step.
+This event log MUST be stored redundantly, to prevent and discover tampering.
 
-### Client device ### {#policy-enforcement-pod}
-The client device (e.g. through a scholarly dashboard), can be used to enforce the policies of the client user. These policies can be evaluated on the client device, or can be passed to the orchestrator service.
+## Policy sources ## {#policy-sources}
+In the decentralized network, multiple actors may require policies to be enforced.
+In the case of scholarly communication, the institution, the faculty, the research group and the researcher can all impose policies to be enforced for scholarly artefacts.
 
-### Orchestrator ### {#policy-enforcement-orchestrator}
-The orchestrator is responsible for the enforcement of all institution policies, for the institution managing the orchestrator, and the function of the orchestrator.
-This requires the orchestrator to be a separate service, in the case the client cannot be trusted with enforcing policies.
-In the case this is not an issue, the orchestrator service can be run on the client device (e.g. through the scholarly dashboard in this case.)
+### Policy inheritance ### {#policy-inheritance} 
+Policy inheritance enables the extension of a set of policies with additional policies.
+This is required in the e.g. the case of a research institution with multiple faculties.
+The institution can provide a core set of policies for the institution, that is extended for each faculty with specific policies relevant to the artefacts created in that faculty.
+This is achieved by referencing the inherited policies with a predefined policy-inheritance predicate.
+This way, the orchestrating instance can retrieve the chain of policies.
 
 
+## Policy Priority ## {#policy-priority}
+When multiple sources provide sets of policies to the orchestrating instance, multiple policies may be retrieved that match for a received artefact.
+In the cases where the order of execution of policies is important, priority information can be required for policies in the network.
+In case of multiple matching policy rules for a received artefact, the priority information can be used to decide the order of policy evaluations.
+
+
+<!-- 
 ## Researcher pod policies ## {#researcher-pod-policies}
 The researcher has full control over his researcher pod.
 Because of this, the researcher can set policies that must be adhered to for their own data pod.
@@ -397,6 +423,8 @@ Examples of enforceable policies are requiring all artefact metadata to be prese
 Service hubs may also enforce policies on the received submission.
 E.g. they may require all metadata to be filled out for a submitted artefact, or require a specific file format for submissions.
 Ideally these policies should be also enforced by the orchestrator making use of the service (as if this is not the case, an error will happen, that has to be back-propagated through the network).
+-->
+
 
 Scholarly Communication context {#usecases}
 ================================================================================

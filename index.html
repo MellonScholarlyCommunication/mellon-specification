@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
-  <meta content="7cd1fe8e6f2641097caeade705347e885d68bf63" name="document-revision">
+  <meta content="89929070e52ef6516b153676d3e2e1b4bd7757cc" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -452,7 +452,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Use Cases and Requirements for the Mellon Project</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-01-25">25 January 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-02-09">9 February 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -490,7 +490,7 @@ dfn > a.self-link::before      { content: "#"; }
      <ol class="toc">
       <li><a href="#researcher-pod"><span class="secno">3.1</span> <span class="content">Researcher pod</span></a>
       <li>
-       <a href="#orchestrator"><span class="secno">3.2</span> <span class="content">Orchestrator (managed by Institutions)</span></a>
+       <a href="#orchestrator"><span class="secno">3.2</span> <span class="content">Orchestrator</span></a>
        <ol class="toc">
         <li><a href="#orchestrator-functions"><span class="secno">3.2.1</span> <span class="content">Orchestrator functions</span></a>
         <li><a href="#orchetrator-design"><span class="secno">3.2.2</span> <span class="content">Orchestrator design</span></a>
@@ -524,12 +524,13 @@ dfn > a.self-link::before      { content: "#"; }
        <a href="#policy-enforcement"><span class="secno">5.2</span> <span class="content">Policy enforcement</span></a>
        <ol class="toc">
         <li><a href="#policy-enforcement-proof"><span class="secno">5.2.1</span> <span class="content">Proof of policy enforcement</span></a>
-        <li><a href="#policy-enforcement-pod"><span class="secno">5.2.2</span> <span class="content">Client device</span></a>
-        <li><a href="#policy-enforcement-orchestrator"><span class="secno">5.2.3</span> <span class="content">Orchestrator</span></a>
        </ol>
-      <li><a href="#researcher-pod-policies"><span class="secno">5.3</span> <span class="content">Researcher pod policies</span></a>
-      <li><a href="#orchestrator-policies"><span class="secno">5.4</span> <span class="content">Institution policies</span></a>
-      <li><a href="#service-hub-policies"><span class="secno">5.5</span> <span class="content">Service hub policies</span></a>
+      <li>
+       <a href="#policy-sources"><span class="secno">5.3</span> <span class="content">Policy sources</span></a>
+       <ol class="toc">
+        <li><a href="#policy-inheritance"><span class="secno">5.3.1</span> <span class="content">Policy inheritance</span></a>
+       </ol>
+      <li><a href="#policy-priority"><span class="secno">5.4</span> <span class="content">Policy Priority</span></a>
      </ol>
     <li>
      <a href="#usecases"><span class="secno">6</span> <span class="content">Scholarly Communication context</span></a>
@@ -703,9 +704,18 @@ In the case of problems, the institution can change from / advertise multiple di
       <th>Social interactions
       <td>A record of the informal interactions the researcher has with peers via available social network features that are enabled by solid pods
    </table>
-   <h3 class="heading settled" data-level="3.2" id="orchestrator"><span class="secno">3.2. </span><span class="content">Orchestrator (managed by Institutions)</span><a class="self-link" href="#orchestrator"></a></h3>
-    Institutions participate in the decentralized scholarly communication network by providing orchestrator services to the network. In this way, an institution can manages their affiliated researchers using these orchestrators. 
-The orchestrators connect researcher pods with a relevant set of service hubs that enable the researcher pod to fulfill all the <a href="#functions-scholarly-communication">functions of scholarly communication</a> In its role as an orchestrator, it can set policies that are enforced in the communication between the research pods and the service hubs. 
+   <h3 class="heading settled" data-level="3.2" id="orchestrator"><span class="secno">3.2. </span><span class="content">Orchestrator</span><a class="self-link" href="#orchestrator"></a></h3>
+    The orchestrator is a component in the network that is responsible for orchestrating the control flow of the network.
+This control flow is dictated by the policies that are imposed by the network.
+An orchestrator component is initialized with a set of policies.
+These policies are retrieved and indexed by the orchestrator.
+Based on these available policies, a control flow is created. 
+   <p>The orchestrator exposes an inbox to the network.
+For all received notifications in the orchestrator inbox, the relevant policies</p>
+   <p>The orchestrator is responsible for retrieving policies, and evaluating these policies over
+for retrieving and evaluating policies over
+Institutions participate in the decentralized scholarly communication network by providing orchestrator services to the network. In this way, an institution can manages their affiliated researchers using these orchestrators. 
+The orchestrators connect researcher pods with a relevant set of service hubs that enable the researcher pod to fulfill all the <a href="#functions-scholarly-communication">functions of scholarly communication</a> In its role as an orchestrator, it can set policies that are enforced in the communication between the research pods and the service hubs.</p>
    <p>Orchestrators should be linked to institutions to allow for <a href="#institutions-decentralized-network-trust">trust based operating of the network</a>.</p>
    <h4 class="heading settled" data-level="3.2.1" id="orchestrator-functions"><span class="secno">3.2.1. </span><span class="content">Orchestrator functions</span><a class="self-link" href="#orchestrator-functions"></a></h4>
    <h4 class="heading settled" data-level="3.2.2" id="orchetrator-design"><span class="secno">3.2.2. </span><span class="content">Orchestrator design</span><a class="self-link" href="#orchetrator-design"></a></h4>
@@ -821,51 +831,49 @@ These <a href="#service-hub">Service Hubs for awareness</a> should be equipped t
 E.g. an actor should be able to subscribe to creation lifecycle events of artefacts tagged with "Scholarly Communication".
 The service hub should be able to advertise the available options for filtering research, and the lifecycle information which can be subscribed to. 
    <h2 class="heading settled" data-level="5" id="policies"><span class="secno">5. </span><span class="content">Policies</span><a class="self-link" href="#policies"></a></h2>
-    A policy is the way on which rules can be enforced in the network.
-Policies can come from the researcher (e.g. my data should certainly also be archived by service X). It can be used by institution to set rules for the submissions made by affiliated researchers (e.g. registration must at least happen by service Y. Submitted artefacts of type paper should contain metadata indicated the affiliated institution, ...).
-Policies must be enforcable in the network. 
+    In a decentralized network setting, policies can be used to dictate the control flow of the network in a dynamic way.
+A policy dictates a function that should be executed for an input matching a certain condition.
+In the case of Scholarly Communication, a policy defines a service call that should be done for an input scholarly artefact matching a given form.
+By adapting the policies, the control flow in the network can be changed dynamically.
+Enforcing a set of policies MUST result in an unambiguous control flow. 
    <h3 class="heading settled" data-level="5.1" id="policy-format"><span class="secno">5.1. </span><span class="content">Policy Format</span><a class="self-link" href="#policy-format"></a></h3>
-    In order for multiple actors in the networks to enforce policies, there is a requirement for a unified policy format.
-This format should enable the orchestration services in a network to enforce the policies, and MUST be able to provide <strong>proof</strong> of the enforcement of the policy. 
+    As multiple actors in the network must create and process policies, there is a requirement for a unified format for these policies.
+The choice of format MUST enable orchestrating entities in the network to enforce the policy, and provide proof of enforcement.
+The format must also help resolve problems if conflicting policies are 
    <h4 class="heading settled" data-level="5.1.1" id="policy-triggers"><span class="secno">5.1.1. </span><span class="content">Triggers</span><a class="self-link" href="#policy-triggers"></a></h4>
-    A policy can be seen as a set of triggers.
-(e.g. the policy of institution X on artefacts of type dataset is defined by the triggers that are activated when receiving an artefact of type dataset.)
-A trigger should contain:
-1- A data shape - this is required to match the received artefact, and only execute the triggers for relevant artefacts.
-2- A trigger function. 
-   <p>This trigger function could be many things:</p>
+    A policy can be seen as a trigger, that executes a function when the trigger condition is fulfilled.
+A trigger contains: 
    <ul>
     <li data-md>
-     <p>A data shape - this is a shape that should be matched by the received artefact (this enables the setting of required fields)</p>
+     <p>A condition - in this case more specifically a data shape. This shape is used to match a received item.</p>
     <li data-md>
-     <p>a service call - this is the service that should be called with the artifact as argument.</p>
+     <p>A trigger function - in this case a service call. This is used to call the indicated service with the received item.</p>
    </ul>
-   <p>As can be seen from above, an ordering is required for the different received triggers (data verification has to happen first, before calling services).
-Precedence in called services can be achieved by receiving the result of previously called services as a notification in the inbox (this is one solution). This way, the notification can be processed, and triggers can be executed on this notification.</p>
+   <p>On receiving an input, the orchestrating entity will try to match the input with the data shapes of the retrieved policies (triggers).
+In case of multiple matching triggers, all triggers are executed according to the available <a href="#policy-priority">policy priority</a> information.
+The trigger execution consists of a function call to the indicated service.</p>
    <h3 class="heading settled" data-level="5.2" id="policy-enforcement"><span class="secno">5.2. </span><span class="content">Policy enforcement</span><a class="self-link" href="#policy-enforcement"></a></h3>
-    Policies in the network should be enforced.
-Institutions / research groups / ... should have some control over the submitted research / way research is submitted. 
+    Policies in the network MUST be enforced by the orchestrating entities in the network.
+In this network architecture, the <a href="#orchestrator">Orchestrator</a> is responsible for enforcing policies in the network. 
    <h4 class="heading settled" data-level="5.2.1" id="policy-enforcement-proof"><span class="secno">5.2.1. </span><span class="content">Proof of policy enforcement</span><a class="self-link" href="#policy-enforcement-proof"></a></h4>
-    Proof of the enforcement of a policy can be given by the orchestration service (if this is a trusted service), through a token that can be validated for each required policy. 
-   <h4 class="heading settled" data-level="5.2.2" id="policy-enforcement-pod"><span class="secno">5.2.2. </span><span class="content">Client device</span><a class="self-link" href="#policy-enforcement-pod"></a></h4>
-    The client device (e.g. through a scholarly dashboard), can be used to enforce the policies of the client user. These policies can be evaluated on the client device, or can be passed to the orchestrator service. 
-   <h4 class="heading settled" data-level="5.2.3" id="policy-enforcement-orchestrator"><span class="secno">5.2.3. </span><span class="content">Orchestrator</span><a class="self-link" href="#policy-enforcement-orchestrator"></a></h4>
-    The orchestrator is responsible for the enforcement of all institution policies, for the institution managing the orchestrator, and the function of the orchestrator.
-This requires the orchestrator to be a separate service, in the case the client cannot be trusted with enforcing policies.
-In the case this is not an issue, the orchestrator service can be run on the client device (e.g. through the scholarly dashboard in this case.) 
-   <h3 class="heading settled" data-level="5.3" id="researcher-pod-policies"><span class="secno">5.3. </span><span class="content">Researcher pod policies</span><a class="self-link" href="#researcher-pod-policies"></a></h3>
-    The researcher has full control over his researcher pod.
-Because of this, the researcher can set policies that must be adhered to for their own data pod.
-An example of this is providing shape trees that enforce where certain data must be stored on the pod (interaction artefacts, lifecycle information, ...).
-Because of these policies, it is important that all information submitted from a researcher pod is also stored and archived by the service hubs, as the policies set by a data pod may reject certain data from being stored on the pod. 
-   <h3 class="heading settled" data-level="5.4" id="orchestrator-policies"><span class="secno">5.4. </span><span class="content">Institution policies</span><a class="self-link" href="#orchestrator-policies"></a></h3>
-    The managing institutions in the network may wish to enforce their own policies on their own affiliated researchers. For this, the institution may provide sets of policies (these could be different sets for different purposes / research groups / ...).
-These policies can be retrieved and enforced by an orchestration service, with proof of the enforcement of the policies.
-Examples of enforceable policies are requiring all artefact metadata to be present before submitting to services. Advertising / enforcing certain service hubs, ...). 
-   <h3 class="heading settled" data-level="5.5" id="service-hub-policies"><span class="secno">5.5. </span><span class="content">Service hub policies</span><a class="self-link" href="#service-hub-policies"></a></h3>
-    Service hubs may also enforce policies on the received submission.
-E.g. they may require all metadata to be filled out for a submitted artefact, or require a specific file format for submissions.
-Ideally these policies should be also enforced by the orchestrator making use of the service (as if this is not the case, an error will happen, that has to be back-propagated through the network). 
+    In some cases, proof of enforcement may be required.
+E.g. A research institution requires a certain set of policies to be enforced for affiliated researchers, and should be able to verify if the required policies have been enforced on artefact submission.
+For this, the orchestrating instance is required to store an event-log of the processed requests and the enforced policies.
+Through this event log, it MUST be possible to prove that all required policies were enforced for every step.
+This event log MUST be stored redundantly, to prevent and discover tampering. 
+   <h3 class="heading settled" data-level="5.3" id="policy-sources"><span class="secno">5.3. </span><span class="content">Policy sources</span><a class="self-link" href="#policy-sources"></a></h3>
+    In the decentralized network, multiple actors may require policies to be enforced.
+In the case of scholarly communication, the institution, the faculty, the research group and the researcher can all impose policies to be enforced for scholarly artefacts. 
+   <h4 class="heading settled" data-level="5.3.1" id="policy-inheritance"><span class="secno">5.3.1. </span><span class="content">Policy inheritance</span><a class="self-link" href="#policy-inheritance"></a></h4>
+    Policy inheritance enables the extension of a set of policies with additional policies.
+This is required in the e.g. the case of a research institution with multiple faculties.
+The institution can provide a core set of policies for the institution, that is extended for each faculty with specific policies relevant to the artefacts created in that faculty.
+This is achieved by referencing the inherited policies with a predefined policy-inheritance predicate.
+This way, the orchestrating instance can retrieve the chain of policies. 
+   <h3 class="heading settled" data-level="5.4" id="policy-priority"><span class="secno">5.4. </span><span class="content">Policy Priority</span><a class="self-link" href="#policy-priority"></a></h3>
+    When multiple sources provide sets of policies to the orchestrating instance, multiple policies may be retrieved that match for a received artefact.
+In the cases where the order of execution of policies is important, priority information can be required for policies in the network.
+In case of multiple matching policy rules for a received artefact, the priority information can be used to decide the order of policy evaluations. 
    <h2 class="heading settled" data-level="6" id="usecases"><span class="secno">6. </span><span class="content">Scholarly Communication context</span><a class="self-link" href="#usecases"></a></h2>
    <h3 class="heading settled" data-level="6.1" id="context-actors"><span class="secno">6.1. </span><span class="content">Actors in the network</span><a class="self-link" href="#context-actors"></a></h3>
    <table style="width:100%">
