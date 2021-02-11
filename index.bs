@@ -1336,7 +1336,7 @@ The initial state of the collector service will have to be synchronized by reque
 
 ## Ontologies ## {#ontology}
 Thought should be given to what ontologies are to be used to semantically describe the artefacts and events. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network.
-
+[Relvant resource](https://csarven.ca/linked-research-decentralised-web#provenance)
 
 
 
