@@ -427,7 +427,87 @@ Ideally these policies should be also enforced by the orchestrator making use of
 -->
 
 
-Scholarly Communication context {#usecases}
+Events {#events}
+================================================================================
+To communicate events in the decentralized networks, systems must be in place for the creation, distribution and processing of these events.
+
+## lifecycle events ## {#lifecycle-event}
+In the context of scholarly communication, events are used to communicate lifecycle events of artefacts in the network.
+These events define the lifecycle of an artefacts in the network.
+External actors in the network can use these events to recreate and the lifecycle of the artefact at the appropriate services in the network.
+
+Using the [ActivityStreams 2.0 specification](https://www.w3.org/TR/activitystreams-core/), we can represent a lifecycle event as follows:
+```
+{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "summary": "Creation of artefact registration lifecycle event",
+  "type": "Announce",
+  "published": "2015-02-10T15:04:55Z",
+  "actor": {
+   "type": "Service",
+   "id": "http://www.servicehub.example/registrationservice",
+   "name": "Example Service Hub Registration Service",
+   "url": "http://www.servicehub.example/",
+   "image": {
+     "type": "Link",
+     "href": "http://www.servicehub.example/logo.jpg",
+     "mediaType": "image/jpeg"
+   }
+  },
+  "object" : {
+   "id": "http://www.servicehub.example/registrationservice/registrations/tokens/artefact1",
+   "type": "https://example.com/vocabulary#Registration",
+   "name": "Registration of artefact 1"
+  },
+  "target" : {
+   "id": "http://example.org/artefacts/artefact1",
+   "type": "Document",
+  }
+}
+```
+
+A lifecycle event consists of 
+<table style="width:100%">
+  <caption>Lifecycle event</caption>
+  <tr>
+    <th style="padding-top: 10px; padding-bottom: 15px;">Term</th>
+    <th style="padding-top: 10px; padding-bottom: 15px;">Description</th>
+  </tr>
+  <tr>
+    <td>actor</td> 
+    <td>The actor responsible for the lifecycle event</td> 
+  </tr>
+  <tr>
+    <td>object</td> 
+    <td>The lifecycle event</td> 
+  </tr>
+  <tr>
+    <td>target</td> 
+    <td>The artefact that is the  of the lifecycle event.</td> 
+  </tr>
+</table>
+
+Quick note: The term `subject` makes more sense than `target` to describe the artefact of the lifecycle event.
+However the `subject` term is defined properly in the AS vocabulary (only in terms of relationships).
+
+
+## Lifecycle event distribution ## {#lifecycle-event-distribution}
+To distribute lifecycle events in a decentralized networks, the [Linked Data Notifications specification](https://www.w3.org/TR/ldn/) is used.
+
+
+
+
+## Lifecycle event processing ## {#lifecycle-event-processing}
+
+
+## Service Interface ## {#service-interface}
+As Linked Data Notifications are used to as the medium to interact with services in the network, 
+it might be useful to have services advertise the required notification shape for interactions with a service.
+Currently no ideas are offered to include this functionality, but it might be useful for future reference.
+
+
+
+Scholarly Communication context {#context}
 ================================================================================
 
 ## Actors in the network ## {#context-actors} 

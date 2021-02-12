@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
-  <meta content="2055202ed552bea03b7ec938ed75f2ee4b7d6d6b" name="document-revision">
+  <meta content="616a255f734a8b12ee46ce0e50fa65184091c34d" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -452,7 +452,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Use Cases and Requirements for the Mellon Project</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-02-11">11 February 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-02-12">12 February 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -533,96 +533,104 @@ dfn > a.self-link::before      { content: "#"; }
       <li><a href="#policy-priority"><span class="secno">5.4</span> <span class="content">Policy Priority</span></a>
      </ol>
     <li>
-     <a href="#usecases"><span class="secno">6</span> <span class="content">Scholarly Communication context</span></a>
+     <a href="#events"><span class="secno">6</span> <span class="content">Events</span></a>
      <ol class="toc">
-      <li><a href="#context-actors"><span class="secno">6.1</span> <span class="content">Actors in the network</span></a>
-      <li><a href="#context-actors①"><span class="secno">6.2</span> <span class="content">Objects in the network</span></a>
-      <li><a href="#context-actors②"><span class="secno">6.3</span> <span class="content">Roles in the network</span></a>
+      <li><a href="#lifecycle-event"><span class="secno">6.1</span> <span class="content">lifecycle events</span></a>
+      <li><a href="#lifecycle-event-distribution"><span class="secno">6.2</span> <span class="content">Lifecycle event distribution</span></a>
+      <li><a href="#lifecycle-event-processing"><span class="secno">6.3</span> <span class="content">Lifecycle event processing</span></a>
+      <li><a href="#service-interface"><span class="secno">6.4</span> <span class="content">Service Interface</span></a>
      </ol>
     <li>
-     <a href="#usecases①"><span class="secno">7</span> <span class="content">Use Cases</span></a>
+     <a href="#context"><span class="secno">7</span> <span class="content">Scholarly Communication context</span></a>
+     <ol class="toc">
+      <li><a href="#context-actors"><span class="secno">7.1</span> <span class="content">Actors in the network</span></a>
+      <li><a href="#context-actors①"><span class="secno">7.2</span> <span class="content">Objects in the network</span></a>
+      <li><a href="#context-actors②"><span class="secno">7.3</span> <span class="content">Roles in the network</span></a>
+     </ol>
+    <li>
+     <a href="#usecases"><span class="secno">8</span> <span class="content">Use Cases</span></a>
      <ol class="toc">
       <li>
-       <a href="#joining-scholarly-communication-network"><span class="secno">7.1</span> <span class="content">Joining a scholarly communication network</span></a>
+       <a href="#joining-scholarly-communication-network"><span class="secno">8.1</span> <span class="content">Joining a scholarly communication network</span></a>
        <ol class="toc">
-        <li><a href="#uc-create-pod"><span class="secno">7.1.1</span> <span class="content">Creating a data pod</span></a>
-        <li><a href="#uc-participate-network"><span class="secno">7.1.2</span> <span class="content">Participating in the network with an existing data pod</span></a>
+        <li><a href="#uc-create-pod"><span class="secno">8.1.1</span> <span class="content">Creating a data pod</span></a>
+        <li><a href="#uc-participate-network"><span class="secno">8.1.2</span> <span class="content">Participating in the network with an existing data pod</span></a>
        </ol>
       <li>
-       <a href="#uc-profile"><span class="secno">7.2</span> <span class="content">The researcher profile</span></a>
+       <a href="#uc-profile"><span class="secno">8.2</span> <span class="content">The researcher profile</span></a>
        <ol class="toc">
-        <li><a href="#uc-create-researcher-profile"><span class="secno">7.2.1</span> <span class="content">Creating a researcher profile</span></a>
-        <li><a href="#view-profile"><span class="secno">7.2.2</span> <span class="content">Updating a researcher profile</span></a>
+        <li><a href="#uc-create-researcher-profile"><span class="secno">8.2.1</span> <span class="content">Creating a researcher profile</span></a>
+        <li><a href="#view-profile"><span class="secno">8.2.2</span> <span class="content">Updating a researcher profile</span></a>
        </ol>
       <li>
-       <a href="#uc-upload-artefact"><span class="secno">7.3</span> <span class="content">Uploading artefacts</span></a>
+       <a href="#uc-upload-artefact"><span class="secno">8.3</span> <span class="content">Uploading artefacts</span></a>
        <ol class="toc">
-        <li><a href="#uc-add-artefact"><span class="secno">7.3.1</span> <span class="content">Adding artefacts to the network scholarly record</span></a>
-        <li><a href="#uc-link-artefact"><span class="secno">7.3.2</span> <span class="content">Linking new artefacts to existing artefacts in the network</span></a>
+        <li><a href="#uc-add-artefact"><span class="secno">8.3.1</span> <span class="content">Adding artefacts to the network scholarly record</span></a>
+        <li><a href="#uc-link-artefact"><span class="secno">8.3.2</span> <span class="content">Linking new artefacts to existing artefacts in the network</span></a>
        </ol>
       <li>
-       <a href="#uc-interact-artefact"><span class="secno">7.4</span> <span class="content">Interacting with artefacts in the network</span></a>
+       <a href="#uc-interact-artefact"><span class="secno">8.4</span> <span class="content">Interacting with artefacts in the network</span></a>
        <ol class="toc">
-        <li><a href="#uc-create-interaction-comment"><span class="secno">7.4.1</span> <span class="content">Commenting on an existing artefact in the network</span></a>
-        <li><a href="#uc-subscribing"><span class="secno">7.4.2</span> <span class="content">Subscribing to entities in the network</span></a>
-        <li><a href="#uc-subscribe-artefact"><span class="secno">7.4.3</span> <span class="content">Subscribing to artefacts of a specific author in the network</span></a>
-        <li><a href="#uc-unsubscribe-artefact"><span class="secno">7.4.4</span> <span class="content">Undo a specific subscription</span></a>
+        <li><a href="#uc-create-interaction-comment"><span class="secno">8.4.1</span> <span class="content">Commenting on an existing artefact in the network</span></a>
+        <li><a href="#uc-subscribing"><span class="secno">8.4.2</span> <span class="content">Subscribing to entities in the network</span></a>
+        <li><a href="#uc-subscribe-artefact"><span class="secno">8.4.3</span> <span class="content">Subscribing to artefacts of a specific author in the network</span></a>
+        <li><a href="#uc-unsubscribe-artefact"><span class="secno">8.4.4</span> <span class="content">Undo a specific subscription</span></a>
        </ol>
      </ol>
     <li>
-     <a href="#requirements"><span class="secno">8</span> <span class="content">Requirements</span></a>
+     <a href="#requirements"><span class="secno">9</span> <span class="content">Requirements</span></a>
      <ol class="toc">
       <li>
-       <a href="#rq-solid-storage"><span class="secno">8.1</span> <span class="content">Pod based data storage{#rq-solid-storage}</span></a>
+       <a href="#rq-solid-storage"><span class="secno">9.1</span> <span class="content">Pod based data storage{#rq-solid-storage}</span></a>
        <ol class="toc">
-        <li><a href="#rq-artefact-storage"><span class="secno">8.1.1</span> <span class="content">Research Artefact Storage</span></a>
-        <li><a href="#rq-interaction-artefact-storage"><span class="secno">8.1.2</span> <span class="content">Artefact Linking</span></a>
-        <li><a href="#rq-metadata-storage"><span class="secno">8.1.3</span> <span class="content">Metadata Storage</span></a>
-        <li><a href="#rq-data-discovery"><span class="secno">8.1.4</span> <span class="content">Data Discovery</span></a>
-        <li><a href="#rq-location-aware-storage"><span class="secno">8.1.5</span> <span class="content">Location aware data storage</span></a>
-        <li><a href="#rq-artefact-versioning"><span class="secno">8.1.6</span> <span class="content">Artefact versioning</span></a>
-        <li><a href="#rq-permissions"><span class="secno">8.1.7</span> <span class="content">Permissions</span></a>
+        <li><a href="#rq-artefact-storage"><span class="secno">9.1.1</span> <span class="content">Research Artefact Storage</span></a>
+        <li><a href="#rq-interaction-artefact-storage"><span class="secno">9.1.2</span> <span class="content">Artefact Linking</span></a>
+        <li><a href="#rq-metadata-storage"><span class="secno">9.1.3</span> <span class="content">Metadata Storage</span></a>
+        <li><a href="#rq-data-discovery"><span class="secno">9.1.4</span> <span class="content">Data Discovery</span></a>
+        <li><a href="#rq-location-aware-storage"><span class="secno">9.1.5</span> <span class="content">Location aware data storage</span></a>
+        <li><a href="#rq-artefact-versioning"><span class="secno">9.1.6</span> <span class="content">Artefact versioning</span></a>
+        <li><a href="#rq-permissions"><span class="secno">9.1.7</span> <span class="content">Permissions</span></a>
        </ol>
       <li>
-       <a href="#rq-events"><span class="secno">8.2</span> <span class="content">Events</span></a>
+       <a href="#rq-events"><span class="secno">9.2</span> <span class="content">Events</span></a>
        <ol class="toc">
-        <li><a href="#rq-notifications"><span class="secno">8.2.1</span> <span class="content">Notifications</span></a>
+        <li><a href="#rq-notifications"><span class="secno">9.2.1</span> <span class="content">Notifications</span></a>
        </ol>
       <li>
-       <a href="#rq-orchestrator"><span class="secno">8.3</span> <span class="content">Orchestrator</span></a>
+       <a href="#rq-orchestrator"><span class="secno">9.3</span> <span class="content">Orchestrator</span></a>
        <ol class="toc">
-        <li><a href="#rq-orchestrator-interface"><span class="secno">8.3.1</span> <span class="content">Orchestration interface</span></a>
-        <li><a href="#rq-orchestrator-policies"><span class="secno">8.3.2</span> <span class="content">Orchestrator policy retrieval</span></a>
-        <li><a href="#rq-"><span class="secno">8.3.3</span> <span class="content">Orchestrator policy enforcement</span></a>
+        <li><a href="#rq-orchestrator-interface"><span class="secno">9.3.1</span> <span class="content">Orchestration interface</span></a>
+        <li><a href="#rq-orchestrator-policies"><span class="secno">9.3.2</span> <span class="content">Orchestrator policy retrieval</span></a>
+        <li><a href="#rq-"><span class="secno">9.3.3</span> <span class="content">Orchestrator policy enforcement</span></a>
        </ol>
       <li>
-       <a href="#rq-policy"><span class="secno">8.4</span> <span class="content">Policies</span></a>
+       <a href="#rq-policy"><span class="secno">9.4</span> <span class="content">Policies</span></a>
        <ol class="toc">
-        <li><a href="#rq-policy-shapes"><span class="secno">8.4.1</span> <span class="content">Shape matching</span></a>
+        <li><a href="#rq-policy-shapes"><span class="secno">9.4.1</span> <span class="content">Shape matching</span></a>
        </ol>
       <li>
-       <a href="#rq-service-hubs"><span class="secno">8.5</span> <span class="content">Service hubs</span></a>
+       <a href="#rq-service-hubs"><span class="secno">9.5</span> <span class="content">Service hubs</span></a>
        <ol class="toc">
-        <li><a href="#rq-service-discovery"><span class="secno">8.5.1</span> <span class="content">Service hub discovery</span></a>
-        <li><a href="#rq-service-interactions"><span class="secno">8.5.2</span> <span class="content">Service hub interactions</span></a>
-        <li><a href="#rq-service-functions"><span class="secno">8.5.3</span> <span class="content">Service hub functions</span></a>
+        <li><a href="#rq-service-discovery"><span class="secno">9.5.1</span> <span class="content">Service hub discovery</span></a>
+        <li><a href="#rq-service-interactions"><span class="secno">9.5.2</span> <span class="content">Service hub interactions</span></a>
+        <li><a href="#rq-service-functions"><span class="secno">9.5.3</span> <span class="content">Service hub functions</span></a>
        </ol>
       <li>
-       <a href="#rq-verification"><span class="secno">8.6</span> <span class="content">Verification mechanics</span></a>
+       <a href="#rq-verification"><span class="secno">9.6</span> <span class="content">Verification mechanics</span></a>
        <ol class="toc">
-        <li><a href="#rq-profile-verification"><span class="secno">8.6.1</span> <span class="content">Researcher profile verification</span></a>
-        <li><a href="#rq-publication-verification"><span class="secno">8.6.2</span> <span class="content">Artefact data verification</span></a>
-        <li><a href="#rq-publication-verification①"><span class="secno">8.6.3</span> <span class="content">Service hub verification</span></a>
+        <li><a href="#rq-profile-verification"><span class="secno">9.6.1</span> <span class="content">Researcher profile verification</span></a>
+        <li><a href="#rq-publication-verification"><span class="secno">9.6.2</span> <span class="content">Artefact data verification</span></a>
+        <li><a href="#rq-publication-verification①"><span class="secno">9.6.3</span> <span class="content">Service hub verification</span></a>
        </ol>
       <li>
-       <a href="#rq-collector"><span class="secno">8.7</span> <span class="content">Collector</span></a>
+       <a href="#rq-collector"><span class="secno">9.7</span> <span class="content">Collector</span></a>
        <ol class="toc">
-        <li><a href="#rq-collector-archiving-service"><span class="secno">8.7.1</span> <span class="content">Archiving service providing querying capabilities</span></a>
-        <li><a href="#separate-collector-instance"><span class="secno">8.7.2</span> <span class="content">Separate collector instance</span></a>
+        <li><a href="#rq-collector-archiving-service"><span class="secno">9.7.1</span> <span class="content">Archiving service providing querying capabilities</span></a>
+        <li><a href="#separate-collector-instance"><span class="secno">9.7.2</span> <span class="content">Separate collector instance</span></a>
        </ol>
-      <li><a href="#ontology"><span class="secno">8.8</span> <span class="content">Ontologies</span></a>
+      <li><a href="#ontology"><span class="secno">9.8</span> <span class="content">Ontologies</span></a>
      </ol>
-    <li><a href="#definitions"><span class="secno">9</span> <span class="content">Definitions</span></a>
+    <li><a href="#definitions"><span class="secno">10</span> <span class="content">Definitions</span></a>
     <li>
      <a href="#w3c-conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ol class="toc">
@@ -643,8 +651,8 @@ In order to design this framework, different approaches to distributed networks 
    <p>In <a href="#scholarly-communication">§ 2 Scholarly communication</a>, the requirements and vision for scholarly communication are explained.
 In <a href="#architecture">§ 3 Architecture of a Decentralized Network for Scholarly Communication</a>, an architecture is proposed for scholarly communication over decentralized networks based on pod based data storage.
 The artefacts required for scholarly communication are listed in [[$artefacts]].
-For the proposed architecture, concrete use-cases are worked out in <a href="#usecases">§ 6 Scholarly Communication context</a>.
-From these use-cases, requirements are derived in <a href="#requirements">§ 8 Requirements</a>.</p>
+For the proposed architecture, concrete use-cases are worked out in <a href="#usecases">§ 8 Use Cases</a>.
+From these use-cases, requirements are derived in <a href="#requirements">§ 9 Requirements</a>.</p>
    <h2 class="heading settled" data-level="2" id="scholarly-communication"><span class="secno">2. </span><span class="content">Scholarly communication</span><a class="self-link" href="#scholarly-communication"></a></h2>
    <h3 class="heading settled" data-level="2.1" id="functions-scholarly-communication"><span class="secno">2.1. </span><span class="content">Core functions of scholarly communication</span><a class="self-link" href="#functions-scholarly-communication"></a></h3>
     For scholarly communication to be successful, <a href="http://www.dlib.org/dlib/september04/vandesompel/09vandesompel.html">four core functions</a> have to be fulfilled. 
@@ -872,8 +880,68 @@ This way, the orchestrating instance can retrieve the chain of policies.
     When multiple sources provide sets of policies to the orchestrating instance, multiple policies may be retrieved that match for a received artefact.
 In the cases where the order of execution of policies is important, priority information can be required for policies in the network.
 In case of multiple matching policy rules for a received artefact, the priority information can be used to decide the order of policy evaluations. 
-   <h2 class="heading settled" data-level="6" id="usecases"><span class="secno">6. </span><span class="content">Scholarly Communication context</span><a class="self-link" href="#usecases"></a></h2>
-   <h3 class="heading settled" data-level="6.1" id="context-actors"><span class="secno">6.1. </span><span class="content">Actors in the network</span><a class="self-link" href="#context-actors"></a></h3>
+   <h2 class="heading settled" data-level="6" id="events"><span class="secno">6. </span><span class="content">Events</span><a class="self-link" href="#events"></a></h2>
+    To communicate events in the decentralized networks, systems must be in place for the creation, distribution and processing of these events. 
+   <h3 class="heading settled" data-level="6.1" id="lifecycle-event"><span class="secno">6.1. </span><span class="content">lifecycle events</span><a class="self-link" href="#lifecycle-event"></a></h3>
+    In the context of scholarly communication, events are used to communicate lifecycle events of artefacts in the network.
+These events define the lifecycle of an artefacts in the network.
+External actors in the network can use these events to recreate and the lifecycle of the artefact at the appropriate services in the networl. 
+   <p>Using the <a href="https://www.w3.org/TR/activitystreams-core/">ActivityStreams 2.0 specification</a>, we can represent a lifecycle event as follows:</p>
+<pre>{
+  "@context": "https://www.w3.org/ns/activitystreams",
+  "summary": "Creation of artefact registration lifecycle event",
+  "type": "Announce",
+  "published": "2015-02-10T15:04:55Z",
+  "actor": {
+   "type": "Service",
+   "id": "http://www.servicehub.example/registrationservice",
+   "name": "Example Service Hub Registration Service",
+   "url": "http://www.servicehub.example/",
+   "image": {
+     "type": "Link",
+     "href": "http://www.servicehub.example/logo.jpg",
+     "mediaType": "image/jpeg"
+   }
+  },
+  "object" : {
+   "id": "http://www.servicehub.example/registrationservice/registrations/tokens/artefact1",
+   "type": "https://example.com/vocabulary#Registration",
+   "name": "Registration of artefact 1"
+  },
+  "target" : {
+   "id": "http://example.org/artefacts/artefact1",
+   "type": "Document",
+  }
+}
+</pre>
+   <p>A lifecycle event consists of</p>
+   <table style="width:100%">
+    <caption>Lifecycle event</caption>
+    <tbody>
+     <tr>
+      <th style="padding-top: 10px; padding-bottom: 15px;">Term
+      <th style="padding-top: 10px; padding-bottom: 15px;">Description
+     <tr>
+      <td>actor
+      <td>The actor responsible for the lifecycle event
+     <tr>
+      <td>object
+      <td>The lifecycle event
+     <tr>
+      <td>target
+      <td>The artefact that is the  of the lifecycle event.
+   </table>
+   <p>Quick note: The term <code>subject</code> makes more sense than <code>target</code> to describe the artefact of the lifecycle event.
+However the <code>subject</code> term is defined properly in the AS vocabulary (only in terms of relationships).</p>
+   <h3 class="heading settled" data-level="6.2" id="lifecycle-event-distribution"><span class="secno">6.2. </span><span class="content">Lifecycle event distribution</span><a class="self-link" href="#lifecycle-event-distribution"></a></h3>
+    To distribute lifecycle events in a decentralized networks, the <a href="https://www.w3.org/TR/ldn/">Linked Data Notifications specification</a> is used. 
+   <h3 class="heading settled" data-level="6.3" id="lifecycle-event-processing"><span class="secno">6.3. </span><span class="content">Lifecycle event processing</span><a class="self-link" href="#lifecycle-event-processing"></a></h3>
+   <h3 class="heading settled" data-level="6.4" id="service-interface"><span class="secno">6.4. </span><span class="content">Service Interface</span><a class="self-link" href="#service-interface"></a></h3>
+    As Linked Data Notifications are used to as the medium to interact with services in the network, 
+it might be useful to have services advertise the required notification shape for interactions with a service.
+Currently no ideas are offered to include this functionality, but it might be useful for future reference. 
+   <h2 class="heading settled" data-level="7" id="context"><span class="secno">7. </span><span class="content">Scholarly Communication context</span><a class="self-link" href="#context"></a></h2>
+   <h3 class="heading settled" data-level="7.1" id="context-actors"><span class="secno">7.1. </span><span class="content">Actors in the network</span><a class="self-link" href="#context-actors"></a></h3>
    <table style="width:100%">
     <caption>Actors in the network</caption>
     <tbody>
@@ -898,7 +966,7 @@ In case of multiple matching policy rules for a received artefact, the priority 
       <td>Service Provider
       <td>Provider of services in the network.
    </table>
-   <h3 class="heading settled" data-level="6.2" id="context-actors①"><span class="secno">6.2. </span><span class="content">Objects in the network</span><a class="self-link" href="#context-actors①"></a></h3>
+   <h3 class="heading settled" data-level="7.2" id="context-actors①"><span class="secno">7.2. </span><span class="content">Objects in the network</span><a class="self-link" href="#context-actors①"></a></h3>
    <table style="width:100%">
     <caption>Actors in the network</caption>
     <tbody>
@@ -935,7 +1003,7 @@ In case of multiple matching policy rules for a received artefact, the priority 
       <td>Policy
       <td>Policy providing a set of regulations that must be enforced.
    </table>
-   <h3 class="heading settled" data-level="6.3" id="context-actors②"><span class="secno">6.3. </span><span class="content">Roles in the network</span><a class="self-link" href="#context-actors②"></a></h3>
+   <h3 class="heading settled" data-level="7.3" id="context-actors②"><span class="secno">7.3. </span><span class="content">Roles in the network</span><a class="self-link" href="#context-actors②"></a></h3>
    <table style="width:100%">
     <caption>Actors in the network</caption>
     <tbody>
@@ -968,7 +1036,7 @@ In case of multiple matching policy rules for a received artefact, the priority 
       <td>Scholarly Record
       <td>Record of scholarly communication happening in the network. Can be queried for information on the scholarly record of the network.
    </table>
-   <h2 class="heading settled" data-level="7" id="usecases①"><span class="secno">7. </span><span class="content">Use Cases</span><a class="self-link" href="#usecases①"></a></h2>
+   <h2 class="heading settled" data-level="8" id="usecases"><span class="secno">8. </span><span class="content">Use Cases</span><a class="self-link" href="#usecases"></a></h2>
    <p>The following scenarios aim at capturing what an architecture based on Decentralized Web should enable for users.
 In this context, the users are the different stakeholders that are active in the network:</p>
    <ul>
@@ -1009,15 +1077,15 @@ In this context, the users are the different stakeholders that are active in the
       <td>Requirements
       <td>Requirements for the use-case to be achievable.
    </table>
-   <h3 class="heading settled" data-level="7.1" id="joining-scholarly-communication-network"><span class="secno">7.1. </span><span class="content">Joining a scholarly communication network</span><a class="self-link" href="#joining-scholarly-communication-network"></a></h3>
+   <h3 class="heading settled" data-level="8.1" id="joining-scholarly-communication-network"><span class="secno">8.1. </span><span class="content">Joining a scholarly communication network</span><a class="self-link" href="#joining-scholarly-communication-network"></a></h3>
     In order to create or interact with artefacts in a scholarly communication network, a user must have a valid data pod environment to store these (interaction) artefacts.
 In order for these artefacts to be taken into the scholarly record, they have to be passed to the respective service hubs that fulfil these functions.
 For this to be possible, the data pod must have access to an orchestrator in the network, that will ensure that the created artefacts can follow the correct steps to be included in the scholarly record. 
-   <h4 class="heading settled" data-level="7.1.1" id="uc-create-pod"><span class="secno">7.1.1. </span><span class="content">Creating a data pod</span><a class="self-link" href="#uc-create-pod"></a></h4>
+   <h4 class="heading settled" data-level="8.1.1" id="uc-create-pod"><span class="secno">8.1.1. </span><span class="content">Creating a data pod</span><a class="self-link" href="#uc-create-pod"></a></h4>
     Bob wants to interact with published artefacts in the network, but does not have a data pod available to store these interactions.
 Any <a href="#scholarly-dashboard">scholarly dashboard</a> used to interact with artefacts in the network SHOULD provide an option to login to an existing pod, register an existing data pod or to create a new data pod.
 Bob chooses the option to create a new pod, and is redirected to an environment where he can create a new data Pod (The available environments can be selected by the scholarly dashboard, as the use of specific platforms can be advertised / enforced). 
-   <h4 class="heading settled" data-level="7.1.2" id="uc-participate-network"><span class="secno">7.1.2. </span><span class="content">Participating in the network with an existing data pod</span><a class="self-link" href="#uc-participate-network"></a></h4>
+   <h4 class="heading settled" data-level="8.1.2" id="uc-participate-network"><span class="secno">8.1.2. </span><span class="content">Participating in the network with an existing data pod</span><a class="self-link" href="#uc-participate-network"></a></h4>
     Bob wants to interact with published artefacts in the network, and has a data pod available.
 Bob chooses the option of the <a href="#scholarly-dashboard">scholarly dashboard</a> to login with an existing data pod.
 The institution managing the scholarly dashboard MAY require Bob to authenticate himself to the institution before allowing use of the dashboard.
@@ -1115,11 +1183,11 @@ On authentication, Bob is given access to the functionality available in the sch
          <p>Authentication mechanism for pod owner wishing to join the network (= make use of orchestrator)</p>
        </ul>
    </table>
-   <h3 class="heading settled" data-level="7.2" id="uc-profile"><span class="secno">7.2. </span><span class="content">The researcher profile</span><a class="self-link" href="#uc-profile"></a></h3>
+   <h3 class="heading settled" data-level="8.2" id="uc-profile"><span class="secno">8.2. </span><span class="content">The researcher profile</span><a class="self-link" href="#uc-profile"></a></h3>
     On initial participation in a scholarly communication network, actors in the network MAY enforce that connecting data pods require a researcher profile to be complete, in order to validate affiliations to certain institutions.
 Any <a href="#scholarly-dashboard">scholarly dashboard</a> used to interact with the scholarly communication network SHOULD provide functionality / redirect to services for researchers to create their profile.
 Institutions SHOULD provide functionality for researchers to receive a token of sorts proving their affiliation to the institution, that can be used by actors in the network to verify the researcher’s affiliations. 
-   <h4 class="heading settled" data-level="7.2.1" id="uc-create-researcher-profile"><span class="secno">7.2.1. </span><span class="content">Creating a researcher profile</span><a class="self-link" href="#uc-create-researcher-profile"></a></h4>
+   <h4 class="heading settled" data-level="8.2.1" id="uc-create-researcher-profile"><span class="secno">8.2.1. </span><span class="content">Creating a researcher profile</span><a class="self-link" href="#uc-create-researcher-profile"></a></h4>
     Bob logs on to a <a href="#scholarly-dashboard">scholarly dashboard</a> with a newly created data pod by authenticating himself to the dashboard.
 The dashboard analyses Bob’s data pod, and cannot discover a researcher profile.
 The dashboard SHOULD provide a way for Bob to create a researcher profile / the dashboard can create a researcher profile automatically if it has the available information using Bob’s authentication to the dashboard.
@@ -1210,14 +1278,14 @@ The orchestrators make sure that the information is passed to the relevant servi
          <p>scholarly dashboard</p>
        </ul>
    </table>
-   <h4 class="heading settled" data-level="7.2.2" id="view-profile"><span class="secno">7.2.2. </span><span class="content">Updating a researcher profile</span><a class="self-link" href="#view-profile"></a></h4>
+   <h4 class="heading settled" data-level="8.2.2" id="view-profile"><span class="secno">8.2.2. </span><span class="content">Updating a researcher profile</span><a class="self-link" href="#view-profile"></a></h4>
     Bob has changed jobs and now works at a new research institution.
 The Scholarly Dashboard of the new institution SHOULD provide functionality for Bob to update his researcher profile. 
 On submission of the new information, it is passed to one or more orchestrators in the network (connected to Bob’s data pod or to the scholarly browser).
 The orchestrators make sure that the information is passed to the relevant services, so that Bob’s updated information is now available in the network. 
-   <h3 class="heading settled" data-level="7.3" id="uc-upload-artefact"><span class="secno">7.3. </span><span class="content">Uploading artefacts</span><a class="self-link" href="#uc-upload-artefact"></a></h3>
+   <h3 class="heading settled" data-level="8.3" id="uc-upload-artefact"><span class="secno">8.3. </span><span class="content">Uploading artefacts</span><a class="self-link" href="#uc-upload-artefact"></a></h3>
     Here we present some use-cases for adding artefacts to the network. 
-   <h4 class="heading settled" data-level="7.3.1" id="uc-add-artefact"><span class="secno">7.3.1. </span><span class="content">Adding artefacts to the network scholarly record</span><a class="self-link" href="#uc-add-artefact"></a></h4>
+   <h4 class="heading settled" data-level="8.3.1" id="uc-add-artefact"><span class="secno">8.3.1. </span><span class="content">Adding artefacts to the network scholarly record</span><a class="self-link" href="#uc-add-artefact"></a></h4>
     Bob has created a new research paper.
 Bob wishes to add the artefact to the network.
 Bob opens the scholarly dashboard, and navigates to the upload section.
@@ -1381,7 +1449,7 @@ The created lifecycle events are stored on Bob’s data pod, and are distributed
          </ul>
        </ul>
    </table>
-   <h4 class="heading settled" data-level="7.3.2" id="uc-link-artefact"><span class="secno">7.3.2. </span><span class="content">Linking new artefacts to existing artefacts in the network</span><a class="self-link" href="#uc-link-artefact"></a></h4>
+   <h4 class="heading settled" data-level="8.3.2" id="uc-link-artefact"><span class="secno">8.3.2. </span><span class="content">Linking new artefacts to existing artefacts in the network</span><a class="self-link" href="#uc-link-artefact"></a></h4>
     Bob wishes to add relevant datasets for a previous published paper (by him) in the network.
 In the case the published paper is not his, an approach is needed that allows the original creator of the linked artefact to accept the new link.
 Bob opens the scholarly dashboard, and navigates to the upload view.
@@ -1481,7 +1549,7 @@ The artefact data is sent to all relevant service hubs.
          <p>TODO</p>
        </ul>
    </table>
-   <h3 class="heading settled" data-level="7.4" id="uc-interact-artefact"><span class="secno">7.4. </span><span class="content">Interacting with artefacts in the network</span><a class="self-link" href="#uc-interact-artefact"></a></h3>
+   <h3 class="heading settled" data-level="8.4" id="uc-interact-artefact"><span class="secno">8.4. </span><span class="content">Interacting with artefacts in the network</span><a class="self-link" href="#uc-interact-artefact"></a></h3>
     Here we present some use-cases for interacting with artefacts in the network. 
    <table>
     <tbody>
@@ -1584,7 +1652,7 @@ The artefact data is sent to all relevant service hubs.
          <p>TODO</p>
        </ul>
    </table>
-   <h4 class="heading settled" data-level="7.4.1" id="uc-create-interaction-comment"><span class="secno">7.4.1. </span><span class="content">Commenting on an existing artefact in the network</span><a class="self-link" href="#uc-create-interaction-comment"></a></h4>
+   <h4 class="heading settled" data-level="8.4.1" id="uc-create-interaction-comment"><span class="secno">8.4.1. </span><span class="content">Commenting on an existing artefact in the network</span><a class="self-link" href="#uc-create-interaction-comment"></a></h4>
     Bob has some questions over an artefact created in the network.
 Bob opens the scholarly dashboard, and navigates to the artefact view.
 Bob selects the option to add a new comment.
@@ -1594,7 +1662,7 @@ The scholarly dashboard retrieves the awareness and archiving service hub inform
 The archiving service stores the comment and indexes it to be retrievable with the data for the original (multiple?) referenced artefact(s).
 The awareness hub extracts the artefact(s) that are referenced by (in) the comment, and notifies all actors subscribed to these artefacts of a new interaction lifecycle event.
 Here we present some use-cases for interacting with artefacts in the network. 
-   <h4 class="heading settled" data-level="7.4.2" id="uc-subscribing"><span class="secno">7.4.2. </span><span class="content">Subscribing to entities in the network</span><a class="self-link" href="#uc-subscribing"></a></h4>
+   <h4 class="heading settled" data-level="8.4.2" id="uc-subscribing"><span class="secno">8.4.2. </span><span class="content">Subscribing to entities in the network</span><a class="self-link" href="#uc-subscribing"></a></h4>
     Actors in the network SHOULD be able to subscribe to artefact lifecycle events for artefacts in the network.
 Additionally, actors MAY be able to subscribe to the events of new actors being added to the network.
 Actors SHOULD be able to subscribe to only specific event types linked to specific artefacts, that can be filtered by the actor on the available dimensions of artefacts in the network.
@@ -1690,7 +1758,7 @@ E.g. an actor in the network should be able to subscribe for notifications of sp
          <p>(Indexed) Shape matching of artefact (lifecycle events).</p>
        </ul>
    </table>
-   <h4 class="heading settled" data-level="7.4.3" id="uc-subscribe-artefact"><span class="secno">7.4.3. </span><span class="content">Subscribing to artefacts of a specific author in the network</span><a class="self-link" href="#uc-subscribe-artefact"></a></h4>
+   <h4 class="heading settled" data-level="8.4.3" id="uc-subscribe-artefact"><span class="secno">8.4.3. </span><span class="content">Subscribing to artefacts of a specific author in the network</span><a class="self-link" href="#uc-subscribe-artefact"></a></h4>
     Bob wishes to subscribe to all artefacts created by Alice in the network, to receive updates of all new lifecycle information of her artefacts.
 Bob uses the scholarly dashboard and navigates to the subscription page.
 The scholarly dashboard retrieves the awareness subscription hub information from the used orchestrator.
@@ -1700,148 +1768,148 @@ Bob decides to filter the artefacts based on their author, and enters the webId 
 Bob decides to subscribe to the "create" and "publish" lifecycle events.
 On submission, the availability service hub saves the subscription, and on subsequent relevant lifecycle events of artefacts with Alice as the author, Bob receives a notification of these events.
 The subscription is also stored with the necessary metadata on Bob’s pod, allowing Bob to easily list and undo created subscriptions. 
-   <h4 class="heading settled" data-level="7.4.4" id="uc-unsubscribe-artefact"><span class="secno">7.4.4. </span><span class="content">Undo a specific subscription</span><a class="self-link" href="#uc-unsubscribe-artefact"></a></h4>
+   <h4 class="heading settled" data-level="8.4.4" id="uc-unsubscribe-artefact"><span class="secno">8.4.4. </span><span class="content">Undo a specific subscription</span><a class="self-link" href="#uc-unsubscribe-artefact"></a></h4>
     Bob wishes to undo a specific subscription because of too much events.
 Bob navigates to the subscription page of the scholarly dashboard.
 All previous subscriptions are listed on the page.
 Bob selects a subscription, and chooses the remove option.
 The awareness service hub is notified that the specific subscription should be removed.
 On success from the service hub, the scholarly dashboard removes the subscription from Bob’s pod. 
-   <h2 class="heading settled" data-level="8" id="requirements"><span class="secno">8. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
-    In this section the requirements are listed based on the proposed architecture <a href="#architecture">§ 3 Architecture of a Decentralized Network for Scholarly Communication</a> and use cases <a href="#usecases">§ 6 Scholarly Communication context</a>. 
-   <h3 class="heading settled" data-level="8.1" id="rq-solid-storage"><span class="secno">8.1. </span><span class="content">Pod based data storage{#rq-solid-storage}</span><a class="self-link" href="#rq-solid-storage"></a></h3>
+   <h2 class="heading settled" data-level="9" id="requirements"><span class="secno">9. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
+    In this section the requirements are listed based on the proposed architecture <a href="#architecture">§ 3 Architecture of a Decentralized Network for Scholarly Communication</a> and use cases <a href="#usecases">§ 8 Use Cases</a>. 
+   <h3 class="heading settled" data-level="9.1" id="rq-solid-storage"><span class="secno">9.1. </span><span class="content">Pod based data storage{#rq-solid-storage}</span><a class="self-link" href="#rq-solid-storage"></a></h3>
     To provide researchers with the possibility to store their own research artefacts and interactions, while keeping control of the data in the process, pod environments such as Solid can be used.
 These can be hosted by the research institutions themselves, or by recommended third party services. 
-   <h4 class="heading settled" data-level="8.1.1" id="rq-artefact-storage"><span class="secno">8.1.1. </span><span class="content">Research Artefact Storage</span><a class="self-link" href="#rq-artefact-storage"></a></h4>
-    Research artefacts (Papers, images, datasets, ...) can be stored as (non-)rdf documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in <a href="#rq-data-discovery">§ 8.1.4 Data Discovery</a>. 
-   <h4 class="heading settled" data-level="8.1.2" id="rq-interaction-artefact-storage"><span class="secno">8.1.2. </span><span class="content">Artefact Linking</span><a class="self-link" href="#rq-interaction-artefact-storage"></a></h4>
+   <h4 class="heading settled" data-level="9.1.1" id="rq-artefact-storage"><span class="secno">9.1.1. </span><span class="content">Research Artefact Storage</span><a class="self-link" href="#rq-artefact-storage"></a></h4>
+    Research artefacts (Papers, images, datasets, ...) can be stored as (non-)rdf documents on the data pod of the researcher, or can be linked to the data pod from an external sources using mechanics described in <a href="#rq-data-discovery">§ 9.1.4 Data Discovery</a>. 
+   <h4 class="heading settled" data-level="9.1.2" id="rq-interaction-artefact-storage"><span class="secno">9.1.2. </span><span class="content">Artefact Linking</span><a class="self-link" href="#rq-interaction-artefact-storage"></a></h4>
     Research artefacts (Papers, images, datasets, ...) can be interacted with in the network.
 These interactions MUST link to the artefacts they interact with.
 Artefacts may also contain links to artefacts they cite, to their used datasets, ...
 In case two way coupeling is required for these interactions, a mechanism is required to notify the pod storing the other artefact to return a link / provide the option to link back. This can be handled automatically, or require manual interaction to veryify. 
-   <h4 class="heading settled" data-level="8.1.3" id="rq-metadata-storage"><span class="secno">8.1.3. </span><span class="content">Metadata Storage</span><a class="self-link" href="#rq-metadata-storage"></a></h4>
+   <h4 class="heading settled" data-level="9.1.3" id="rq-metadata-storage"><span class="secno">9.1.3. </span><span class="content">Metadata Storage</span><a class="self-link" href="#rq-metadata-storage"></a></h4>
     Artefacts in the network have metadata, and will require this metadata to be stored and linked to the original artefacts.
 There are multiple solutions to store metadata for (non-)rdf data on a Linked Data Platform. However, it may benefit applications to support multiple approaches to metadata storage, and fall back on less ideal approaches in case the required metadata cannot be discovered. 
-   <h5 class="heading settled" data-level="8.1.3.1" id="meta-file"><span class="secno">8.1.3.1. </span><span class="content">.meta file</span><a class="self-link" href="#meta-file"></a></h5>
+   <h5 class="heading settled" data-level="9.1.3.1" id="meta-file"><span class="secno">9.1.3.1. </span><span class="content">.meta file</span><a class="self-link" href="#meta-file"></a></h5>
     A straightforward way to store file metadata on a Linked Data Platform is making use of a .meta file. As the .meta is a naming convention, for every file the .meta file can be automatically retrieved.
 However, lately this seems to have been getting less and less traction in the community? 
-   <h5 class="heading settled" data-level="8.1.3.2" id="describedby"><span class="secno">8.1.3.2. </span><span class="content">describedby / seeAlso metadata</span><a class="self-link" href="#describedby"></a></h5>
+   <h5 class="heading settled" data-level="9.1.3.2" id="describedby"><span class="secno">9.1.3.2. </span><span class="content">describedby / seeAlso metadata</span><a class="self-link" href="#describedby"></a></h5>
     Metadata can be provided in a more semantic way using predicates as <code>rdf:seeAlso</code>.
 This metadata can be stored in the location where the relevant resource is stored. 
 A downside to this however is that if a resource is directly retrieved, this information will not be retrieved, and the metadata reference will be lost to the application retrieving the resource. 
-   <h5 class="heading settled" data-level="8.1.3.3" id="link-seeAlso"><span class="secno">8.1.3.3. </span><span class="content">Link header</span><a class="self-link" href="#link-seeAlso"></a></h5>
+   <h5 class="heading settled" data-level="9.1.3.3" id="link-seeAlso"><span class="secno">9.1.3.3. </span><span class="content">Link header</span><a class="self-link" href="#link-seeAlso"></a></h5>
     A third solution is to provide <a href="https://www.w3.org/TR/ldp/#link-relation-describedby">Link Relations</a> This solution returns the link to the metadata file in the response header of the HTTP request.
 Using this solution in combination with the previous solution of providing the link to the metadata file in the RDF data where the resource is stored, provides the most complete approach to storing metadata for a resource. 
-   <h4 class="heading settled" data-level="8.1.4" id="rq-data-discovery"><span class="secno">8.1.4. </span><span class="content">Data Discovery</span><a class="self-link" href="#rq-data-discovery"></a></h4>
+   <h4 class="heading settled" data-level="9.1.4" id="rq-data-discovery"><span class="secno">9.1.4. </span><span class="content">Data Discovery</span><a class="self-link" href="#rq-data-discovery"></a></h4>
     Data discovery is required for external services to retrieve artefacts from a researcher pod, on being notified of new data.
 There should be a semantic way for external applications and services to discover the locations of certain types of artefacts and their metadata, and retrieve this data, given the correct permissions.
 Currently, <strong>shape trees</strong> are considered as the go-to approach to enable data discovery on linked data platforms. 
-   <h4 class="heading settled" data-level="8.1.5" id="rq-location-aware-storage"><span class="secno">8.1.5. </span><span class="content">Location aware data storage</span><a class="self-link" href="#rq-location-aware-storage"></a></h4>
+   <h4 class="heading settled" data-level="9.1.5" id="rq-location-aware-storage"><span class="secno">9.1.5. </span><span class="content">Location aware data storage</span><a class="self-link" href="#rq-location-aware-storage"></a></h4>
     External services that need to post data to the researcher pod (e.g. registration service hub returning a certificate of registration) need to be aware of the location where they can post this data.
 The <strong>shape tree</strong> approach used for data discovery can also be used to make the actor posting data aware of the location where data matching a given shape should be posted. 
-   <h4 class="heading settled" data-level="8.1.6" id="rq-artefact-versioning"><span class="secno">8.1.6. </span><span class="content">Artefact versioning</span><a class="self-link" href="#rq-artefact-versioning"></a></h4>
+   <h4 class="heading settled" data-level="9.1.6" id="rq-artefact-versioning"><span class="secno">9.1.6. </span><span class="content">Artefact versioning</span><a class="self-link" href="#rq-artefact-versioning"></a></h4>
     Versioning is a concept that is very relevant for scholarly communication, as certain artefacts (datasets, papers, ...) can be iterated upon (incorporating reviews, ...).
 In order to support this behavior, a versioning system must be in place that allows for actors in the network to retrieve different versions of the same research publication.
 This versioning system also should take into account the available lifecycle event information for the artefacts in question (Using the avialable lifecycle information, an actor in the network SHOULD be able construct the whole timeline of an artefact: creation, updates, publication, interactions, ...).
 This concept could also be applied for interaction artefacts (e.g. see comments on proposed edits, see updates of made comments, ...) 
-   <h4 class="heading settled" data-level="8.1.7" id="rq-permissions"><span class="secno">8.1.7. </span><span class="content">Permissions</span><a class="self-link" href="#rq-permissions"></a></h4>
+   <h4 class="heading settled" data-level="9.1.7" id="rq-permissions"><span class="secno">9.1.7. </span><span class="content">Permissions</span><a class="self-link" href="#rq-permissions"></a></h4>
     Permissions are an important tool for data pods to protect private information.
 Only actors with the correct permissions set have access to resources in a pod environment.
 In pod environments, permissions are handled using ACL files.
 Permissions are required in case certain parts of the research are sensitive (e.g. datasets with sensitive information), or should not yet be public (e.g. in-progress work to share with colleagues). 
-   <h5 class="heading settled" data-level="8.1.7.1" id="rq-set-permissions"><span class="secno">8.1.7.1. </span><span class="content">Setting permissions</span><a class="self-link" href="#rq-set-permissions"></a></h5>
+   <h5 class="heading settled" data-level="9.1.7.1" id="rq-set-permissions"><span class="secno">9.1.7.1. </span><span class="content">Setting permissions</span><a class="self-link" href="#rq-set-permissions"></a></h5>
     Functionality must be in place for all allowed to set permissions in a data pod.
 This requires that researchers are able to allow e.g. a scholarly dashboard to edit the permissions of their data pod (for specific locations). 
-   <h5 class="heading settled" data-level="8.1.7.2" id="req-group-permissions"><span class="secno">8.1.7.2. </span><span class="content">Group permissions</span><a class="self-link" href="#req-group-permissions"></a></h5>
+   <h5 class="heading settled" data-level="9.1.7.2" id="req-group-permissions"><span class="secno">9.1.7.2. </span><span class="content">Group permissions</span><a class="self-link" href="#req-group-permissions"></a></h5>
     Setting permissions for individual actors can be insufficient at times.
 Applications built on the Mellon framework SHOULD enable actors to to create, edit, and delete permissions for groups of actors.
 Creating or updating a permission group MUST have the consequence that the permissions of this group are applied on the new permission group, and are removed from actors that are removed from the permission group.
 This can be useful for e.g. creating a permissions group for your research group, so that permissions for created research can be automatically granted for the whole research group, instead of needing to set all permissions individually. 
-   <h3 class="heading settled" data-level="8.2" id="rq-events"><span class="secno">8.2. </span><span class="content">Events</span><a class="self-link" href="#rq-events"></a></h3>
-   <h4 class="heading settled" data-level="8.2.1" id="rq-notifications"><span class="secno">8.2.1. </span><span class="content">Notifications</span><a class="self-link" href="#rq-notifications"></a></h4>
+   <h3 class="heading settled" data-level="9.2" id="rq-events"><span class="secno">9.2. </span><span class="content">Events</span><a class="self-link" href="#rq-events"></a></h3>
+   <h4 class="heading settled" data-level="9.2.1" id="rq-notifications"><span class="secno">9.2.1. </span><span class="content">Notifications</span><a class="self-link" href="#rq-notifications"></a></h4>
     Notifications are required for the scholarly dashboard to notify the user of new information (received from e.g. the awareness service). 
-   <h5 class="heading settled" data-level="8.2.1.1" id="rq-notification-filtering"><span class="secno">8.2.1.1. </span><span class="content">Notification filtering</span><a class="self-link" href="#rq-notification-filtering"></a></h5>
+   <h5 class="heading settled" data-level="9.2.1.1" id="rq-notification-filtering"><span class="secno">9.2.1.1. </span><span class="content">Notification filtering</span><a class="self-link" href="#rq-notification-filtering"></a></h5>
     A scholarly dashboard application SHOULD be able to filter notifications based on preset shapes.
 This enables the scholarly dashboard to filter the notifiactions for relevant lifecycle information of searched artefacts. 
-   <h5 class="heading settled" data-level="8.2.1.2" id="rq-notification-based-actions"><span class="secno">8.2.1.2. </span><span class="content">Notification based actions</span><a class="self-link" href="#rq-notification-based-actions"></a></h5>
+   <h5 class="heading settled" data-level="9.2.1.2" id="rq-notification-based-actions"><span class="secno">9.2.1.2. </span><span class="content">Notification based actions</span><a class="self-link" href="#rq-notification-based-actions"></a></h5>
     In the case that notifications are used to notify of important artefact lifecycle information (in the case this is not directly posted to the researcher pod because of design reasons?), fucntionality is required that can evaluated the received notifications and execute automatic actions.
 This can be avoided by making notifications non-essentialy by posting the important life cycle events directly to the data pod, and making the notifications secondary to this and only point out the locations of the newly added data. 
-   <h3 class="heading settled" data-level="8.3" id="rq-orchestrator"><span class="secno">8.3. </span><span class="content">Orchestrator</span><a class="self-link" href="#rq-orchestrator"></a></h3>
+   <h3 class="heading settled" data-level="9.3" id="rq-orchestrator"><span class="secno">9.3. </span><span class="content">Orchestrator</span><a class="self-link" href="#rq-orchestrator"></a></h3>
     The orchestrator is an actor in the network that is responsible for executing policies on received artefacts in the network.
 For all received policies, the orchestrator should filter relevant policies for the current action, and provide a proof of enforcement for each policy.
 Policy filtering can be achieved using <a href="#rq-policy-shapes">shape matching</a> solutions. 
-   <h4 class="heading settled" data-level="8.3.1" id="rq-orchestrator-interface"><span class="secno">8.3.1. </span><span class="content">Orchestration interface</span><a class="self-link" href="#rq-orchestrator-interface"></a></h4>
+   <h4 class="heading settled" data-level="9.3.1" id="rq-orchestrator-interface"><span class="secno">9.3.1. </span><span class="content">Orchestration interface</span><a class="self-link" href="#rq-orchestrator-interface"></a></h4>
     The interface for an orchestration service is an inbox advertised by the orchestrator.
 This inbox serves as an event-queue, from which the orchestrator pulls notifications if available.
 As the inbox is open, it can be posted to by all actors in the network. 
-   <h4 class="heading settled" data-level="8.3.2" id="rq-orchestrator-policies"><span class="secno">8.3.2. </span><span class="content">Orchestrator policy retrieval</span><a class="self-link" href="#rq-orchestrator-policies"></a></h4>
+   <h4 class="heading settled" data-level="9.3.2" id="rq-orchestrator-policies"><span class="secno">9.3.2. </span><span class="content">Orchestrator policy retrieval</span><a class="self-link" href="#rq-orchestrator-policies"></a></h4>
     The orchestrator matches and enforces policies on received lifecycle events of artefacts in the network.
 But these policies have to first be retrieved / passed to the orchestrator.
 For this, both the client and the institution managing the orchestrator can provide an interface for the orchestrator to retrieve relevant policies. 
-   <h4 class="heading settled" data-level="8.3.3" id="rq-"><span class="secno">8.3.3. </span><span class="content">Orchestrator policy enforcement</span><a class="self-link" href="#rq-"></a></h4>
+   <h4 class="heading settled" data-level="9.3.3" id="rq-"><span class="secno">9.3.3. </span><span class="content">Orchestrator policy enforcement</span><a class="self-link" href="#rq-"></a></h4>
     The enforcing of policies is handled by first matching the relevant policies to a received artefact lifecycle event, 
 and subsequently executing the attached triggers.
 Proof of this execution should be possible, to verify the artefact path through the network, and to verify for the institution that the rules have been enforced.
 For this, a proof of execution could also be required by the service hubs, to know that a received submission is approved by (the automated rules of) a certain institution in the network. 
-   <h3 class="heading settled" data-level="8.4" id="rq-policy"><span class="secno">8.4. </span><span class="content">Policies</span><a class="self-link" href="#rq-policy"></a></h3>
+   <h3 class="heading settled" data-level="9.4" id="rq-policy"><span class="secno">9.4. </span><span class="content">Policies</span><a class="self-link" href="#rq-policy"></a></h3>
     Functionality is required for actors to enforce policies on data being generated / submitted / ... in the network. 
-   <h4 class="heading settled" data-level="8.4.1" id="rq-policy-shapes"><span class="secno">8.4.1. </span><span class="content">Shape matching</span><a class="self-link" href="#rq-policy-shapes"></a></h4>
+   <h4 class="heading settled" data-level="9.4.1" id="rq-policy-shapes"><span class="secno">9.4.1. </span><span class="content">Shape matching</span><a class="self-link" href="#rq-policy-shapes"></a></h4>
     Shape matching functionality can be a vital part of enforcing certain policies for actors to match the shape of artefacts and their metadata in case of RDF data. 
 Shape matching makes use of a shape ontology, for which both <a href="https://www.w3.org/TR/shacl/">shacl</a> and <a href="https://shex.io/">shex</a> are currently the most relevant shape ontologies.
 In case of non-rdf data, other solutions can be explored?. 
-   <h3 class="heading settled" data-level="8.5" id="rq-service-hubs"><span class="secno">8.5. </span><span class="content">Service hubs</span><a class="self-link" href="#rq-service-hubs"></a></h3>
+   <h3 class="heading settled" data-level="9.5" id="rq-service-hubs"><span class="secno">9.5. </span><span class="content">Service hubs</span><a class="self-link" href="#rq-service-hubs"></a></h3>
     In this sections the requirements for the different service hubs are listed. 
-   <h4 class="heading settled" data-level="8.5.1" id="rq-service-discovery"><span class="secno">8.5.1. </span><span class="content">Service hub discovery</span><a class="self-link" href="#rq-service-discovery"></a></h4>
+   <h4 class="heading settled" data-level="9.5.1" id="rq-service-discovery"><span class="secno">9.5.1. </span><span class="content">Service hub discovery</span><a class="self-link" href="#rq-service-discovery"></a></h4>
     Service hubs in the network MUST be discoverable via advertisement of a service hub by orchestrators in the network. 
-   <h4 class="heading settled" data-level="8.5.2" id="rq-service-interactions"><span class="secno">8.5.2. </span><span class="content">Service hub interactions</span><a class="self-link" href="#rq-service-interactions"></a></h4>
+   <h4 class="heading settled" data-level="9.5.2" id="rq-service-interactions"><span class="secno">9.5.2. </span><span class="content">Service hub interactions</span><a class="self-link" href="#rq-service-interactions"></a></h4>
     Service hubs MUST advertise the specific services they provide.
 Multiple service hubs may be used simultaneously to fulfil the same service (e.g. a researcher may register his created artefacts at multiple service hubs). 
-   <h4 class="heading settled" data-level="8.5.3" id="rq-service-functions"><span class="secno">8.5.3. </span><span class="content">Service hub functions</span><a class="self-link" href="#rq-service-functions"></a></h4>
+   <h4 class="heading settled" data-level="9.5.3" id="rq-service-functions"><span class="secno">9.5.3. </span><span class="content">Service hub functions</span><a class="self-link" href="#rq-service-functions"></a></h4>
     Here the different available services in the network are listed.
-The proposed registration tokens are not bindingm and could be replaced by other verification mechanisms (see <a href="#rq-verification">§ 8.6 Verification mechanics</a>). 
-   <h5 class="heading settled" data-level="8.5.3.1" id="rq-registration-service"><span class="secno">8.5.3.1. </span><span class="content">Registration service</span><a class="self-link" href="#rq-registration-service"></a></h5>
+The proposed registration tokens are not bindingm and could be replaced by other verification mechanisms (see <a href="#rq-verification">§ 9.6 Verification mechanics</a>). 
+   <h5 class="heading settled" data-level="9.5.3.1" id="rq-registration-service"><span class="secno">9.5.3.1. </span><span class="content">Registration service</span><a class="self-link" href="#rq-registration-service"></a></h5>
     A registration service MUST provide a token of registration to the pod where the submitted artefact is stored. This token MUST be timestamped to allow actors in the network to verify claims of precedence.
 A copy of this token (and the submitted artefact) MUST be stored locally, to allow for verification by actors in the network, and should be provided to an archiving service. 
-   <h5 class="heading settled" data-level="8.5.3.2" id="rq-certification-service"><span class="secno">8.5.3.2. </span><span class="content">Certification service</span><a class="self-link" href="#rq-certification-service"></a></h5>
+   <h5 class="heading settled" data-level="9.5.3.2" id="rq-certification-service"><span class="secno">9.5.3.2. </span><span class="content">Certification service</span><a class="self-link" href="#rq-certification-service"></a></h5>
     A certification service MUST compare a submitted artefact with the current <em>state-of-the-art</em> in the respective field.
 If the submitted artefact is novel, the service MUST provide a certification token to the pod where the submitted artefact is stored.
 A copy of this token (and the submitted artefact) MUST be stored locally, to allow for verification by actors in the network, and should be provided to an archiving service. 
-   <h6 class="heading settled" data-level="8.5.3.2.1" id="rq-peer-review-service"><span class="secno">8.5.3.2.1. </span><span class="content">Peer review service</span><a class="self-link" href="#rq-peer-review-service"></a></h6>
+   <h6 class="heading settled" data-level="9.5.3.2.1" id="rq-peer-review-service"><span class="secno">9.5.3.2.1. </span><span class="content">Peer review service</span><a class="self-link" href="#rq-peer-review-service"></a></h6>
     In the case of peer reviews, the a service may be setup that forwards a submitted artefact to a set of peers the network for review.
 The reviews of these MUST be returned to the service (before a set deadline), where the service will return a token with the attached reviews. 
-   <h5 class="heading settled" data-level="8.5.3.3" id="rq-awareness-service"><span class="secno">8.5.3.3. </span><span class="content">Awareness service</span><a class="self-link" href="#rq-awareness-service"></a></h5>
+   <h5 class="heading settled" data-level="9.5.3.3" id="rq-awareness-service"><span class="secno">9.5.3.3. </span><span class="content">Awareness service</span><a class="self-link" href="#rq-awareness-service"></a></h5>
     The service MUST advertise the available dimensions of the artefacts on the network for which an actor can subscribe (e.g. title, tags, creator, ...).
 Next to artefacts, an awareness service MAY also advertise new actors (researchers / service hubs / ...) connected to the network.
 The service MUST provide an interface for actors in the network to subscribe to specific lifecycle events of artefacts that can be filtered on all advertised dimensions.
 The awareness service MUST update all relevant subscribers of new information in the network.
 The service MUST provide an interface to undo specific subscriptions. 
-   <h5 class="heading settled" data-level="8.5.3.4" id="rq-archiving-service"><span class="secno">8.5.3.4. </span><span class="content">Archiving service</span><a class="self-link" href="#rq-archiving-service"></a></h5>
+   <h5 class="heading settled" data-level="9.5.3.4" id="rq-archiving-service"><span class="secno">9.5.3.4. </span><span class="content">Archiving service</span><a class="self-link" href="#rq-archiving-service"></a></h5>
     An archiving service MUST store all submitted artefact data it receives.
 The service MUST provide an interface to retrieve specific data from the service. 
-   <h3 class="heading settled" data-level="8.6" id="rq-verification"><span class="secno">8.6. </span><span class="content">Verification mechanics</span><a class="self-link" href="#rq-verification"></a></h3>
+   <h3 class="heading settled" data-level="9.6" id="rq-verification"><span class="secno">9.6. </span><span class="content">Verification mechanics</span><a class="self-link" href="#rq-verification"></a></h3>
     A scholarly communication network requires a way for actors in the network to verify data and entities in the network. 
-   <h4 class="heading settled" data-level="8.6.1" id="rq-profile-verification"><span class="secno">8.6.1. </span><span class="content">Researcher profile verification</span><a class="self-link" href="#rq-profile-verification"></a></h4>
+   <h4 class="heading settled" data-level="9.6.1" id="rq-profile-verification"><span class="secno">9.6.1. </span><span class="content">Researcher profile verification</span><a class="self-link" href="#rq-profile-verification"></a></h4>
     A method MUST be in place for actors in the network to check the profile information of researchers in the network.
 This authentication requires the institution the researcher is affiliated with to provide an interface or a digital token to the researcher using which the verification can be done. 
-   <h4 class="heading settled" data-level="8.6.2" id="rq-publication-verification"><span class="secno">8.6.2. </span><span class="content">Artefact data verification</span><a class="self-link" href="#rq-publication-verification"></a></h4>
+   <h4 class="heading settled" data-level="9.6.2" id="rq-publication-verification"><span class="secno">9.6.2. </span><span class="content">Artefact data verification</span><a class="self-link" href="#rq-publication-verification"></a></h4>
     An actor in the network MUST be able to verify an artefact in the network at the service hubs specified in the artefact metadata. E.g. An actor can verify the registration of the artefact by for example verifying a registration token available for the artefact at the registration service hub specified in the artefact metadata or lifecycle events. 
-   <h4 class="heading settled" data-level="8.6.3" id="rq-publication-verification①"><span class="secno">8.6.3. </span><span class="content">Service hub verification</span><a class="self-link" href="#rq-publication-verification①"></a></h4>
+   <h4 class="heading settled" data-level="9.6.3" id="rq-publication-verification①"><span class="secno">9.6.3. </span><span class="content">Service hub verification</span><a class="self-link" href="#rq-publication-verification①"></a></h4>
     An actor in the network MUST be able to verify a called service in the network. This can prevent malicious actors from re-routing actors to malicious services.
 This can be resolved using simple public / private key-based solutions 
-   <h3 class="heading settled" data-level="8.7" id="rq-collector"><span class="secno">8.7. </span><span class="content">Collector</span><a class="self-link" href="#rq-collector"></a></h3>
+   <h3 class="heading settled" data-level="9.7" id="rq-collector"><span class="secno">9.7. </span><span class="content">Collector</span><a class="self-link" href="#rq-collector"></a></h3>
     The Collector services in a network collect the generated knowledge, and make it available for clients querying the network.
 In the case of scholarly communication, there are multiple approaches. 
-   <h4 class="heading settled" data-level="8.7.1" id="rq-collector-archiving-service"><span class="secno">8.7.1. </span><span class="content">Archiving service providing querying capabilities</span><a class="self-link" href="#rq-collector-archiving-service"></a></h4>
+   <h4 class="heading settled" data-level="9.7.1" id="rq-collector-archiving-service"><span class="secno">9.7.1. </span><span class="content">Archiving service providing querying capabilities</span><a class="self-link" href="#rq-collector-archiving-service"></a></h4>
     As an archiving service collects and archives the scholarly record of the network, this information could be queried by clients.
 This however brings the risk of the archiving service having a monopoly on both the archiving and making public of the scholarly record in the network,
 where these services can provide their own browser for their own archived data. 
-   <h4 class="heading settled" data-level="8.7.2" id="separate-collector-instance"><span class="secno">8.7.2. </span><span class="content">Separate collector instance</span><a class="self-link" href="#separate-collector-instance"></a></h4>
+   <h4 class="heading settled" data-level="9.7.2" id="separate-collector-instance"><span class="secno">9.7.2. </span><span class="content">Separate collector instance</span><a class="self-link" href="#separate-collector-instance"></a></h4>
     Separate collector services may be added to the network.
 These services can subscribe to the available awareness service hubs on the network to be notified of new information in the network.
 The initial state of the collector service will have to be synchronized by requesting the scholarly record from the available archiving services that should be indexed. 
-   <h3 class="heading settled" data-level="8.8" id="ontology"><span class="secno">8.8. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h3>
+   <h3 class="heading settled" data-level="9.8" id="ontology"><span class="secno">9.8. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h3>
     Thought should be given to what ontologies are to be used to semantically describe the artefacts and events. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network. <a href="https://csarven.ca/linked-research-decentralised-web#provenance">Relvant resource</a> 
-   <h2 class="heading settled" data-level="9" id="definitions"><span class="secno">9. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
+   <h2 class="heading settled" data-level="10" id="definitions"><span class="secno">10. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
   </main>
   <div data-fill-with="conformance">
    <h2 class="no-ref no-num heading settled" id="w3c-conformance"><span class="content">Conformance</span><a class="self-link" href="#w3c-conformance"></a></h2>
