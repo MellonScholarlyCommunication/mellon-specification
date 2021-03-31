@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
   <meta content="Bikeshed version c5172e83, updated Fri Nov 20 15:35:20 2020 -0800" name="generator">
-  <meta content="616a255f734a8b12ee46ce0e50fa65184091c34d" name="document-revision">
+  <meta content="129cc6f7bd3b586e7f664f5c26f12181877395ed" name="document-revision">
 <style>
 
   table.collections thead tr {
@@ -452,7 +452,7 @@ dfn > a.self-link::before      { content: "#"; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Use Cases and Requirements for the Mellon Project</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-02-12">12 February 2021</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-02-16">16 February 2021</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>Issue Tracking:
@@ -581,7 +581,7 @@ dfn > a.self-link::before      { content: "#"; }
      <a href="#requirements"><span class="secno">9</span> <span class="content">Requirements</span></a>
      <ol class="toc">
       <li>
-       <a href="#rq-solid-storage"><span class="secno">9.1</span> <span class="content">Pod based data storage{#rq-solid-storage}</span></a>
+       <a href="#rq-solid-storage"><span class="secno">9.1</span> <span class="content">Pod based data storage</span></a>
        <ol class="toc">
         <li><a href="#rq-artefact-storage"><span class="secno">9.1.1</span> <span class="content">Research Artefact Storage</span></a>
         <li><a href="#rq-interaction-artefact-storage"><span class="secno">9.1.2</span> <span class="content">Artefact Linking</span></a>
@@ -628,7 +628,8 @@ dfn > a.self-link::before      { content: "#"; }
         <li><a href="#rq-collector-archiving-service"><span class="secno">9.7.1</span> <span class="content">Archiving service providing querying capabilities</span></a>
         <li><a href="#separate-collector-instance"><span class="secno">9.7.2</span> <span class="content">Separate collector instance</span></a>
        </ol>
-      <li><a href="#ontology"><span class="secno">9.8</span> <span class="content">Ontologies</span></a>
+      <li><a href="#examples"><span class="secno">9.8</span> <span class="content">Examples</span></a>
+      <li><a href="#ontology"><span class="secno">9.9</span> <span class="content">Ontologies</span></a>
      </ol>
     <li><a href="#definitions"><span class="secno">10</span> <span class="content">Definitions</span></a>
     <li>
@@ -885,7 +886,7 @@ In case of multiple matching policy rules for a received artefact, the priority 
    <h3 class="heading settled" data-level="6.1" id="lifecycle-event"><span class="secno">6.1. </span><span class="content">lifecycle events</span><a class="self-link" href="#lifecycle-event"></a></h3>
     In the context of scholarly communication, events are used to communicate lifecycle events of artefacts in the network.
 These events define the lifecycle of an artefacts in the network.
-External actors in the network can use these events to recreate and the lifecycle of the artefact at the appropriate services in the networl. 
+External actors in the network can use these events to recreate and the lifecycle of the artefact at the appropriate services in the network. 
    <p>Using the <a href="https://www.w3.org/TR/activitystreams-core/">ActivityStreams 2.0 specification</a>, we can represent a lifecycle event as follows:</p>
 <pre>{
   "@context": "https://www.w3.org/ns/activitystreams",
@@ -1777,7 +1778,7 @@ The awareness service hub is notified that the specific subscription should be r
 On success from the service hub, the scholarly dashboard removes the subscription from Bob’s pod. 
    <h2 class="heading settled" data-level="9" id="requirements"><span class="secno">9. </span><span class="content">Requirements</span><a class="self-link" href="#requirements"></a></h2>
     In this section the requirements are listed based on the proposed architecture <a href="#architecture">§ 3 Architecture of a Decentralized Network for Scholarly Communication</a> and use cases <a href="#usecases">§ 8 Use Cases</a>. 
-   <h3 class="heading settled" data-level="9.1" id="rq-solid-storage"><span class="secno">9.1. </span><span class="content">Pod based data storage{#rq-solid-storage}</span><a class="self-link" href="#rq-solid-storage"></a></h3>
+   <h3 class="heading settled" data-level="9.1" id="rq-solid-storage"><span class="secno">9.1. </span><span class="content">Pod based data storage</span><a class="self-link" href="#rq-solid-storage"></a></h3>
     To provide researchers with the possibility to store their own research artefacts and interactions, while keeping control of the data in the process, pod environments such as Solid can be used.
 These can be hosted by the research institutions themselves, or by recommended third party services. 
    <h4 class="heading settled" data-level="9.1.1" id="rq-artefact-storage"><span class="secno">9.1.1. </span><span class="content">Research Artefact Storage</span><a class="self-link" href="#rq-artefact-storage"></a></h4>
@@ -1907,8 +1908,29 @@ where these services can provide their own browser for their own archived data.
     Separate collector services may be added to the network.
 These services can subscribe to the available awareness service hubs on the network to be notified of new information in the network.
 The initial state of the collector service will have to be synchronized by requesting the scholarly record from the available archiving services that should be indexed. 
-   <h3 class="heading settled" data-level="9.8" id="ontology"><span class="secno">9.8. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h3>
-    Thought should be given to what ontologies are to be used to semantically describe the artefacts and events. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network. <a href="https://csarven.ca/linked-research-decentralised-web#provenance">Relvant resource</a> 
+   <h3 class="heading settled" data-level="9.8" id="examples"><span class="secno">9.8. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h3>
+   <p><strong>Researcher Pod</strong></p>
+<pre>/
+  inbox/
+  profile/
+    card
+  publications/
+    publication1.pdf
+    publication1.meta 
+    publication2.pdf
+    publication2.meta
+  graphs/
+    graph1.svg
+    graph2.svg
+  datasets/
+    dataset1.ttl 
+    dataset2.json
+</pre>
+   <p><strong>publication1.meta</strong></p>
+<pre>
+</pre>
+   <h3 class="heading settled" data-level="9.9" id="ontology"><span class="secno">9.9. </span><span class="content">Ontologies</span><a class="self-link" href="#ontology"></a></h3>
+    Thought should be given to what ontologies are to be used to semantically describe the artefacts and events. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network. <a href="https://csarven.ca/linked-research-decentralised-web#provenance">Relevant resource</a> 
    <h2 class="heading settled" data-level="10" id="definitions"><span class="secno">10. </span><span class="content">Definitions</span><a class="self-link" href="#definitions"></a></h2>
   </main>
   <div data-fill-with="conformance">

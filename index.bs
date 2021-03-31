@@ -3,9 +3,9 @@ Title: Use Cases and Requirements for the Mellon Project
 Shortname: ldnp-req
 Level: 1
 Max ToC Depth: 3
-Status: w3c/ED
+Status: LS
 Group: UGent-Imec
-URL: 
+URL: https://mellonscholarlycommunication.github.io/mellon-specification/
 Editor: Ruben Dedecker (UGent - Imec)
 Markup Shorthands: markdown yes
 Abstract:
@@ -1231,7 +1231,7 @@ Requirements {#requirements}
 ================================================================================
 In this section the requirements are listed based on the proposed architecture [[#architecture]] and use cases [[#usecases]].
 
-## Pod based data storage{#rq-solid-storage}
+## Pod based data storage ## {#rq-solid-storage}
 To provide researchers with the possibility to store their own research artefacts and interactions, while keeping control of the data in the process, pod environments such as Solid can be used.
 These can be hosted by the research institutions themselves, or by recommended third party services.
 
@@ -1412,11 +1412,36 @@ Separate collector services may be added to the network.
 These services can subscribe to the available awareness service hubs on the network to be notified of new information in the network.
 The initial state of the collector service will have to be synchronized by requesting the scholarly record from the available archiving services that should be indexed.
 
+## Examples ## {#examples}
 
+
+**Researcher Pod**
+```
+/
+  inbox/
+  profile/
+    card
+  publications/
+    publication1.pdf
+    publication1.meta 
+    publication2.pdf
+    publication2.meta
+  graphs/
+    graph1.svg
+    graph2.svg
+  datasets/
+    dataset1.ttl 
+    dataset2.json
+```
+
+**publication1.meta**
+``` 
+
+```
 
 ## Ontologies ## {#ontology}
 Thought should be given to what ontologies are to be used to semantically describe the artefacts and events. The use of different ontologies could mean that more or less compatibility layers are required for the framework to interact with different scholarly communication frameworks outside of its network.
-[Relvant resource](https://csarven.ca/linked-research-decentralised-web#provenance)
+[Relevant resource](https://csarven.ca/linked-research-decentralised-web#provenance)
 
 
 
